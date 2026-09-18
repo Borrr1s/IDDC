@@ -668,107 +668,99 @@
     let isFirstLoad = true;
     let modalTimer = null;
 
-    // Регламентные переходы по сетке Double Elimination
-    const DE_FLOW = {
-      1:  { ph1: '1',   ph2: '32',  nextW: 'Хит 25 (Раунд 3А)', nextL: 'Хит 17 (L1)' },
-      2:  { ph1: '16',  ph2: '17',  nextW: 'Хит 25 (Раунд 3А)', nextL: 'Хит 17 (L2)' },
-      3:  { ph1: '8',   ph2: '25',  nextW: 'Хит 26 (Раунд 3А)', nextL: 'Хит 18 (L3)' },
-      4:  { ph1: '9',   ph2: '24',  nextW: 'Хит 26 (Раунд 3А)', nextL: 'Хит 18 (L4)' },
-      5:  { ph1: '4',   ph2: '29',  nextW: 'Хит 27 (Раунд 3А)', nextL: 'Хит 19 (L5)' },
-      6:  { ph1: '13',  ph2: '20',  nextW: 'Хит 27 (Раунд 3А)', nextL: 'Хит 19 (L6)' },
-      7:  { ph1: '5',   ph2: '28',  nextW: 'Хит 28 (Раунд 3А)', nextL: 'Хит 20 (L7)' },
-      8:  { ph1: '12',  ph2: '21',  nextW: 'Хит 28 (Раунд 3А)', nextL: 'Хит 20 (L8)' },
+    // Регламентная сетка ТОП-32: посев и пути продвижения
+    const DE_CONFIG = {
+      // Суббота R1A & R1B (Базовые пары жеребьевки)
+      1:  { s1: 1,  s2: 32, ph1: '1',  ph2: '32', nextW: [25, 'p1', 'Хит 25 (Раунд 3А)'], nextL: [17, 'p1', 'Хит 17 (L1)'] },
+      2:  { s1: 16, s2: 17, ph1: '16', ph2: '17', nextW: [25, 'p2', 'Хит 25 (Раунд 3А)'], nextL: [17, 'p2', 'Хит 17 (L2)'] },
+      3:  { s1: 8,  s2: 25, ph1: '8',  ph2: '25', nextW: [26, 'p1', 'Хит 26 (Раунд 3А)'], nextL: [18, 'p1', 'Хит 18 (L3)'] },
+      4:  { s1: 9,  s2: 24, ph1: '9',  ph2: '24', nextW: [26, 'p2', 'Хит 26 (Раунд 3А)'], nextL: [18, 'p2', 'Хит 18 (L4)'] },
+      5:  { s1: 4,  s2: 29, ph1: '4',  ph2: '29', nextW: [27, 'p1', 'Хит 27 (Раунд 3А)'], nextL: [19, 'p1', 'Хит 19 (L5)'] },
+      6:  { s1: 13, s2: 20, ph1: '13', ph2: '20', nextW: [27, 'p2', 'Хит 27 (Раунд 3А)'], nextL: [19, 'p2', 'Хит 19 (L6)'] },
+      7:  { s1: 5,  s2: 28, ph1: '5',  ph2: '28', nextW: [28, 'p1', 'Хит 28 (Раунд 3А)'], nextL: [20, 'p1', 'Хит 20 (L7)'] },
+      8:  { s1: 12, s2: 21, ph1: '12', ph2: '21', nextW: [28, 'p2', 'Хит 28 (Раунд 3А)'], nextL: [20, 'p2', 'Хит 20 (L8)'] },
 
-      9:  { ph1: '2',   ph2: '31',  nextW: 'Хит 29 (Раунд 3Б)', nextL: 'Хит 21 (L9)' },
-      10: { ph1: '15',  ph2: '18',  nextW: 'Хит 29 (Раунд 3Б)', nextL: 'Хит 21 (L10)' },
-      11: { ph1: '7',   ph2: '26',  nextW: 'Хит 30 (Раунд 3Б)', nextL: 'Хит 22 (L11)' },
-      12: { ph1: '10',  ph2: '23',  nextW: 'Хит 30 (Раунд 3Б)', nextL: 'Хит 22 (L12)' },
-      13: { ph1: '3',   ph2: '30',  nextW: 'Хит 31 (Раунд 3Б)', nextL: 'Хит 23 (L13)' },
-      14: { ph1: '14',  ph2: '19',  nextW: 'Хит 31 (Раунд 3Б)', nextL: 'Хит 23 (L14)' },
-      15: { ph1: '6',   ph2: '27',  nextW: 'Хит 32 (Раунд 3Б)', nextL: 'Хит 24 (L15)' },
-      16: { ph1: '11',  ph2: '22',  nextW: 'Хит 32 (Раунд 3Б)', nextL: 'Хит 24 (L16)' },
+      9:  { s1: 2,  s2: 31, ph1: '2',  ph2: '31', nextW: [29, 'p1', 'Хит 29 (Раунд 3Б)'], nextL: [21, 'p1', 'Хит 21 (L9)'] },
+      10: { s1: 15, s2: 18, ph1: '15', ph2: '18', nextW: [29, 'p2', 'Хит 29 (Раунд 3Б)'], nextL: [21, 'p2', 'Хит 21 (L10)'] },
+      11: { s1: 7,  s2: 26, ph1: '7',  ph2: '26', nextW: [30, 'p1', 'Хит 30 (Раунд 3Б)'], nextL: [22, 'p1', 'Хит 22 (L11)'] },
+      12: { s1: 10, s2: 23, ph1: '10', ph2: '23', nextW: [30, 'p2', 'Хит 30 (Раунд 3Б)'], nextL: [22, 'p2', 'Хит 22 (L12)'] },
+      13: { s1: 3,  s2: 30, ph1: '3',  ph2: '30', nextW: [31, 'p1', 'Хит 31 (Раунд 3Б)'], nextL: [23, 'p1', 'Хит 23 (L13)'] },
+      14: { s1: 14, s2: 19, ph1: '14', ph2: '19', nextW: [31, 'p2', 'Хит 31 (Раунд 3Б)'], nextL: [23, 'p2', 'Хит 23 (L14)'] },
+      15: { s1: 6,  s2: 27, ph1: '6',  ph2: '27', nextW: [32, 'p1', 'Хит 32 (Раунд 3Б)'], nextL: [24, 'p1', 'Хит 24 (L15)'] },
+      16: { s1: 11, s2: 22, ph1: '11', ph2: '22', nextW: [32, 'p2', 'Хит 32 (Раунд 3Б)'], nextL: [24, 'p2', 'Хит 24 (L16)'] },
 
-      17: { ph1: 'L1',  ph2: 'L2',  nextW: 'Вскр Хит 33', nextL: 'Выбывание (25-32 место)' },
-      18: { ph1: 'L3',  ph2: 'L4',  nextW: 'Вскр Хит 34', nextL: 'Выбывание (25-32 место)' },
-      19: { ph1: 'L5',  ph2: 'L6',  nextW: 'Вскр Хит 35', nextL: 'Выбывание (25-32 место)' },
-      20: { ph1: 'L7',  ph2: 'L8',  nextW: 'Вскр Хит 36', nextL: 'Выбывание (25-32 место)' },
-      21: { ph1: 'L9',  ph2: 'L10', nextW: 'Вскр Хит 37', nextL: 'Выбывание (25-32 место)' },
-      22: { ph1: 'L11', ph2: 'L12', nextW: 'Вскр Хит 38', nextL: 'Выбывание (25-32 место)' },
-      23: { ph1: 'L13', ph2: 'L14', nextW: 'Вскр Хит 39', nextL: 'Выбывание (25-32 место)' },
-      24: { ph1: 'L15', ph2: 'L16', nextW: 'Вскр Хит 40', nextL: 'Выбывание (25-32 место)' },
+      // Суббота R2A & R2B (Нижняя сетка)
+      17: { ph1: 'L1',  ph2: 'L2',  nextW: [33, 'p1', 'Вскр Хит 33'], nextL: [null, null, 'Выбывание (25-32 место)'] },
+      18: { ph1: 'L3',  ph2: 'L4',  nextW: [34, 'p1', 'Вскр Хит 34'], nextL: [null, null, 'Выбывание (25-32 место)'] },
+      19: { ph1: 'L5',  ph2: 'L6',  nextW: [35, 'p1', 'Вскр Хит 35'], nextL: [null, null, 'Выбывание (25-32 место)'] },
+      20: { ph1: 'L7',  ph2: 'L8',  nextW: [36, 'p1', 'Вскр Хит 36'], nextL: [null, null, 'Выбывание (25-32 место)'] },
+      21: { ph1: 'L9',  ph2: 'L10', nextW: [37, 'p1', 'Вскр Хит 37'], nextL: [null, null, 'Выбывание (25-32 место)'] },
+      22: { ph1: 'L11', ph2: 'L12', nextW: [38, 'p1', 'Вскр Хит 38'], nextL: [null, null, 'Выбывание (25-32 место)'] },
+      23: { ph1: 'L13', ph2: 'L14', nextW: [39, 'p1', 'Вскр Хит 39'], nextL: [null, null, 'Выбывание (25-32 место)'] },
+      24: { ph1: 'L15', ph2: 'L16', nextW: [40, 'p1', 'Вскр Хит 40'], nextL: [null, null, 'Выбывание (25-32 место)'] },
 
-      25: { ph1: 'W1',  ph2: 'W2',  nextW: 'Вскр Хит 45 (Top 8)', nextL: 'Вскр Хит 40 (L25)' },
-      26: { ph1: 'W3',  ph2: 'W4',  nextW: 'Вскр Хит 45 (Top 8)', nextL: 'Вскр Хит 39 (L26)' },
-      27: { ph1: 'W5',  ph2: 'W6',  nextW: 'Вскр Хит 46 (Top 8)', nextL: 'Вскр Хит 38 (L27)' },
-      28: { ph1: 'W7',  ph2: 'W8',  nextW: 'Вскр Хит 46 (Top 8)', nextL: 'Вскр Хит 37 (L28)' },
-      29: { ph1: 'W9',  ph2: 'W10', nextW: 'Вскр Хит 47 (Top 8)', nextL: 'Вскр Хит 36 (L29)' },
-      30: { ph1: 'W11', ph2: 'W12', nextW: 'Вскр Хит 47 (Top 8)', nextL: 'Вскр Хит 35 (L30)' },
-      31: { ph1: 'W13', ph2: 'W14', nextW: 'Вскр Хит 48 (Top 8)', nextL: 'Вскр Хит 34 (L31)' },
-      32: { ph1: 'W15', ph2: 'W16', nextW: 'Вскр Хит 48 (Top 8)', nextL: 'Вскр Хит 33 (L32)' },
+      // Суббота R3A & R3B (Стыки за выход в Top 8)
+      25: { ph1: 'W1',  ph2: 'W2',  nextW: [45, 'p1', 'Вскр Хит 45 (Top 8)'], nextL: [40, 'p2', 'Вскр Хит 40 (L25)'] },
+      26: { ph1: 'W3',  ph2: 'W4',  nextW: [45, 'p2', 'Вскр Хит 45 (Top 8)'], nextL: [39, 'p2', 'Вскр Хит 39 (L26)'] },
+      27: { ph1: 'W5',  ph2: 'W6',  nextW: [46, 'p1', 'Вскр Хит 46 (Top 8)'], nextL: [38, 'p2', 'Вскр Хит 38 (L27)'] },
+      28: { ph1: 'W7',  ph2: 'W8',  nextW: [46, 'p2', 'Вскр Хит 46 (Top 8)'], nextL: [37, 'p2', 'Вскр Хит 37 (L28)'] },
+      29: { ph1: 'W9',  ph2: 'W10', nextW: [47, 'p1', 'Вскр Хит 47 (Top 8)'], nextL: [36, 'p2', 'Вскр Хит 36 (L29)'] },
+      30: { ph1: 'W11', ph2: 'W12', nextW: [47, 'p2', 'Вскр Хит 47 (Top 8)'], nextL: [35, 'p2', 'Вскр Хит 35 (L30)'] },
+      31: { ph1: 'W13', ph2: 'W14', nextW: [48, 'p1', 'Вскр Хит 48 (Top 8)'], nextL: [34, 'p2', 'Вскр Хит 34 (L31)'] },
+      32: { ph1: 'W15', ph2: 'W16', nextW: [48, 'p2', 'Вскр Хит 48 (Top 8)'], nextL: [33, 'p2', 'Вскр Хит 33 (L32)'] },
 
-      33: { ph1: 'W17', ph2: 'L32', nextW: 'Хит 41 (Раунд 5)', nextL: 'Выбывание (17-24 место)' },
-      34: { ph1: 'W18', ph2: 'L31', nextW: 'Хит 41 (Раунд 5)', nextL: 'Выбывание (17-24 место)' },
-      35: { ph1: 'W19', ph2: 'L30', nextW: 'Хит 42 (Раунд 5)', nextL: 'Выбывание (17-24 место)' },
-      36: { ph1: 'W20', ph2: 'L29', nextW: 'Хит 42 (Раунд 5)', nextL: 'Выбывание (17-24 место)' },
-      37: { ph1: 'W21', ph2: 'L28', nextW: 'Хит 43 (Раунд 5)', nextL: 'Выбывание (17-24 место)' },
-      38: { ph1: 'W22', ph2: 'L27', nextW: 'Хит 43 (Раунд 5)', nextL: 'Выбывание (17-24 место)' },
-      39: { ph1: 'W23', ph2: 'L26', nextW: 'Хит 44 (Раунд 5)', nextL: 'Выбывание (17-24 место)' },
-      40: { ph1: 'W24', ph2: 'L25', nextW: 'Хит 44 (Раунд 5)', nextL: 'Выбывание (17-24 место)' },
+      // Воскресенье Нижняя: Раунд 4
+      33: { ph1: 'W17', ph2: 'L32', nextW: [41, 'p1', 'Хит 41 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
+      34: { ph1: 'W18', ph2: 'L31', nextW: [41, 'p2', 'Хит 41 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
+      35: { ph1: 'W19', ph2: 'L30', nextW: [42, 'p1', 'Хит 42 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
+      36: { ph1: 'W20', ph2: 'L29', nextW: [42, 'p2', 'Хит 42 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
+      37: { ph1: 'W21', ph2: 'L28', nextW: [43, 'p1', 'Хит 43 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
+      38: { ph1: 'W22', ph2: 'L27', nextW: [43, 'p2', 'Хит 43 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
+      39: { ph1: 'W23', ph2: 'L26', nextW: [44, 'p1', 'Хит 44 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
+      40: { ph1: 'W24', ph2: 'L25', nextW: [44, 'p2', 'Хит 44 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
 
-      41: { ph1: 'W33', ph2: 'W34', nextW: 'Хит 49 (Раунд 7)', nextL: 'Выбывание (13-16 место)' },
-      42: { ph1: 'W35', ph2: 'W36', nextW: 'Хит 50 (Раунд 7)', nextL: 'Выбывание (13-16 место)' },
-      43: { ph1: 'W37', ph2: 'W38', nextW: 'Хит 51 (Раунд 7)', nextL: 'Выбывание (13-16 место)' },
-      44: { ph1: 'W39', ph2: 'W40', nextW: 'Хит 52 (Раунд 7)', nextL: 'Выбывание (13-16 место)' },
+      // Воскресенье Нижняя: Раунд 5
+      41: { ph1: 'W33', ph2: 'W34', nextW: [49, 'p1', 'Хит 49 (Раунд 7)'], nextL: [null, null, 'Выбывание (13-16 место)'] },
+      42: { ph1: 'W35', ph2: 'W36', nextW: [50, 'p1', 'Хит 50 (Раунд 7)'], nextL: [null, null, 'Выбывание (13-16 место)'] },
+      43: { ph1: 'W37', ph2: 'W38', nextW: [51, 'p1', 'Хит 51 (Раунд 7)'], nextL: [null, null, 'Выбывание (13-16 место)'] },
+      44: { ph1: 'W39', ph2: 'W40', nextW: [52, 'p1', 'Хит 52 (Раунд 7)'], nextL: [null, null, 'Выбывание (13-16 место)'] },
 
-      45: { ph1: 'W25', ph2: 'W26', nextW: 'Хит 55 (Раунд 9)', nextL: 'Хит 49 (L45)' },
-      46: { ph1: 'W27', ph2: 'W28', nextW: 'Хит 55 (Раунд 9)', nextL: 'Хит 50 (L46)' },
-      47: { ph1: 'W29', ph2: 'W30', nextW: 'Хит 56 (Раунд 9)', nextL: 'Хит 51 (L47)' },
-      48: { ph1: 'W31', ph2: 'W32', nextW: 'Хит 56 (Раунд 9)', nextL: 'Хит 52 (L48)' },
+      // Воскресенье Верхняя: Раунд 6 (ТОП-8 Winners)
+      45: { ph1: 'W25', ph2: 'W26', nextW: [55, 'p1', 'Хит 55 (Раунд 9)'], nextL: [49, 'p2', 'Хит 49 (L45)'] },
+      46: { ph1: 'W27', ph2: 'W28', nextW: [55, 'p2', 'Хит 55 (Раунд 9)'], nextL: [50, 'p2', 'Хит 50 (L46)'] },
+      47: { ph1: 'W29', ph2: 'W30', nextW: [56, 'p1', 'Хит 56 (Раунд 9)'], nextL: [51, 'p2', 'Хит 51 (L47)'] },
+      48: { ph1: 'W31', ph2: 'W32', nextW: [56, 'p2', 'Хит 56 (Раунд 9)'], nextL: [52, 'p2', 'Хит 52 (L48)'] },
 
-      49: { ph1: 'W41', ph2: 'L45', nextW: 'Хит 53 (Раунд 8)', nextL: 'Выбывание (9-12 место)' },
-      50: { ph1: 'W42', ph2: 'L46', nextW: 'Хит 53 (Раунд 8)', nextL: 'Выбывание (9-12 место)' },
-      51: { ph1: 'W43', ph2: 'L47', nextW: 'Хит 54 (Раунд 8)', nextL: 'Выбывание (9-12 место)' },
-      52: { ph1: 'W44', ph2: 'L48', nextW: 'Хит 54 (Раунд 8)', nextL: 'Выбывание (9-12 место)' },
+      // Воскресенье Нижняя: Раунд 7
+      49: { ph1: 'W41', ph2: 'L45', nextW: [53, 'p1', 'Хит 53 (Раунд 8)'], nextL: [null, null, 'Выбывание (9-12 место)'] },
+      50: { ph1: 'W42', ph2: 'L46', nextW: [53, 'p2', 'Хит 53 (Раунд 8)'], nextL: [null, null, 'Выбывание (9-12 место)'] },
+      51: { ph1: 'W43', ph2: 'L47', nextW: [54, 'p1', 'Хит 54 (Раунд 8)'], nextL: [null, null, 'Выбывание (9-12 место)'] },
+      52: { ph1: 'W44', ph2: 'L48', nextW: [54, 'p2', 'Хит 54 (Раунд 8)'], nextL: [null, null, 'Выбывание (9-12 место)'] },
 
-      53: { ph1: 'W49', ph2: 'W50', nextW: 'Хит 57 (Раунд 10)', nextL: 'Выбывание (7-8 место)' },
-      54: { ph1: 'W51', ph2: 'W52', nextW: 'Хит 58 (Раунд 10)', nextL: 'Выбывание (7-8 место)' },
+      // Воскресенье Нижняя: Раунд 8
+      53: { ph1: 'W49', ph2: 'W50', nextW: [57, 'p1', 'Хит 57 (Раунд 10)'], nextL: [null, null, 'Выбывание (7-8 место)'] },
+      54: { ph1: 'W51', ph2: 'W52', nextW: [58, 'p1', 'Хит 58 (Раунд 10)'], nextL: [null, null, 'Выбывание (7-8 место)'] },
 
-      55: { ph1: 'W45', ph2: 'W46', nextW: 'Хит 60 (Финал Виннеров)', nextL: 'Хит 57 (L55)' },
-      56: { ph1: 'W47', ph2: 'W48', nextW: 'Хит 60 (Финал Виннеров)', nextL: 'Хит 58 (L56)' },
+      // Воскресенье Верхняя: Раунд 9 (Полуфинал)
+      55: { ph1: 'W45', ph2: 'W46', nextW: [60, 'p1', 'Хит 60 (Финал Виннеров)'], nextL: [57, 'p2', 'Хит 57 (L55)'] },
+      56: { ph1: 'W47', ph2: 'W48', nextW: [60, 'p2', 'Хит 60 (Финал Виннеров)'], nextL: [58, 'p2', 'Хит 58 (L56)'] },
 
-      57: { ph1: 'W53', ph2: 'L55', nextW: 'Хит 59 (Раунд 11)', nextL: 'Выбывание (5-6 место)' },
-      58: { ph1: 'W54', ph2: 'L56', nextW: 'Хит 59 (Раунд 11)', nextL: 'Выбывание (5-6 место)' },
+      // Воскресенье Нижняя: Раунд 10
+      57: { ph1: 'W53', ph2: 'L55', nextW: [59, 'p1', 'Хит 59 (Раунд 11)'], nextL: [null, null, 'Выбывание (5-6 место)'] },
+      58: { ph1: 'W54', ph2: 'L56', nextW: [59, 'p2', 'Хит 59 (Раунд 11)'], nextL: [null, null, 'Выбывание (5-6 место)'] },
 
-      59: { ph1: 'W57', ph2: 'W58', nextW: 'Хит 61 (Финал Лузеров)', nextL: '4-е место' },
-      60: { ph1: 'W55', ph2: 'W56', nextW: 'СУПЕРФИНАЛ (Хит 62)', nextL: 'Хит 61 (L60)' },
-      61: { ph1: 'W59', ph2: 'L60', nextW: 'СУПЕРФИНАЛ (Хит 62)', nextL: '🥉 3-е место' },
-      62: { ph1: 'W60', ph2: 'W61', nextW: '🏆 ЧЕМПИОН ДРИФТ-ВЫЗОВА!', nextL: '🥈 2-е место' }
+      // Воскресенье Нижняя: Раунд 11
+      59: { ph1: 'W57', ph2: 'W58', nextW: [61, 'p1', 'Хит 61 (Финал Лузеров)'], nextL: [null, null, '4-е место'] },
+
+      // Воскресенье Верхняя: Раунд 12 (Финал Виннеров)
+      60: { ph1: 'W55', ph2: 'W56', nextW: [62, 'p1', 'СУПЕРФИНАЛ (Хит 62)'], nextL: [61, 'p2', 'Хит 61 (L60)'] },
+
+      // Воскресенье Нижняя: Раунд 13 (Финал Лузеров)
+      61: { ph1: 'W59', ph2: 'L60', nextW: [62, 'p2', 'СУПЕРФИНАЛ (Хит 62)'], nextL: [null, null, '🥉 3-е место'] },
+
+      // Воскресенье: СУПЕРФИНАЛ
+      62: { ph1: 'W60', ph2: 'W61', nextW: [null, null, '🏆 ЧЕМПИОН ДРИФТ-ВЫЗОВА!'], nextL: [null, null, '🥈 2-е место'] }
     };
-
-    // ИЗОЛИРОВАННЫЕ РЕГИОНЫ ПОИСКА ДЛЯ КАЖДОГО РАУНДА (Исключает ложные срабатывания)
-    const ROUND_CONFIGS = [
-      // Суббота
-      { round: 'R1A', sheet: 'sat', rMin: 8,  rMax: 42, cMin: 0,  cMax: 5,  heats: [1,2,3,4,5,6,7,8] },
-      { round: 'R1B', sheet: 'sat', rMin: 8,  rMax: 42, cMin: 22, cMax: 30, heats: [9,10,11,12,13,14,15,16] },
-      { round: 'R3A', sheet: 'sat', rMin: 8,  rMax: 42, cMin: 6,  cMax: 13, heats: [25,26,27,28] },
-      { round: 'R3B', sheet: 'sat', rMin: 8,  rMax: 42, cMin: 18, cMax: 24, heats: [29,30,31,32] },
-      { round: 'R2A', sheet: 'sat', rMin: 42, rMax: 75, cMin: 0,  cMax: 8,  heats: [17,18,19,20] },
-      { round: 'R2B', sheet: 'sat', rMin: 42, rMax: 75, cMin: 20, cMax: 28, heats: [21,22,23,24] },
-
-      // Воскресенье
-      { round: 'R6',    sheet: 'sun', rMin: 6,  rMax: 25, cMin: 0, cMax: 4,  heats: [45,46,47,48] },
-      { round: 'R9',    sheet: 'sun', rMin: 6,  rMax: 25, cMin: 3, cMax: 6,  heats: [55,56] },
-      { round: 'R12',   sheet: 'sun', rMin: 6,  rMax: 25, cMin: 5, cMax: 8,  heats: [60] },
-      { round: 'FINAL', sheet: 'sun', rMin: 6,  rMax: 25, cMin: 6, cMax: 10, heats: [62] },
-
-      { round: 'R4',    sheet: 'sun', rMin: 26, rMax: 85, cMin: 0, cMax: 4,  heats: [33,34,35,36,37,38,39,40] },
-      { round: 'R5',    sheet: 'sun', rMin: 26, rMax: 85, cMin: 1, cMax: 4,  heats: [41,42,43,44] },
-      { round: 'R7',    sheet: 'sun', rMin: 26, rMax: 85, cMin: 3, cMax: 6,  heats: [49,50,51,52] },
-      { round: 'R8',    sheet: 'sun', rMin: 26, rMax: 85, cMin: 4, cMax: 7,  heats: [53,54] },
-      { round: 'R10',   sheet: 'sun', rMin: 26, rMax: 85, cMin: 5, cMax: 8,  heats: [57,58] },
-      { round: 'R11',   sheet: 'sun', rMin: 26, rMax: 85, cMin: 6, cMax: 9,  heats: [59] },
-      { round: 'R13',   sheet: 'sun', rMin: 26, rMax: 85, cMin: 7, cMax: 10, heats: [61] }
-    ];
 
     function isWinChar(val) {
       if (val === null || val === undefined) return false;
@@ -817,43 +809,37 @@
       return JSON.parse(jsonStr);
     }
 
-    // Загрузка пилотов: строго сканирует всю жеребьёвку
+    // Загрузка пилотов из жеребьевки
     async function loadPilotsCatalog() {
       try {
-        const data = await fetchSheetJSON('ЖЕРЕБЬЕВКА');
-        const rows = data.table.rows;
-        pilotsByNum = {};
-        pilotsByName = {};
-
         for (let num = 1; num <= 32; num++) {
           pilotsByNum[num] = { seed: num, carNum: num, name: `Пилот #${num}`, car: '', region: '' };
         }
 
-        for (let i = 0; i < rows.length; i++) {
-          const c = rows[i]?.c;
-          if (!c) continue;
+        const data = await fetchSheetJSON('ЖЕРЕБЬЕВКА');
+        const rows = data.table.rows;
+        if (!rows) return;
 
-          let foundNum = null;
+        rows.forEach(r => {
+          if (!r || !r.c) return;
           for (let col = 0; col <= 1; col++) {
-            const val = c[col]?.v;
+            const val = r.c[col]?.v;
             if (typeof val === 'number' && val >= 1 && val <= 32) {
-              foundNum = val;
+              const seed = val;
+              const carNum = r.c[1]?.v || seed;
+              const name = r.c[2]?.v ? String(r.c[2].v).trim() : '';
+              const car = r.c[3]?.v ? String(r.c[3].v).trim() : '';
+              const region = r.c[4]?.v ? String(r.c[4].v).trim() : '';
+
+              if (name && !name.toLowerCase().includes('судья') && !name.toLowerCase().includes('секретарь')) {
+                const p = { seed, carNum, name, car, region };
+                pilotsByNum[seed] = p;
+                pilotsByName[name.toLowerCase()] = p;
+              }
               break;
             }
           }
-          if (foundNum === null) continue;
-
-          const carNum = c[1]?.v || foundNum;
-          const name = c[2]?.v ? String(c[2].v).trim() : '';
-          const car = c[3]?.v ? String(c[3].v).trim() : '';
-          const region = c[4]?.v ? String(c[4].v).trim() : '';
-
-          if (!name || name.toLowerCase().includes('судья') || name.toLowerCase().includes('секретарь')) continue;
-
-          const pObj = { seed: foundNum, carNum, name, car, region };
-          pilotsByNum[foundNum] = pObj;
-          pilotsByName[name.toLowerCase()] = pObj;
-        }
+        });
 
         let html = '';
         for (let num = 1; num <= 32; num++) {
@@ -874,124 +860,253 @@
       }
     }
 
-    // Инициализация структуры
+    // Инициализация турнира
     function initTournament() {
       for (let h = 1; h <= 62; h++) {
-        const flow = DE_FLOW[h];
+        const cfg = DE_CONFIG[h];
         tournamentMatches[h] = {
           heat: h,
-          p1: { seed: flow.ph1, name: `Ожидание (${flow.ph1})`, car: '' },
-          p2: { seed: flow.ph2, name: `Ожидание (${flow.ph2})`, car: '' },
+          p1: { seed: cfg.ph1, name: `Ожидание (${cfg.ph1})`, car: '' },
+          p2: { seed: cfg.ph2, name: `Ожидание (${cfg.ph2})`, car: '' },
           winner: null,
           loser: null
         };
+
+        // Заезды 1..16 получают участников строго по сетке
+        if (cfg.s1 && cfg.s2) {
+          tournamentMatches[h].p1 = { ...pilotsByNum[cfg.s1] };
+          tournamentMatches[h].p2 = { ...pilotsByNum[cfg.s2] };
+        }
       }
     }
 
-    // ТОЧНЫЙ ПАРСИНГ ХИТА ВНУТРИ СВОЕЙ ЗОНЫ ТАБЛИЦЫ
-    function parseHeatInRegion(sheetRows, cfg, heatNum) {
-      const match = tournamentMatches[heatNum];
-      const flow = DE_FLOW[heatNum];
-      if (!sheetRows || !sheetRows.length) return;
+    // Синхронизация данных субботы
+    function parseSaturday(satRows) {
+      if (!satRows || !satRows.length) return;
 
-      // 1. Ищем ячейку с номером заезда СТРОГО в границах этого раунда
-      let heatR = -1;
-      let heatC = -1;
+      // Находим строку, разделяющую верхнюю сетку и нижнюю (Раунд 2)
+      let dividerRow = -1;
+      for (let r = 0; r < satRows.length; r++) {
+        const txt = (satRows[r]?.c || []).map(c => String(c?.v || '')).join(' ');
+        if (txt.includes('Раунд 2')) {
+          dividerRow = r;
+          break;
+        }
+      }
+      if (dividerRow === -1) dividerRow = 42;
 
-      for (let r = cfg.rMin; r <= Math.min(cfg.rMax, sheetRows.length - 1); r++) {
-        const row = sheetRows[r];
-        if (!row || !row.c) continue;
-        for (let c = cfg.cMin; c <= Math.min(cfg.cMax, row.c.length - 1); c++) {
-          const val = row.c[c]?.v;
-          if (val === null || val === undefined || val === '') continue;
+      // 1. ПРОВЕРКА ПОБЕД В РАУНДАХ 1А И 1Б (ХИТЫ 1..16)
+      for (let h = 1; h <= 16; h++) {
+        const m = tournamentMatches[h];
+        const p1 = m.p1;
+        const p2 = m.p2;
+        const isGroupB = (h >= 9);
 
-          if (Number(val) === heatNum || String(val).trim() === String(heatNum)) {
-            heatR = r;
-            heatC = c;
-            break;
+        const cMin = isGroupB ? 20 : 0;
+        const cMax = isGroupB ? 30 : 6;
+
+        let p1HasW = false;
+        let p2HasW = false;
+
+        for (let r = 0; r < dividerRow; r++) {
+          const row = satRows[r];
+          if (!row || !row.c) continue;
+
+          let hasW = false;
+          let hasP1 = false;
+          let hasP2 = false;
+
+          for (let c = cMin; c <= Math.min(cMax, row.c.length - 1); c++) {
+            const v = row.c[c]?.v;
+            if (v === null || v === undefined || v === '') continue;
+
+            if (isWinChar(v)) hasW = true;
+
+            if (v === p1.seed || String(v).trim().toLowerCase() === String(p1.name).toLowerCase()) hasP1 = true;
+            if (v === p2.seed || String(v).trim().toLowerCase() === String(p2.name).toLowerCase()) hasP2 = true;
+          }
+
+          if (hasW) {
+            if (hasP1) p1HasW = true;
+            if (hasP2) p2HasW = true;
           }
         }
-        if (heatR !== -1) break;
+
+        if (p1HasW && !p2HasW) { m.winner = p1; m.loser = p2; }
+        else if (p2HasW && !p1HasW) { m.winner = p2; m.loser = p1; }
       }
 
-      if (heatR === -1) return;
+      // 2. ПРОВЕРКА ХИТОВ 17..32 (НИЖНЯЯ СЕТКА И СТЫКИ)
+      for (let h = 17; h <= 32; h++) {
+        const m = tournamentMatches[h];
+        const isLosers = (h <= 24);
+        const rMin = isLosers ? dividerRow : 0;
+        const rMax = isLosers ? satRows.length - 1 : dividerRow;
 
-      // 2. Сканируем участников в локальном блоке этого заезда
-      const rStart = heatR;
-      const rEnd = Math.min(sheetRows.length - 1, heatR + 5);
-      const cStart = Math.max(0, cfg.cMin);
-      const cEnd = Math.min(32, cfg.cMax + 3);
+        let cMin = 0;
+        let cMax = 30;
+        if (h >= 17 && h <= 20) { cMin = 0; cMax = 8; }
+        else if (h >= 21 && h <= 24) { cMin = 20; cMax = 30; }
+        else if (h >= 25 && h <= 28) { cMin = 6; cMax = 12; }
+        else if (h >= 29 && h <= 32) { cMin = 18; cMax = 24; }
 
-      let foundCompetitors = [];
+        // Ищем ячейку с номером хита
+        let hRow = -1;
+        let hCol = -1;
+        for (let r = rMin; r <= rMax; r++) {
+          const row = satRows[r];
+          if (!row || !row.c) continue;
+          for (let c = cMin; c <= Math.min(cMax, row.c.length - 1); c++) {
+            if (Number(row.c[c]?.v) === h) {
+              hRow = r; hCol = c; break;
+            }
+          }
+          if (hRow !== -1) break;
+        }
 
-      for (let r = rStart; r <= rEnd; r++) {
-        const row = sheetRows[r];
-        if (!row || !row.c) continue;
+        if (hRow === -1) continue;
 
-        let detectedPilot = null;
-        let rowHasW = false;
+        // Сканируем строки заезда
+        let localFound = [];
+        for (let r = hRow; r <= Math.min(satRows.length - 1, hRow + 4); r++) {
+          const row = satRows[r];
+          if (!row || !row.c) continue;
+          let rowPilot = null;
+          let rowW = false;
 
-        for (let c = cStart; c <= cEnd; c++) {
-          const cellVal = row.c[c]?.v;
-          if (cellVal === null || cellVal === undefined || cellVal === '') continue;
+          for (let c = Math.max(0, hCol - 2); c <= Math.min(30, hCol + 6); c++) {
+            const val = row.c[c]?.v;
+            if (!val) continue;
 
-          if (isWinChar(cellVal)) {
-            rowHasW = true;
+            if (isWinChar(val)) rowW = true;
+
+            if (typeof val === 'number' && pilotsByNum[val] && val !== h) {
+              rowPilot = pilotsByNum[val];
+            } else if (typeof val === 'string') {
+              const low = val.trim().toLowerCase();
+              if (pilotsByName[low]) rowPilot = pilotsByName[low];
+            }
           }
 
-          // Поиск пилота
-          if (typeof cellVal === 'number' && cellVal >= 1 && cellVal <= 32 && pilotsByNum[cellVal]) {
-            if (!detectedPilot) detectedPilot = { ...pilotsByNum[cellVal] };
-          } else if (typeof cellVal === 'string') {
-            const low = cellVal.trim().toLowerCase();
-            if (pilotsByName[low]) {
-              if (!detectedPilot) detectedPilot = { ...pilotsByName[low] };
-            } else if ((low.startsWith('l') || low.startsWith('w')) && !isWinChar(cellVal)) {
-              if (!detectedPilot) detectedPilot = { seed: cellVal.trim(), name: `Ожидание (${cellVal.trim()})`, car: '' };
+          if (rowPilot) {
+            const ex = localFound.find(x => x.p.seed === rowPilot.seed);
+            if (!ex) localFound.push({ p: rowPilot, win: rowW });
+            else if (rowW) ex.win = true;
+          }
+        }
+
+        if (localFound[0]) m.p1 = localFound[0].p;
+        if (localFound[1]) m.p2 = localFound[1].p;
+
+        if (localFound.length >= 2) {
+          if (localFound[0].win && !localFound[1].win) { m.winner = m.p1; m.loser = m.p2; }
+          else if (localFound[1].win && !localFound[0].win) { m.winner = m.p2; m.loser = m.p1; }
+        }
+      }
+    }
+
+    // Синхронизация данных воскресенья
+    function parseSunday(sunRows) {
+      if (!sunRows || !sunRows.length) return;
+
+      for (let h = 33; h <= 62; h++) {
+        const m = tournamentMatches[h];
+
+        // Находим ячейку с номером заезда (все номера >= 33 уникальны)
+        let hRow = -1;
+        let hCol = -1;
+        for (let r = 0; r < sunRows.length; r++) {
+          const row = sunRows[r];
+          if (!row || !row.c) continue;
+          for (let c = 0; c < row.c.length; c++) {
+            if (Number(row.c[c]?.v) === h) {
+              hRow = r; hCol = c; break;
+            }
+          }
+          if (hRow !== -1) break;
+        }
+
+        if (hRow === -1) continue;
+
+        let localFound = [];
+        for (let r = hRow; r <= Math.min(sunRows.length - 1, hRow + 5); r++) {
+          const row = sunRows[r];
+          if (!row || !row.c) continue;
+          let rowPilot = null;
+          let rowW = false;
+
+          for (let c = Math.max(0, hCol - 1); c <= Math.min(34, hCol + 6); c++) {
+            const val = row.c[c]?.v;
+            if (!val) continue;
+
+            if (isWinChar(val)) rowW = true;
+
+            if (typeof val === 'number' && pilotsByNum[val] && val !== h) {
+              rowPilot = pilotsByNum[val];
+            } else if (typeof val === 'string') {
+              const low = val.trim().toLowerCase();
+              if (pilotsByName[low]) rowPilot = pilotsByName[low];
+            }
+          }
+
+          if (rowPilot) {
+            const ex = localFound.find(x => x.p.seed === rowPilot.seed);
+            if (!ex) localFound.push({ p: rowPilot, win: rowW });
+            else if (rowW) ex.win = true;
+          }
+        }
+
+        if (localFound[0]) m.p1 = localFound[0].p;
+        if (localFound[1]) m.p2 = localFound[1].p;
+
+        if (localFound.length >= 2) {
+          if (localFound[0].win && !localFound[1].win) { m.winner = m.p1; m.loser = m.p2; }
+          else if (localFound[1].win && !localFound[0].win) { m.winner = m.p2; m.loser = m.p1; }
+        }
+      }
+    }
+
+    // Автопродвижение по сетке Double Elimination
+    function advanceBracketTree() {
+      for (let step = 0; step < 5; step++) {
+        for (let h = 1; h <= 62; h++) {
+          const m = tournamentMatches[h];
+          const cfg = DE_CONFIG[h];
+
+          if (m.winner && m.loser) {
+            // Переход победителя
+            if (cfg.nextW && cfg.nextW[0]) {
+              const targetHeat = tournamentMatches[cfg.nextW[0]];
+              const slot = cfg.nextW[1];
+              if (targetHeat && (!targetHeat[slot] || targetHeat[slot].name.startsWith('Ожидание'))) {
+                targetHeat[slot] = { ...m.winner };
+              }
+            }
+
+            // Переход проигравшего
+            if (cfg.nextL && cfg.nextL[0]) {
+              const targetHeat = tournamentMatches[cfg.nextL[0]];
+              const slot = cfg.nextL[1];
+              if (targetHeat && (!targetHeat[slot] || targetHeat[slot].name.startsWith('Ожидание'))) {
+                targetHeat[slot] = { ...m.loser };
+              }
             }
           }
         }
-
-        if (detectedPilot) {
-          const existing = foundCompetitors.find(x => x.pilot.seed === detectedPilot.seed);
-          if (!existing) {
-            foundCompetitors.push({ pilot: detectedPilot, hasWin: rowHasW });
-          } else if (rowHasW) {
-            existing.hasWin = true;
-          }
-        }
-      }
-
-      // Привязка участников
-      if (foundCompetitors[0]) match.p1 = foundCompetitors[0].pilot;
-      if (foundCompetitors[1]) match.p2 = foundCompetitors[1].pilot;
-
-      // 3. Фиксация победы
-      if (foundCompetitors.length >= 2) {
-        if (foundCompetitors[0].hasWin && !foundCompetitors[1].hasWin) {
-          match.winner = match.p1;
-          match.loser = match.p2;
-        } else if (foundCompetitors[1].hasWin && !foundCompetitors[0].hasWin) {
-          match.winner = match.p2;
-          match.loser = match.p1;
-        }
-      } else if (foundCompetitors.length === 1 && foundCompetitors[0].hasWin && match.p2) {
-        match.winner = match.p1;
-        match.loser = match.p2;
       }
     }
 
-    // Проверка новых побед для вызова плашки
-    function checkWinnerAlerts() {
+    // Проверка новых побед для вывода плашки (для всех 62 хитов)
+    function checkNewWinners() {
       for (let h = 1; h <= 62; h++) {
         const m = tournamentMatches[h];
         if (m.winner && m.loser) {
           const prevKey = previousWinners[h];
           const currKey = `${m.winner.seed}_${m.winner.name}`;
 
-          if (prevKey !== currKey && !isFirstLoad) {
-            const flow = DE_FLOW[h];
-            showWinnerModal(h, m.winner, m.loser, flow.nextL);
+          if (!prevKey && !isFirstLoad) {
+            const cfg = DE_CONFIG[h];
+            showWinnerModal(h, m.winner, m.loser, cfg.nextL[2]);
           }
           previousWinners[h] = currKey;
         }
@@ -1033,7 +1148,7 @@
 
     function createHeatCardHTML(h) {
       const m = tournamentMatches[h];
-      const flow = DE_FLOW[h];
+      const cfg = DE_CONFIG[h];
       const p1 = m.p1;
       const p2 = m.p2;
 
@@ -1071,8 +1186,8 @@
           </div>
 
           <div class="heat-footer-flow">
-            <span>Победитель: ${flow.nextW}</span>
-            <span>${flow.nextL}</span>
+            <span>Победитель: ${cfg.nextW[2]}</span>
+            <span>${cfg.nextL[2]}</span>
           </div>
         </div>
       `;
@@ -1081,7 +1196,7 @@
     function onHeatCardClick(h) {
       const m = tournamentMatches[h];
       if (m.winner && m.loser) {
-        showWinnerModal(h, m.winner, m.loser, DE_FLOW[h].nextL);
+        showWinnerModal(h, m.winner, m.loser, DE_CONFIG[h].nextL[2]);
       }
     }
 
@@ -1113,7 +1228,6 @@
       el.innerHTML = heats.map(createHeatCardHTML).join('');
     }
 
-    // Главный цикл синхронизации
     async function runSync() {
       try {
         document.getElementById('syncText').innerText = 'Обновление...';
@@ -1125,21 +1239,10 @@
           fetchSheetJSON('Sun 32DE')
         ]);
 
-        const satRows = satData.table.rows;
-        const sunRows = sunData.table.rows;
-
-        // Сканируем строго по изолированным регионам
-        ROUND_CONFIGS.forEach(cfg => {
-          const rows = cfg.sheet === 'sat' ? satRows : sunRows;
-          cfg.heats.forEach(h => {
-            parseHeatInRegion(rows, cfg, h);
-          });
-        });
-
-        // Проверяем новые победы (для всех заездов)
-        checkWinnerAlerts();
-
-        // Отрисовка
+        parseSaturday(satData.table.rows);
+        parseSunday(sunData.table.rows);
+        advanceBracketTree();
+        checkNewWinners();
         renderDOM();
 
         document.getElementById('syncText').innerText = `OK (${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'})})`;
