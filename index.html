@@ -24,6 +24,7 @@
       --text-dim: #7d8496;
       --border-color: #212534;
       --gold: #ffd700;
+      --kinforest-blue: #0b4ea2;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -42,20 +43,20 @@
       padding-bottom: 60px;
     }
 
-    /* HEADER */
+    /* ШАПКА С ТРЕМЯ БРЕНДАМИ */
     header {
-      background: linear-gradient(180deg, rgba(12, 14, 20, 0.98) 0%, rgba(7, 8, 11, 0.92) 100%);
+      background: linear-gradient(180deg, rgba(14, 16, 24, 0.98) 0%, rgba(7, 8, 11, 0.94) 100%);
       border-bottom: 2px solid var(--igora-red);
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(12px);
-      padding: 12px 24px;
+      backdrop-filter: blur(14px);
+      padding: 10px 24px;
       box-shadow: 0 6px 35px rgba(0, 0, 0, 0.85);
     }
 
     .header-content {
-      max-width: 1880px;
+      max-width: 1920px;
       margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
@@ -64,39 +65,115 @@
       gap: 16px;
     }
 
-    .brand-block {
+    /* ЛОГОТИПЫ */
+    .brand-cluster {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
     }
 
-    .badge-circuit {
-      background: var(--igora-red);
-      color: #fff;
+    /* 1. ИГОРА ДРАЙВ */
+    .logo-igora {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #c4185d 0%, #681758 100%);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 16px rgba(196, 24, 93, 0.35);
+    }
+
+    .logo-igora-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .logo-igora-title {
+      font-weight: 900;
+      font-size: 17px;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      text-transform: uppercase;
+      font-style: italic;
+    }
+
+    .logo-igora-sub {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    /* 2. DRIFT MATSURI SPB */
+    .logo-matsuri {
+      display: flex;
+      flex-direction: column;
+      line-height: 0.95;
+    }
+
+    .matsuri-top {
+      font-family: 'Montserrat', sans-serif;
       font-weight: 900;
       font-style: italic;
-      padding: 6px 14px;
-      font-size: 13px;
+      font-size: 21px;
       letter-spacing: 1px;
-      clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+      background: linear-gradient(90deg, #ffde00 0%, #ff6a00 50%, #e6007e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       text-transform: uppercase;
-      box-shadow: 0 0 16px var(--igora-red-glow);
+      filter: drop-shadow(0 0 8px rgba(255, 106, 0, 0.4));
     }
 
-    .titles h1 {
-      font-size: 20px;
-      font-weight: 900;
+    .matsuri-sub {
+      font-family: 'Teko', sans-serif;
+      font-size: 16px;
+      letter-spacing: 2px;
+      color: #ffffff;
       text-transform: uppercase;
+    }
+
+    /* 3. KINFOREST TIRES */
+    .logo-kinforest {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      border-left: 1px solid var(--border-color);
+      padding-left: 16px;
+    }
+
+    .kinforest-name {
+      font-weight: 900;
+      font-style: italic;
+      font-size: 20px;
       letter-spacing: 0.5px;
+      color: #2b72db;
       display: flex;
       align-items: center;
-      gap: 8px;
+      line-height: 1;
     }
 
-    .titles h1 span { color: var(--matsuri-cyan); }
-    .titles p { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
+    .kinforest-k {
+      color: var(--igora-red);
+      font-size: 23px;
+      margin-right: 1px;
+      filter: drop-shadow(0 0 5px rgba(227, 6, 19, 0.6));
+    }
 
-    /* TABS */
+    .kinforest-tag {
+      font-size: 8px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: 1.5px;
+      color: #2b72db;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* НАВИГАЦИЯ ПО ДНЯМ */
     .tabs-nav {
       display: flex;
       gap: 8px;
@@ -161,9 +238,9 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    /* MAIN CONTAINER */
+    /* ОСНОВНОЙ КОНТЕНТ */
     main {
-      max-width: 1880px;
+      max-width: 1920px;
       margin: 24px auto;
       padding: 0 20px;
     }
@@ -234,7 +311,7 @@
       font-weight: 700;
     }
 
-    /* HEAT CARD */
+    /* КАРТОЧКА ЗАЕЗДА */
     .heat-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -375,7 +452,7 @@
       border-top: 1px solid rgba(255,255,255,0.02);
     }
 
-    /* MODAL POPUP */
+    /* ПЛАШКА ПОБЕДЫ (MODAL) */
     .winner-modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -468,7 +545,7 @@
       position: absolute; bottom: 0; left: 0; height: 4px; background: var(--matsuri-lime); width: 100%; transform-origin: left;
     }
 
-    /* TABLE */
+    /* ТАБЛИЦА ЖЕРЕБЬЕВКИ */
     .table-container {
       background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto;
     }
@@ -489,11 +566,27 @@
 
   <header>
     <div class="header-content">
-      <div class="brand-block">
-        <div class="badge-circuit">Игора Драйв</div>
-        <div class="titles">
-          <h1>Дрифт-Вызов <span>// Drift Matsuri SPb</span></h1>
-          <p>Double Elimination Top 32 • Онлайн сетка заездов</p>
+      <div class="brand-cluster">
+        <!-- 1. ИГОРА ДРАЙВ -->
+        <div class="logo-igora">
+          <div class="logo-igora-text">
+            <span class="logo-igora-title">ИГОРА</span>
+            <span class="logo-igora-sub">ДРАЙВ</span>
+          </div>
+        </div>
+
+        <!-- 2. DRIFT MATSURI SPB -->
+        <div class="logo-matsuri">
+          <span class="matsuri-top">DRIFT MATSURI</span>
+          <span class="matsuri-sub">SAINT-PETERSBURG</span>
+        </div>
+
+        <!-- 3. KINFOREST TIRES -->
+        <div class="logo-kinforest">
+          <div class="kinforest-name">
+            <span class="kinforest-k">K</span>INFOREST
+          </div>
+          <span class="kinforest-tag">UHP TIRE</span>
         </div>
       </div>
 
@@ -668,9 +761,9 @@
     let isFirstLoad = true;
     let modalTimer = null;
 
-    // Регламентная сетка ТОП-32: посев и пути продвижения
+    // Регламентная сетка ТОП-32: пары и переходы
     const DE_CONFIG = {
-      // Суббота R1A & R1B (Базовые пары жеребьевки)
+      // 1A & 1B (Суббота)
       1:  { s1: 1,  s2: 32, ph1: '1',  ph2: '32', nextW: [25, 'p1', 'Хит 25 (Раунд 3А)'], nextL: [17, 'p1', 'Хит 17 (L1)'] },
       2:  { s1: 16, s2: 17, ph1: '16', ph2: '17', nextW: [25, 'p2', 'Хит 25 (Раунд 3А)'], nextL: [17, 'p2', 'Хит 17 (L2)'] },
       3:  { s1: 8,  s2: 25, ph1: '8',  ph2: '25', nextW: [26, 'p1', 'Хит 26 (Раунд 3А)'], nextL: [18, 'p1', 'Хит 18 (L3)'] },
@@ -689,7 +782,7 @@
       15: { s1: 6,  s2: 27, ph1: '6',  ph2: '27', nextW: [32, 'p1', 'Хит 32 (Раунд 3Б)'], nextL: [24, 'p1', 'Хит 24 (L15)'] },
       16: { s1: 11, s2: 22, ph1: '11', ph2: '22', nextW: [32, 'p2', 'Хит 32 (Раунд 3Б)'], nextL: [24, 'p2', 'Хит 24 (L16)'] },
 
-      // Суббота R2A & R2B (Нижняя сетка)
+      // 2A & 2B (Лузера субботы)
       17: { ph1: 'L1',  ph2: 'L2',  nextW: [33, 'p1', 'Вскр Хит 33'], nextL: [null, null, 'Выбывание (25-32 место)'] },
       18: { ph1: 'L3',  ph2: 'L4',  nextW: [34, 'p1', 'Вскр Хит 34'], nextL: [null, null, 'Выбывание (25-32 место)'] },
       19: { ph1: 'L5',  ph2: 'L6',  nextW: [35, 'p1', 'Вскр Хит 35'], nextL: [null, null, 'Выбывание (25-32 место)'] },
@@ -699,7 +792,7 @@
       23: { ph1: 'L13', ph2: 'L14', nextW: [39, 'p1', 'Вскр Хит 39'], nextL: [null, null, 'Выбывание (25-32 место)'] },
       24: { ph1: 'L15', ph2: 'L16', nextW: [40, 'p1', 'Вскр Хит 40'], nextL: [null, null, 'Выбывание (25-32 место)'] },
 
-      // Суббота R3A & R3B (Стыки за выход в Top 8)
+      // 3A & 3B (Стыки за Top 8)
       25: { ph1: 'W1',  ph2: 'W2',  nextW: [45, 'p1', 'Вскр Хит 45 (Top 8)'], nextL: [40, 'p2', 'Вскр Хит 40 (L25)'] },
       26: { ph1: 'W3',  ph2: 'W4',  nextW: [45, 'p2', 'Вскр Хит 45 (Top 8)'], nextL: [39, 'p2', 'Вскр Хит 39 (L26)'] },
       27: { ph1: 'W5',  ph2: 'W6',  nextW: [46, 'p1', 'Вскр Хит 46 (Top 8)'], nextL: [38, 'p2', 'Вскр Хит 38 (L27)'] },
@@ -709,7 +802,7 @@
       31: { ph1: 'W13', ph2: 'W14', nextW: [48, 'p1', 'Вскр Хит 48 (Top 8)'], nextL: [34, 'p2', 'Вскр Хит 34 (L31)'] },
       32: { ph1: 'W15', ph2: 'W16', nextW: [48, 'p2', 'Вскр Хит 48 (Top 8)'], nextL: [33, 'p2', 'Вскр Хит 33 (L32)'] },
 
-      // Воскресенье Нижняя: Раунд 4
+      // Воскресенье: Раунд 4 (Хиты 33-40)
       33: { ph1: 'W17', ph2: 'L32', nextW: [41, 'p1', 'Хит 41 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
       34: { ph1: 'W18', ph2: 'L31', nextW: [41, 'p2', 'Хит 41 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
       35: { ph1: 'W19', ph2: 'L30', nextW: [42, 'p1', 'Хит 42 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
@@ -719,43 +812,43 @@
       39: { ph1: 'W23', ph2: 'L26', nextW: [44, 'p1', 'Хит 44 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
       40: { ph1: 'W24', ph2: 'L25', nextW: [44, 'p2', 'Хит 44 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
 
-      // Воскресенье Нижняя: Раунд 5
+      // Воскресенье: Раунд 5
       41: { ph1: 'W33', ph2: 'W34', nextW: [49, 'p1', 'Хит 49 (Раунд 7)'], nextL: [null, null, 'Выбывание (13-16 место)'] },
       42: { ph1: 'W35', ph2: 'W36', nextW: [50, 'p1', 'Хит 50 (Раунд 7)'], nextL: [null, null, 'Выбывание (13-16 место)'] },
       43: { ph1: 'W37', ph2: 'W38', nextW: [51, 'p1', 'Хит 51 (Раунд 7)'], nextL: [null, null, 'Выбывание (13-16 место)'] },
       44: { ph1: 'W39', ph2: 'W40', nextW: [52, 'p1', 'Хит 52 (Раунд 7)'], nextL: [null, null, 'Выбывание (13-16 место)'] },
 
-      // Воскресенье Верхняя: Раунд 6 (ТОП-8 Winners)
+      // Воскресенье: Раунд 6 (Top 8 Winners)
       45: { ph1: 'W25', ph2: 'W26', nextW: [55, 'p1', 'Хит 55 (Раунд 9)'], nextL: [49, 'p2', 'Хит 49 (L45)'] },
       46: { ph1: 'W27', ph2: 'W28', nextW: [55, 'p2', 'Хит 55 (Раунд 9)'], nextL: [50, 'p2', 'Хит 50 (L46)'] },
       47: { ph1: 'W29', ph2: 'W30', nextW: [56, 'p1', 'Хит 56 (Раунд 9)'], nextL: [51, 'p2', 'Хит 51 (L47)'] },
       48: { ph1: 'W31', ph2: 'W32', nextW: [56, 'p2', 'Хит 56 (Раунд 9)'], nextL: [52, 'p2', 'Хит 52 (L48)'] },
 
-      // Воскресенье Нижняя: Раунд 7
+      // Воскресенье: Раунд 7
       49: { ph1: 'W41', ph2: 'L45', nextW: [53, 'p1', 'Хит 53 (Раунд 8)'], nextL: [null, null, 'Выбывание (9-12 место)'] },
       50: { ph1: 'W42', ph2: 'L46', nextW: [53, 'p2', 'Хит 53 (Раунд 8)'], nextL: [null, null, 'Выбывание (9-12 место)'] },
       51: { ph1: 'W43', ph2: 'L47', nextW: [54, 'p1', 'Хит 54 (Раунд 8)'], nextL: [null, null, 'Выбывание (9-12 место)'] },
       52: { ph1: 'W44', ph2: 'L48', nextW: [54, 'p2', 'Хит 54 (Раунд 8)'], nextL: [null, null, 'Выбывание (9-12 место)'] },
 
-      // Воскресенье Нижняя: Раунд 8
+      // Воскресенье: Раунд 8
       53: { ph1: 'W49', ph2: 'W50', nextW: [57, 'p1', 'Хит 57 (Раунд 10)'], nextL: [null, null, 'Выбывание (7-8 место)'] },
       54: { ph1: 'W51', ph2: 'W52', nextW: [58, 'p1', 'Хит 58 (Раунд 10)'], nextL: [null, null, 'Выбывание (7-8 место)'] },
 
-      // Воскресенье Верхняя: Раунд 9 (Полуфинал)
+      // Воскресенье: Раунд 9 (Полуфинал)
       55: { ph1: 'W45', ph2: 'W46', nextW: [60, 'p1', 'Хит 60 (Финал Виннеров)'], nextL: [57, 'p2', 'Хит 57 (L55)'] },
       56: { ph1: 'W47', ph2: 'W48', nextW: [60, 'p2', 'Хит 60 (Финал Виннеров)'], nextL: [58, 'p2', 'Хит 58 (L56)'] },
 
-      // Воскресенье Нижняя: Раунд 10
+      // Воскресенье: Раунд 10
       57: { ph1: 'W53', ph2: 'L55', nextW: [59, 'p1', 'Хит 59 (Раунд 11)'], nextL: [null, null, 'Выбывание (5-6 место)'] },
       58: { ph1: 'W54', ph2: 'L56', nextW: [59, 'p2', 'Хит 59 (Раунд 11)'], nextL: [null, null, 'Выбывание (5-6 место)'] },
 
-      // Воскресенье Нижняя: Раунд 11
+      // Воскресенье: Раунд 11
       59: { ph1: 'W57', ph2: 'W58', nextW: [61, 'p1', 'Хит 61 (Финал Лузеров)'], nextL: [null, null, '4-е место'] },
 
-      // Воскресенье Верхняя: Раунд 12 (Финал Виннеров)
+      // Воскресенье: Раунд 12 (Финал Виннеров)
       60: { ph1: 'W55', ph2: 'W56', nextW: [62, 'p1', 'СУПЕРФИНАЛ (Хит 62)'], nextL: [61, 'p2', 'Хит 61 (L60)'] },
 
-      // Воскресенье Нижняя: Раунд 13 (Финал Лузеров)
+      // Воскресенье: Раунд 13 (Финал Лузеров)
       61: { ph1: 'W59', ph2: 'L60', nextW: [62, 'p2', 'СУПЕРФИНАЛ (Хит 62)'], nextL: [null, null, '🥉 3-е место'] },
 
       // Воскресенье: СУПЕРФИНАЛ
@@ -787,7 +880,7 @@
         osc2.frequency.setValueAtTime(220, now);
         osc2.frequency.setValueAtTime(330, now + 0.24);
 
-        gain.gain.setValueAtTime(0.16, now);
+        gain.gain.setValueAtTime(0.18, now);
         gain.gain.exponentialRampToValueAtTime(0.01, now + 0.95);
 
         osc1.connect(gain);
@@ -872,7 +965,6 @@
           loser: null
         };
 
-        // Заезды 1..16 получают участников строго по сетке
         if (cfg.s1 && cfg.s2) {
           tournamentMatches[h].p1 = { ...pilotsByNum[cfg.s1] };
           tournamentMatches[h].p2 = { ...pilotsByNum[cfg.s2] };
@@ -880,195 +972,193 @@
       }
     }
 
-    // Синхронизация данных субботы
-    function parseSaturday(satRows) {
-      if (!satRows || !satRows.length) return;
-
-      // Находим строку, разделяющую верхнюю сетку и нижнюю (Раунд 2)
-      let dividerRow = -1;
-      for (let r = 0; r < satRows.length; r++) {
-        const txt = (satRows[r]?.c || []).map(c => String(c?.v || '')).join(' ');
-        if (txt.includes('Раунд 2')) {
-          dividerRow = r;
-          break;
+    // ВСПОМОГАТЕЛЬНЫЙ ПОИСК КОЛОНОК РАУНДОВ
+    function findRoundHeaders(rows, targetRounds) {
+      let result = {};
+      for (let r = 0; r < rows.length; r++) {
+        const row = rows[r];
+        if (!row || !row.c) continue;
+        for (let c = 0; c < row.c.length; c++) {
+          const val = String(row.c[c]?.v || '').trim().toLowerCase().replace(/\s+/g, ' ');
+          targetRounds.forEach(tr => {
+            if (val.includes(tr.tag.toLowerCase())) {
+              if (!result[tr.id]) {
+                result[tr.id] = { row: r, col: c, heats: tr.heats };
+              }
+            }
+          });
         }
       }
-      if (dividerRow === -1) dividerRow = 42;
+      return result;
+    }
 
-      // 1. ПРОВЕРКА ПОБЕД В РАУНДАХ 1А И 1Б (ХИТЫ 1..16)
-      for (let h = 1; h <= 16; h++) {
+    // ДИНАМИЧЕСКИЙ ПАРСИНГ РАУНДОВ СУББОТЫ
+    function parseSaturdayDynamic(rows) {
+      if (!rows || !rows.length) return;
+
+      // 1. Находим разделитель между верхней и нижней сеткой (Раунд 2А/2Б)
+      let splitR = 40;
+      for (let r = 0; r < rows.length; r++) {
+        const txt = (rows[r]?.c || []).map(c => String(c?.v || '')).join(' ');
+        if (txt.includes('Раунд 2')) { splitR = r; break; }
+      }
+
+      // Спецификация раундов субботы
+      const satDefs = [
+        { id: 'R1A', tag: 'раунд 1а', heats: [1,2,3,4,5,6,7,8], rMin: 0, rMax: splitR, cMin: 0, cMax: 6 },
+        { id: 'R3A', tag: 'раунд 3а', heats: [25,26,27,28], rMin: 0, rMax: splitR, cMin: 6, cMax: 14 },
+        { id: 'R3B', tag: 'раунд 3б', heats: [29,30,31,32], rMin: 0, rMax: splitR, cMin: 17, cMax: 24 },
+        { id: 'R1B', tag: 'раунд 1б', heats: [9,10,11,12,13,14,15,16], rMin: 0, rMax: splitR, cMin: 23, cMax: 32 },
+        { id: 'R2A', tag: 'раунд 2а', heats: [17,18,19,20], rMin: splitR, rMax: rows.length, cMin: 0, cMax: 12 },
+        { id: 'R2B', tag: 'раунд 2б', heats: [21,22,23,24], rMin: splitR, rMax: rows.length, cMin: 18, cMax: 32 }
+      ];
+
+      satDefs.forEach(def => {
+        parseRoundBlock(rows, def);
+      });
+    }
+
+    // ДИНАМИЧЕСКИЙ ПАРСИНГ РАУНДОВ ВОСКРЕСЕНЬЯ
+    function parseSundayDynamic(rows) {
+      if (!rows || !rows.length) return;
+
+      // Находим разделитель между верхней и нижней сеткой воскресенья
+      let splitR = 25;
+      for (let r = 0; r < rows.length; r++) {
+        const txt = (rows[r]?.c || []).map(c => String(c?.v || '')).join(' ');
+        if (txt.includes('Раунд 4') || txt.includes('Раунд  4')) { splitR = r; break; }
+      }
+
+      const sunDefs = [
+        // Верхняя сетка
+        { id: 'R6', tag: 'раунд 6', heats: [45,46,47,48], rMin: 0, rMax: splitR, cMin: 0, cMax: 5 },
+        { id: 'R9', tag: 'раунд 9', heats: [55,56], rMin: 0, rMax: splitR, cMin: 4, cMax: 10 },
+        { id: 'R12', tag: 'раунд 12', heats: [60], rMin: 0, rMax: splitR, cMin: 9, cMax: 16 },
+        { id: 'FINAL', tag: 'финал', heats: [62], rMin: 0, rMax: splitR, cMin: 14, cMax: 24 },
+        // Нижняя сетка
+        { id: 'R4', tag: 'раунд 4', heats: [33,34,35,36,37,38,39,40], rMin: splitR, rMax: rows.length, cMin: 0, cMax: 6 },
+        { id: 'R5', tag: 'раунд 5', heats: [41,42,43,44], rMin: splitR, rMax: rows.length, cMin: 4, cMax: 10 },
+        { id: 'R7', tag: 'раунд 7', heats: [49,50,51,52], rMin: splitR, rMax: rows.length, cMin: 8, cMax: 14 },
+        { id: 'R8', tag: 'раунд 8', heats: [53,54], rMin: splitR, rMax: rows.length, cMin: 12, cMax: 18 },
+        { id: 'R10', tag: 'раунд 10', heats: [57,58], rMin: splitR, rMax: rows.length, cMin: 16, cMax: 22 },
+        { id: 'R11', tag: 'раунд 11', heats: [59], rMin: splitR, rMax: rows.length, cMin: 20, cMax: 26 },
+        { id: 'R13', tag: 'раунд 13', heats: [61], rMin: splitR, rMax: rows.length, cMin: 24, cMax: 32 }
+      ];
+
+      sunDefs.forEach(def => {
+        parseRoundBlock(rows, def);
+      });
+    }
+
+    // ИЗОЛИРОВАННЫЙ СКАНЕР КОНКРЕТНОГО БЛОКА
+    function parseRoundBlock(rows, def) {
+      def.heats.forEach(h => {
         const m = tournamentMatches[h];
-        const p1 = m.p1;
-        const p2 = m.p2;
-        const isGroupB = (h >= 9);
 
-        const cMin = isGroupB ? 20 : 0;
-        const cMax = isGroupB ? 30 : 6;
+        // 1. Ищем ячейку с номером хита внутри выделенного сектора
+        let hRow = -1;
+        let hCol = -1;
 
-        let p1HasW = false;
-        let p2HasW = false;
-
-        for (let r = 0; r < dividerRow; r++) {
-          const row = satRows[r];
+        for (let r = def.rMin; r < Math.min(def.rMax, rows.length); r++) {
+          const row = rows[r];
           if (!row || !row.c) continue;
-
-          let hasW = false;
-          let hasP1 = false;
-          let hasP2 = false;
-
-          for (let c = cMin; c <= Math.min(cMax, row.c.length - 1); c++) {
+          for (let c = def.cMin; c <= Math.min(def.cMax, row.c.length - 1); c++) {
             const v = row.c[c]?.v;
-            if (v === null || v === undefined || v === '') continue;
-
-            if (isWinChar(v)) hasW = true;
-
-            if (v === p1.seed || String(v).trim().toLowerCase() === String(p1.name).toLowerCase()) hasP1 = true;
-            if (v === p2.seed || String(v).trim().toLowerCase() === String(p2.name).toLowerCase()) hasP2 = true;
-          }
-
-          if (hasW) {
-            if (hasP1) p1HasW = true;
-            if (hasP2) p2HasW = true;
-          }
-        }
-
-        if (p1HasW && !p2HasW) { m.winner = p1; m.loser = p2; }
-        else if (p2HasW && !p1HasW) { m.winner = p2; m.loser = p1; }
-      }
-
-      // 2. ПРОВЕРКА ХИТОВ 17..32 (НИЖНЯЯ СЕТКА И СТЫКИ)
-      for (let h = 17; h <= 32; h++) {
-        const m = tournamentMatches[h];
-        const isLosers = (h <= 24);
-        const rMin = isLosers ? dividerRow : 0;
-        const rMax = isLosers ? satRows.length - 1 : dividerRow;
-
-        let cMin = 0;
-        let cMax = 30;
-        if (h >= 17 && h <= 20) { cMin = 0; cMax = 8; }
-        else if (h >= 21 && h <= 24) { cMin = 20; cMax = 30; }
-        else if (h >= 25 && h <= 28) { cMin = 6; cMax = 12; }
-        else if (h >= 29 && h <= 32) { cMin = 18; cMax = 24; }
-
-        // Ищем ячейку с номером хита
-        let hRow = -1;
-        let hCol = -1;
-        for (let r = rMin; r <= rMax; r++) {
-          const row = satRows[r];
-          if (!row || !row.c) continue;
-          for (let c = cMin; c <= Math.min(cMax, row.c.length - 1); c++) {
-            if (Number(row.c[c]?.v) === h) {
-              hRow = r; hCol = c; break;
+            if (Number(v) === h) {
+              hRow = r;
+              hCol = c;
+              break;
             }
           }
           if (hRow !== -1) break;
         }
 
-        if (hRow === -1) continue;
+        if (hRow === -1) return;
 
-        // Сканируем строки заезда
-        let localFound = [];
-        for (let r = hRow; r <= Math.min(satRows.length - 1, hRow + 4); r++) {
-          const row = satRows[r];
+        // 2. Сканируем заезд (от строки хита на 4 строки вниз)
+        let foundPilots = [];
+        for (let r = hRow; r <= Math.min(rows.length - 1, hRow + 4); r++) {
+          const row = rows[r];
           if (!row || !row.c) continue;
-          let rowPilot = null;
-          let rowW = false;
 
-          for (let c = Math.max(0, hCol - 2); c <= Math.min(30, hCol + 6); c++) {
+          let detectedPilot = null;
+          let hasW = false;
+
+          for (let c = Math.max(0, hCol - 2); c <= Math.min(35, hCol + 6); c++) {
             const val = row.c[c]?.v;
-            if (!val) continue;
+            if (val === null || val === undefined || val === '') continue;
 
-            if (isWinChar(val)) rowW = true;
+            if (isWinChar(val)) hasW = true;
 
-            if (typeof val === 'number' && pilotsByNum[val] && val !== h) {
-              rowPilot = pilotsByNum[val];
+            // Поиск пилота (по номеру или фамилии)
+            if (typeof val === 'number' && val >= 1 && val <= 32 && val !== h) {
+              if (!detectedPilot) detectedPilot = pilotsByNum[val];
             } else if (typeof val === 'string') {
               const low = val.trim().toLowerCase();
-              if (pilotsByName[low]) rowPilot = pilotsByName[low];
+              if (pilotsByName[low]) {
+                if (!detectedPilot) detectedPilot = pilotsByName[low];
+              } else if ((low.startsWith('l') || low.startsWith('w')) && !isWinChar(val)) {
+                if (!detectedPilot) detectedPilot = { seed: val.trim(), name: `Ожидание (${val.trim()})`, car: '' };
+              }
             }
           }
 
-          if (rowPilot) {
-            const ex = localFound.find(x => x.p.seed === rowPilot.seed);
-            if (!ex) localFound.push({ p: rowPilot, win: rowW });
-            else if (rowW) ex.win = true;
+          if (detectedPilot) {
+            const ex = foundPilots.find(x => x.p.seed === detectedPilot.seed);
+            if (!ex) foundPilots.push({ p: detectedPilot, win: hasW, row: r });
+            else if (hasW) ex.win = true;
           }
         }
 
-        if (localFound[0]) m.p1 = localFound[0].p;
-        if (localFound[1]) m.p2 = localFound[1].p;
+        // Для 1А и 1Б пилоты строго закреплены по жеребьевке
+        if (h <= 16) {
+          // Проверяем наличие 'w' в строках пилота 1 и пилота 2
+          let p1Won = false;
+          let p2Won = false;
 
-        if (localFound.length >= 2) {
-          if (localFound[0].win && !localFound[1].win) { m.winner = m.p1; m.loser = m.p2; }
-          else if (localFound[1].win && !localFound[0].win) { m.winner = m.p2; m.loser = m.p1; }
+          for (let r = hRow; r <= Math.min(rows.length - 1, hRow + 3); r++) {
+            const row = rows[r];
+            if (!row || !row.c) continue;
+            let rowHasW = false;
+            let rowP1 = false;
+            let rowP2 = false;
+
+            for (let c = def.cMin; c <= Math.min(def.cMax, row.c.length - 1); c++) {
+              const v = row.c[c]?.v;
+              if (!v) continue;
+              if (isWinChar(v)) rowHasW = true;
+              if (v === m.p1.seed || String(v).trim().toLowerCase() === String(m.p1.name).toLowerCase()) rowP1 = true;
+              if (v === m.p2.seed || String(v).trim().toLowerCase() === String(m.p2.name).toLowerCase()) rowP2 = true;
+            }
+
+            if (rowHasW) {
+              if (rowP1) p1Won = true;
+              if (rowP2) p2Won = true;
+            }
+          }
+
+          if (p1Won && !p2Won) { m.winner = m.p1; m.loser = m.p2; }
+          else if (p2Won && !p1Won) { m.winner = m.p2; m.loser = m.p1; }
+          return;
         }
-      }
+
+        // Для всех остальных заездов (17-62)
+        if (foundPilots[0]) m.p1 = foundPilots[0].p;
+        if (foundPilots[1]) m.p2 = foundPilots[1].p;
+
+        if (foundPilots.length >= 2) {
+          if (foundPilots[0].win && !foundPilots[1].win) { m.winner = m.p1; m.loser = m.p2; }
+          else if (foundPilots[1].win && !foundPilots[0].win) { m.winner = m.p2; m.loser = m.p1; }
+        } else if (foundPilots.length === 1 && foundPilots[0].win && m.p2) {
+          m.winner = m.p1;
+          m.loser = m.p2;
+        }
+      });
     }
 
-    // Синхронизация данных воскресенья
-    function parseSunday(sunRows) {
-      if (!sunRows || !sunRows.length) return;
-
-      for (let h = 33; h <= 62; h++) {
-        const m = tournamentMatches[h];
-
-        // Находим ячейку с номером заезда (все номера >= 33 уникальны)
-        let hRow = -1;
-        let hCol = -1;
-        for (let r = 0; r < sunRows.length; r++) {
-          const row = sunRows[r];
-          if (!row || !row.c) continue;
-          for (let c = 0; c < row.c.length; c++) {
-            if (Number(row.c[c]?.v) === h) {
-              hRow = r; hCol = c; break;
-            }
-          }
-          if (hRow !== -1) break;
-        }
-
-        if (hRow === -1) continue;
-
-        let localFound = [];
-        for (let r = hRow; r <= Math.min(sunRows.length - 1, hRow + 5); r++) {
-          const row = sunRows[r];
-          if (!row || !row.c) continue;
-          let rowPilot = null;
-          let rowW = false;
-
-          for (let c = Math.max(0, hCol - 1); c <= Math.min(34, hCol + 6); c++) {
-            const val = row.c[c]?.v;
-            if (!val) continue;
-
-            if (isWinChar(val)) rowW = true;
-
-            if (typeof val === 'number' && pilotsByNum[val] && val !== h) {
-              rowPilot = pilotsByNum[val];
-            } else if (typeof val === 'string') {
-              const low = val.trim().toLowerCase();
-              if (pilotsByName[low]) rowPilot = pilotsByName[low];
-            }
-          }
-
-          if (rowPilot) {
-            const ex = localFound.find(x => x.p.seed === rowPilot.seed);
-            if (!ex) localFound.push({ p: rowPilot, win: rowW });
-            else if (rowW) ex.win = true;
-          }
-        }
-
-        if (localFound[0]) m.p1 = localFound[0].p;
-        if (localFound[1]) m.p2 = localFound[1].p;
-
-        if (localFound.length >= 2) {
-          if (localFound[0].win && !localFound[1].win) { m.winner = m.p1; m.loser = m.p2; }
-          else if (localFound[1].win && !localFound[0].win) { m.winner = m.p2; m.loser = m.p1; }
-        }
-      }
-    }
-
-    // Автопродвижение по сетке Double Elimination
-    function advanceBracketTree() {
-      for (let step = 0; step < 5; step++) {
+    // ТУРНИРНЫЙ ДВИГАТЕЛЬ (ПЕРЕНОС ПОБЕДИТЕЛЕЙ И ПРОИГРАВШИХ)
+    function propagateTreeEngine() {
+      for (let pass = 0; pass < 6; pass++) {
         for (let h = 1; h <= 62; h++) {
           const m = tournamentMatches[h];
           const cfg = DE_CONFIG[h];
@@ -1078,7 +1168,7 @@
             if (cfg.nextW && cfg.nextW[0]) {
               const targetHeat = tournamentMatches[cfg.nextW[0]];
               const slot = cfg.nextW[1];
-              if (targetHeat && (!targetHeat[slot] || targetHeat[slot].name.startsWith('Ожидание'))) {
+              if (targetHeat && (!targetHeat[slot] || String(targetHeat[slot].name).startsWith('Ожидание'))) {
                 targetHeat[slot] = { ...m.winner };
               }
             }
@@ -1087,7 +1177,7 @@
             if (cfg.nextL && cfg.nextL[0]) {
               const targetHeat = tournamentMatches[cfg.nextL[0]];
               const slot = cfg.nextL[1];
-              if (targetHeat && (!targetHeat[slot] || targetHeat[slot].name.startsWith('Ожидание'))) {
+              if (targetHeat && (!targetHeat[slot] || String(targetHeat[slot].name).startsWith('Ожидание'))) {
                 targetHeat[slot] = { ...m.loser };
               }
             }
@@ -1096,8 +1186,8 @@
       }
     }
 
-    // Проверка новых побед для вывода плашки (для всех 62 хитов)
-    function checkNewWinners() {
+    // ПРОВЕРКА ПОБЕД И ВЫВОД ПЛАШКИ
+    function checkWinnerAlerts() {
       for (let h = 1; h <= 62; h++) {
         const m = tournamentMatches[h];
         if (m.winner && m.loser) {
@@ -1201,6 +1291,7 @@
     }
 
     function renderDOM() {
+      // Суббота
       renderGroup('colR1A', [1,2,3,4,5,6,7,8]);
       renderGroup('colR1B', [9,10,11,12,13,14,15,16]);
       renderGroup('colR3A', [25,26,27,28]);
@@ -1208,6 +1299,7 @@
       renderGroup('colR2A', [17,18,19,20]);
       renderGroup('colR2B', [21,22,23,24]);
 
+      // Воскресенье
       renderGroup('colR6', [45,46,47,48]);
       renderGroup('colR9', [55,56]);
       renderGroup('colR12', [60]);
@@ -1228,6 +1320,7 @@
       el.innerHTML = heats.map(createHeatCardHTML).join('');
     }
 
+    // ГЛАВНЫЙ ЦИКЛ СИНХРОНИЗАЦИИ
     async function runSync() {
       try {
         document.getElementById('syncText').innerText = 'Обновление...';
@@ -1239,10 +1332,16 @@
           fetchSheetJSON('Sun 32DE')
         ]);
 
-        parseSaturday(satData.table.rows);
-        parseSunday(sunData.table.rows);
-        advanceBracketTree();
-        checkNewWinners();
+        parseSaturdayDynamic(satData.table.rows);
+        parseSundayDynamic(sunData.table.rows);
+
+        // Продвижение по сетке
+        propagateTreeEngine();
+
+        // Проверка новых побед
+        checkWinnerAlerts();
+
+        // Отрисовка
         renderDOM();
 
         document.getElementById('syncText').innerText = `OK (${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'})})`;
