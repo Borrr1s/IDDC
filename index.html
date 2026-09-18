@@ -3,64 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ИГОРА ДРАЙВ | Drift Matsuri — Сетка ТОП-32 DE</title>
+  <title>ИГОРА ДРАЙВ | Drift Matsuri SPb — Double Elimination Top 32</title>
   
-  <!-- Шрифты для автоспортивного стиля -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,800;0,900;1,700;1,900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-dark: #090a0f;
-      --bg-card: #12141c;
-      --bg-card-hover: #191c28;
+      --bg-dark: #07080b;
+      --bg-card: #11131b;
+      --bg-card-header: #171a26;
       --igora-red: #e30613;
       --igora-red-glow: rgba(227, 6, 19, 0.45);
       --matsuri-cyan: #00f0ff;
       --matsuri-cyan-glow: rgba(0, 240, 255, 0.35);
       --matsuri-lime: #ccff00;
+      --matsuri-lime-glow: rgba(204, 255, 0, 0.35);
       --text-main: #f5f6fa;
-      --text-dim: #7f8699;
-      --border-color: #232736;
-      --loser-dim: #444957;
+      --text-dim: #7d8496;
+      --border-color: #212534;
+      --gold: #ffd700;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(circle at 10% 20%, rgba(227, 6, 19, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+        radial-gradient(circle at 5% 15%, rgba(227, 6, 19, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 95% 85%, rgba(0, 240, 255, 0.1) 0%, transparent 40%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
       color: var(--text-main);
       font-family: 'Montserrat', sans-serif;
       min-height: 100vh;
-      overflow-x: hidden;
-      padding-bottom: 50px;
+      padding-bottom: 60px;
     }
 
     /* HEADER */
     header {
-      background: linear-gradient(180deg, rgba(14, 16, 23, 0.98) 0%, rgba(9, 10, 15, 0.9) 100%);
+      background: linear-gradient(180deg, rgba(12, 14, 20, 0.98) 0%, rgba(7, 8, 11, 0.92) 100%);
       border-bottom: 2px solid var(--igora-red);
       position: sticky;
       top: 0;
       z-index: 100;
       backdrop-filter: blur(12px);
       padding: 12px 24px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 6px 35px rgba(0, 0, 0, 0.85);
     }
 
     .header-content {
-      max-width: 1700px;
+      max-width: 1800px;
       margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
@@ -72,7 +67,7 @@
     .brand-block {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
     }
 
     .badge-circuit {
@@ -80,42 +75,32 @@
       color: #fff;
       font-weight: 900;
       font-style: italic;
-      padding: 5px 12px;
+      padding: 6px 14px;
       font-size: 13px;
       letter-spacing: 1px;
       clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
       text-transform: uppercase;
-      box-shadow: 0 0 15px var(--igora-red-glow);
+      box-shadow: 0 0 16px var(--igora-red-glow);
     }
 
     .titles h1 {
       font-size: 20px;
       font-weight: 900;
-      letter-spacing: 0.5px;
       text-transform: uppercase;
-      line-height: 1.1;
+      letter-spacing: 0.5px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .titles h1 span {
-      color: var(--matsuri-cyan);
-    }
+    .titles h1 span { color: var(--matsuri-cyan); }
+    .titles p { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
 
-    .titles p {
-      font-size: 12px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 600;
-    }
-
-    /* TABS */
+    /* NAV TABS */
     .tabs-nav {
       display: flex;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.03);
       padding: 4px;
       border-radius: 6px;
       border: 1px solid var(--border-color);
@@ -126,32 +111,26 @@
       border: none;
       color: var(--text-dim);
       font-family: 'Teko', sans-serif;
-      font-size: 20px;
-      letter-spacing: 1px;
-      padding: 4px 20px;
+      font-size: 22px;
+      letter-spacing: 1.2px;
+      padding: 4px 22px;
       cursor: pointer;
       text-transform: uppercase;
       transition: all 0.25s ease;
-      border-radius: 4px;
       clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
     }
 
-    .tab-btn:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
+    .tab-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
     .tab-btn.active {
       background: var(--igora-red);
       color: #fff;
-      box-shadow: 0 0 16px var(--igora-red-glow);
+      box-shadow: 0 0 18px var(--igora-red-glow);
     }
 
-    /* STATUS & CONTROLS */
     .controls-block {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
     .live-status {
@@ -161,9 +140,8 @@
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 6px 12px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 6px 14px;
       border-radius: 20px;
       border: 1px solid var(--border-color);
     }
@@ -183,68 +161,56 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    .btn-test {
-      background: rgba(0, 240, 255, 0.1);
-      border: 1px solid var(--matsuri-cyan);
-      color: var(--matsuri-cyan);
-      padding: 5px 12px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      text-transform: uppercase;
-      border-radius: 4px;
-      transition: 0.2s;
-    }
-
-    .btn-test:hover {
-      background: var(--matsuri-cyan);
-      color: #000;
-      box-shadow: 0 0 15px var(--matsuri-cyan-glow);
-    }
-
-    /* BRACKET LAYOUT */
+    /* MAIN CONTAINER */
     main {
-      max-width: 1750px;
+      max-width: 1840px;
       margin: 28px auto;
       padding: 0 20px;
     }
 
     .section-title {
       font-family: 'Teko', sans-serif;
-      font-size: 32px;
+      font-size: 30px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin: 32px 0 16px 0;
       display: flex;
       align-items: center;
       gap: 12px;
       color: #fff;
     }
 
-    .section-title::before {
-      content: '';
-      display: inline-block;
-      width: 6px;
-      height: 24px;
-      background: var(--igora-red);
-      transform: skewX(-15deg);
+    .section-title.red::before {
+      content: ''; display: inline-block; width: 6px; height: 24px; background: var(--igora-red); transform: skewX(-15deg);
     }
 
-    .rounds-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      margin-bottom: 40px;
+    .section-title.cyan::before {
+      content: ''; display: inline-block; width: 6px; height: 24px; background: var(--matsuri-cyan); transform: skewX(-15deg);
     }
+
+    .rounds-flex-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+      align-items: flex-start;
+    }
+
+    .rounds-flex-container::-webkit-scrollbar { height: 8px; }
+    .rounds-flex-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); border-radius: 4px; }
+    .rounds-flex-container::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
 
     .round-column {
-      background: rgba(18, 20, 28, 0.6);
+      flex: 1 0 340px;
+      max-width: 380px;
+      background: rgba(17, 19, 27, 0.7);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 16px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
+      backdrop-filter: blur(8px);
     }
 
     .round-header {
@@ -260,8 +226,9 @@
       align-items: baseline;
     }
 
+    .round-header.gold { color: var(--gold); }
     .round-header span {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-dim);
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
@@ -273,26 +240,46 @@
       border: 1px solid var(--border-color);
       border-radius: 6px;
       overflow: hidden;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: all 0.2s ease;
+      cursor: pointer;
       position: relative;
     }
 
     .heat-card:hover {
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(0, 240, 255, 0.4);
       transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .heat-card.grand-final {
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
     }
 
     .heat-header {
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--bg-card-header);
       padding: 6px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text-dim);
       text-transform: uppercase;
+    }
+
+    .heat-badge-status {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .heat-badge-status.finished {
+      background: rgba(204, 255, 0, 0.15);
+      color: var(--matsuri-lime);
+      border: 1px solid var(--matsuri-lime);
     }
 
     .pilot-row {
@@ -304,9 +291,7 @@
       transition: background 0.2s ease;
     }
 
-    .pilot-row:last-child {
-      border-bottom: none;
-    }
+    .pilot-row:last-child { border-bottom: none; }
 
     .pilot-row.winner {
       background: rgba(204, 255, 0, 0.08);
@@ -315,7 +300,7 @@
 
     .pilot-row.loser {
       opacity: 0.45;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.25);
     }
 
     .pilot-info {
@@ -323,10 +308,11 @@
       align-items: center;
       gap: 10px;
       overflow: hidden;
+      flex: 1;
     }
 
     .pilot-seed {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.06);
       color: #fff;
       font-family: 'Teko', sans-serif;
       font-size: 18px;
@@ -368,7 +354,7 @@
 
     .win-badge {
       font-family: 'Teko', sans-serif;
-      font-size: 18px;
+      font-size: 17px;
       letter-spacing: 1px;
       background: var(--matsuri-lime);
       color: #000;
@@ -376,30 +362,32 @@
       padding: 1px 8px;
       border-radius: 2px;
       text-transform: uppercase;
+      box-shadow: 0 0 10px var(--matsuri-lime-glow);
     }
 
-    /* CENTER MODAL (ПЛАШКА ПОБЕДИТЕЛЯ) */
+    .heat-footer-flow {
+      background: rgba(0,0,0,0.3);
+      padding: 5px 12px;
+      font-size: 10px;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.02);
+    }
+
+    /* MODAL POPUP */
     .winner-modal-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(4, 5, 8, 0.88);
-      backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      backdrop-filter: blur(12px);
+      display: flex; justify-content: center; align-items: center;
       z-index: 1000;
-      opacity: 0;
-      pointer-events: none;
+      opacity: 0; pointer-events: none;
       transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .winner-modal-overlay.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .winner-modal-overlay.show { opacity: 1; pointer-events: auto; }
 
     .winner-modal-card {
       width: 90%;
@@ -415,62 +403,31 @@
       padding: 32px;
     }
 
-    .winner-modal-overlay.show .winner-modal-card {
-      transform: scale(1) translateY(0);
-    }
+    .winner-modal-overlay.show .winner-modal-card { transform: scale(1) translateY(0); }
 
     .modal-banner-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 14px;
     }
 
     .heat-title-badge {
       font-family: 'Teko', sans-serif;
-      font-size: 28px;
-      letter-spacing: 2px;
-      color: var(--matsuri-cyan);
-      text-transform: uppercase;
+      font-size: 28px; letter-spacing: 2px;
+      color: var(--matsuri-cyan); text-transform: uppercase;
     }
 
     .modal-close-btn {
-      background: transparent;
-      border: 1px solid var(--border-color);
-      color: #fff;
-      font-size: 18px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: transparent; border: 1px solid var(--border-color);
+      color: #fff; font-size: 18px; width: 32px; height: 32px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: 0.2s;
     }
 
-    .modal-close-btn:hover {
-      background: var(--igora-red);
-      border-color: var(--igora-red);
-    }
-
-    /* DUAL BATTLE CARD IN MODAL */
-    .battle-result-container {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    .modal-close-btn:hover { background: var(--igora-red); border-color: var(--igora-red); }
 
     .pilot-result-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      border-radius: 8px;
-      position: relative;
-      overflow: hidden;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-radius: 8px; margin-bottom: 14px;
     }
 
     .pilot-result-card.win-side {
@@ -482,185 +439,175 @@
     .pilot-result-card.lose-side {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border-color);
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
-    .pilot-meta {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .pilot-meta { display: flex; align-items: center; gap: 16px; }
 
     .modal-seed {
-      font-family: 'Teko', sans-serif;
-      font-size: 38px;
-      line-height: 1;
-      padding: 4px 12px;
-      border-radius: 4px;
-      background: #000;
-      border: 1px solid var(--border-color);
+      font-family: 'Teko', sans-serif; font-size: 38px; line-height: 1;
+      padding: 4px 12px; border-radius: 4px; background: #000; border: 1px solid var(--border-color);
     }
 
-    .win-side .modal-seed {
-      background: var(--matsuri-lime);
-      color: #000;
-      font-weight: 700;
-      border: none;
-    }
-
-    .modal-pilot-name {
-      font-size: 22px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .modal-pilot-car {
-      font-size: 13px;
-      color: var(--text-dim);
-      margin-top: 3px;
-    }
+    .win-side .modal-seed { background: var(--matsuri-lime); color: #000; font-weight: 700; border: none; }
+    .modal-pilot-name { font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
+    .modal-pilot-car { font-size: 13px; color: var(--text-dim); margin-top: 3px; }
 
     .status-badge-lg {
-      font-family: 'Teko', sans-serif;
-      font-size: 26px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 4px 16px;
-      border-radius: 4px;
-      clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+      font-family: 'Teko', sans-serif; font-size: 24px; letter-spacing: 1px;
+      text-transform: uppercase; padding: 4px 16px; border-radius: 4px;
     }
 
-    .status-badge-lg.winner {
-      background: var(--matsuri-lime);
-      color: #000;
-      font-weight: 700;
-      animation: neonPulse 1.5s infinite alternate;
-    }
-
-    @keyframes neonPulse {
-      from { box-shadow: 0 0 10px rgba(204, 255, 0, 0.4); }
-      to { box-shadow: 0 0 25px rgba(204, 255, 0, 0.85); }
-    }
-
+    .status-badge-lg.winner { background: var(--matsuri-lime); color: #000; font-weight: 700; }
     .status-badge-lg.loser {
-      background: rgba(227, 6, 19, 0.2);
-      border: 1px solid var(--igora-red);
-      color: #ff6b75;
-      font-size: 16px;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
+      background: rgba(227, 6, 19, 0.2); border: 1px solid var(--igora-red);
+      color: #ff6b75; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: 700;
     }
 
     .progress-bar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 4px;
-      background: var(--matsuri-lime);
-      width: 100%;
-      transform-origin: left;
+      position: absolute; bottom: 0; left: 0; height: 4px; background: var(--matsuri-lime); width: 100%; transform-origin: left;
     }
 
-    /* TABLE VIEW (ЖЕРЕБЬЕВКА) */
+    /* TABLE */
     .table-container {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      overflow-x: auto;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 14px;
-    }
-
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
     th {
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--matsuri-cyan);
-      font-family: 'Teko', sans-serif;
-      font-size: 18px;
-      letter-spacing: 1px;
-      padding: 12px 16px;
-      text-transform: uppercase;
-      border-bottom: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.04); color: var(--matsuri-cyan);
+      font-family: 'Teko', sans-serif; font-size: 18px; letter-spacing: 1px;
+      padding: 12px 16px; text-transform: uppercase; border-bottom: 1px solid var(--border-color);
     }
+    td { padding: 10px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
-    td {
-      padding: 10px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    }
-
-    tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-  <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
   <header>
     <div class="header-content">
       <div class="brand-block">
         <div class="badge-circuit">Игора Драйв</div>
         <div class="titles">
           <h1>Дрифт-Вызов <span>// Drift Matsuri SPb</span></h1>
-          <p>Double Elimination Top 32 • Онлайн сетка заездов</p>
+          <p>Double Elimination Top 32 • Сетка соревнований</p>
         </div>
       </div>
 
-      <!-- ПЕРЕКЛЮЧЕНИЕ ДНЕЙ -->
       <nav class="tabs-nav">
         <button class="tab-btn active" id="tabSat" onclick="switchTab('sat')">Суббота (Sat 32DE)</button>
         <button class="tab-btn" id="tabSun" onclick="switchTab('sun')">Воскресенье (Sun 32DE)</button>
         <button class="tab-btn" id="tabPilots" onclick="switchTab('pilots')">Список пилотов</button>
       </nav>
 
-      <!-- СТАТУС ОБНОВЛЕНИЯ -->
       <div class="controls-block">
-        <button class="btn-test" onclick="triggerTestModal()">Тест плашки победы</button>
         <div class="live-status">
           <div class="live-dot"></div>
-          <span id="syncText">Синхронизация: OK</span>
+          <span id="syncText">Синхронизация...</span>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- ОСНОВНОЙ КОНТЕНТ -->
   <main>
     <!-- СУББОТА -->
     <div id="viewSat">
-      <div class="section-title">Верхняя сетка • Раунд 1А / 1Б & Раунд 3</div>
-      <div class="rounds-grid" id="satWinnersGrid">
-        <!-- Генерируется из данных Google Таблицы -->
+      <div class="section-title red">Суббота • Верхняя сетка (Winners)</div>
+      <div class="rounds-flex-container">
+        <div class="round-column">
+          <div class="round-header">Раунд 1А <span>Хиты 1 - 8</span></div>
+          <div id="colR1A"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 1Б <span>Хиты 9 - 16</span></div>
+          <div id="colR1B"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 3А <span>Хиты 25 - 28</span></div>
+          <div id="colR3A"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 3Б <span>Хиты 29 - 32</span></div>
+          <div id="colR3B"></div>
+        </div>
       </div>
 
-      <div class="section-title">Нижняя сетка (Losers) • Раунд 2А / 2Б</div>
-      <div class="rounds-grid" id="satLosersGrid">
-        <!-- Заезды лузеров субботы -->
+      <div class="section-title cyan">Суббота • Нижняя сетка (Losers)</div>
+      <div class="rounds-flex-container">
+        <div class="round-column">
+          <div class="round-header">Раунд 2А <span>Хиты 17 - 20</span></div>
+          <div id="colR2A"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 2Б <span>Хиты 21 - 24</span></div>
+          <div id="colR2B"></div>
+        </div>
       </div>
     </div>
 
     <!-- ВОСКРЕСЕНЬЕ -->
     <div id="viewSun" class="hidden">
-      <div class="section-title">Воскресенье • Финальные стадии (Top 16 DE & Grand Final)</div>
-      <div class="rounds-grid" id="sunGrid">
-        <!-- Сетка воскресенья -->
+      <div class="section-title red">Воскресенье • Верхняя сетка (Winners) & Финал</div>
+      <div class="rounds-flex-container">
+        <div class="round-column">
+          <div class="round-header">Раунд 6 (Top 8) <span>Хиты 45 - 48</span></div>
+          <div id="colR6"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 9 (Полуфинал) <span>Хиты 55 - 56</span></div>
+          <div id="colR9"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 12 (Финал Виннеров) <span>Хит 60</span></div>
+          <div id="colR12"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header gold">🏆 СУПЕРФИНАЛ <span>Хит 62</span></div>
+          <div id="colFinal"></div>
+        </div>
+      </div>
+
+      <div class="section-title cyan">Воскресенье • Нижняя сетка (Losers)</div>
+      <div class="rounds-flex-container">
+        <div class="round-column">
+          <div class="round-header">Раунд 4 <span>Хиты 33 - 40</span></div>
+          <div id="colR4"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 5 <span>Хиты 41 - 44</span></div>
+          <div id="colR5"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 7 <span>Хиты 49 - 52</span></div>
+          <div id="colR7"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 8 <span>Хиты 53 - 54</span></div>
+          <div id="colR8"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 10 <span>Хиты 57 - 58</span></div>
+          <div id="colR10"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 11 <span>Хит 59</span></div>
+          <div id="colR11"></div>
+        </div>
+        <div class="round-column">
+          <div class="round-header">Раунд 13 (Финал Лузеров) <span>Хит 61</span></div>
+          <div id="colR13"></div>
+        </div>
       </div>
     </div>
 
-    <!-- ЖЕРЕБЬЕВКА / ПИЛОТЫ -->
+    <!-- ЖЕРЕБЬЕВКА -->
     <div id="viewPilots" class="hidden">
-      <div class="section-title">Протокол жеребьевки участников</div>
+      <div class="section-title red">Протокол жеребьевки участников</div>
       <div class="table-container">
-        <table id="pilotsTable">
+        <table>
           <thead>
             <tr>
               <th>№</th>
@@ -670,15 +617,13 @@
               <th>Субъект РФ</th>
             </tr>
           </thead>
-          <tbody id="pilotsTableBody">
-            <!-- Список пилотов -->
-          </tbody>
+          <tbody id="pilotsTableBody"></tbody>
         </table>
       </div>
     </div>
   </main>
 
-  <!-- ЦЕНТРАЛЬНАЯ ПЛАШКА ПОБЕДИТЕЛЯ (MODAL) -->
+  <!-- ПЛАШКА ПОБЕДЫ -->
   <div class="winner-modal-overlay" id="winnerModal">
     <div class="winner-modal-card">
       <div class="modal-banner-top">
@@ -686,30 +631,26 @@
         <button class="modal-close-btn" onclick="closeModal()">✕</button>
       </div>
 
-      <div class="battle-result-container">
-        <!-- ПОБЕДИТЕЛЬ -->
-        <div class="pilot-result-card win-side">
-          <div class="pilot-meta">
-            <div class="modal-seed" id="modalWinSeed">1</div>
-            <div>
-              <div class="modal-pilot-name" id="modalWinName">Имя Победителя</div>
-              <div class="modal-pilot-car" id="modalWinCar">Автомобиль / Команда</div>
-            </div>
+      <div class="pilot-result-card win-side">
+        <div class="pilot-meta">
+          <div class="modal-seed" id="modalWinSeed">1</div>
+          <div>
+            <div class="modal-pilot-name" id="modalWinName">Имя Победителя</div>
+            <div class="modal-pilot-car" id="modalWinCar">Автомобиль</div>
           </div>
-          <div class="status-badge-lg winner">WINNER • ДАЛЬШЕ ПО СЕТКЕ</div>
         </div>
+        <div class="status-badge-lg winner">WINNER • ДАЛЬШЕ</div>
+      </div>
 
-        <!-- ПРОИГРАВШИЙ -->
-        <div class="pilot-result-card lose-side">
-          <div class="pilot-meta">
-            <div class="modal-seed" id="modalLoseSeed">32</div>
-            <div>
-              <div class="modal-pilot-name" id="modalLoseName">Имя Соперника</div>
-              <div class="modal-pilot-car" id="modalLoseCar">Автомобиль / Команда</div>
-            </div>
+      <div class="pilot-result-card lose-side">
+        <div class="pilot-meta">
+          <div class="modal-seed" id="modalLoseSeed">32</div>
+          <div>
+            <div class="modal-pilot-name" id="modalLoseName">Имя Проигравшего</div>
+            <div class="modal-pilot-car" id="modalLoseCar">Автомобиль</div>
           </div>
-          <div class="status-badge-lg loser" id="modalLoseAction">Падает в нижнюю сетку</div>
         </div>
+        <div class="status-badge-lg loser" id="modalLoseAction">Падает в нижнюю сетку</div>
       </div>
 
       <div class="progress-bar" id="modalProgressBar"></div>
@@ -718,53 +659,137 @@
 
   <script>
     const SPREADSHEET_ID = '1ydV36JHtw8T00uJwsZYAxU-tCaWIrQv5yPkKpqtCtTk';
-    const POLL_INTERVAL = 4500; // 4.5 секунды между обновлениями
+    const POLL_INTERVAL = 4000;
 
-    // Локальное состояние для отслеживания изменений (побед)
-    let previousMatchesState = {};
-    let isInitialLoad = true;
-    let autoCloseTimer = null;
+    let pilotsCache = {};
+    let matches = {};
+    let previousWinners = {};
+    let isFirstLoad = true;
+    let modalTimer = null;
 
-    // Звуковой генератор победной отбивки (Web Audio API)
+    // Структура всех 62 хитов и правила переходов:
+    // nextW: [номер хита, слот 'p1' или 'p2', текстовое описание]
+    // nextL: [номер хита, слот 'p1' или 'p2', текстовое описание]
+    const DE_TREE = {
+      // Суббота R1A & R1B
+      1:  { round: 'R1A', s1: 1, s2: 32, nextW: [25, 'p1', 'Хит 25 (Раунд 3А)'], nextL: [17, 'p1', 'Хит 17 (L1)'] },
+      2:  { round: 'R1A', s1: 16, s2: 17, nextW: [25, 'p2', 'Хит 25 (Раунд 3А)'], nextL: [17, 'p2', 'Хит 17 (L2)'] },
+      3:  { round: 'R1A', s1: 8, s2: 25, nextW: [26, 'p1', 'Хит 26 (Раунд 3А)'], nextL: [18, 'p1', 'Хит 18 (L3)'] },
+      4:  { round: 'R1A', s1: 9, s2: 24, nextW: [26, 'p2', 'Хит 26 (Раунд 3А)'], nextL: [18, 'p2', 'Хит 18 (L4)'] },
+      5:  { round: 'R1A', s1: 4, s2: 29, nextW: [27, 'p1', 'Хит 27 (Раунд 3А)'], nextL: [19, 'p1', 'Хит 19 (L5)'] },
+      6:  { round: 'R1A', s1: 13, s2: 20, nextW: [27, 'p2', 'Хит 27 (Раунд 3А)'], nextL: [19, 'p2', 'Хит 19 (L6)'] },
+      7:  { round: 'R1A', s1: 5, s2: 28, nextW: [28, 'p1', 'Хит 28 (Раунд 3А)'], nextL: [20, 'p1', 'Хит 20 (L7)'] },
+      8:  { round: 'R1A', s1: 12, s2: 21, nextW: [28, 'p2', 'Хит 28 (Раунд 3А)'], nextL: [20, 'p2', 'Хит 20 (L8)'] },
+      9:  { round: 'R1B', s1: 2, s2: 31, nextW: [29, 'p1', 'Хит 29 (Раунд 3Б)'], nextL: [21, 'p1', 'Хит 21 (L9)'] },
+      10: { round: 'R1B', s1: 15, s2: 18, nextW: [29, 'p2', 'Хит 29 (Раунд 3Б)'], nextL: [21, 'p2', 'Хит 21 (L10)'] },
+      11: { round: 'R1B', s1: 7, s2: 26, nextW: [30, 'p1', 'Хит 30 (Раунд 3Б)'], nextL: [22, 'p1', 'Хит 22 (L11)'] },
+      12: { round: 'R1B', s1: 10, s2: 23, nextW: [30, 'p2', 'Хит 30 (Раунд 3Б)'], nextL: [22, 'p2', 'Хит 22 (L12)'] },
+      13: { round: 'R1B', s1: 3, s2: 30, nextW: [31, 'p1', 'Хит 31 (Раунд 3Б)'], nextL: [23, 'p1', 'Хит 23 (L13)'] },
+      14: { round: 'R1B', s1: 14, s2: 19, nextW: [31, 'p2', 'Хит 31 (Раунд 3Б)'], nextL: [23, 'p2', 'Хит 23 (L14)'] },
+      15: { round: 'R1B', s1: 6, s2: 27, nextW: [32, 'p1', 'Хит 32 (Раунд 3Б)'], nextL: [24, 'p1', 'Хит 24 (L15)'] },
+      16: { round: 'R1B', s1: 11, s2: 22, nextW: [32, 'p2', 'Хит 32 (Раунд 3Б)'], nextL: [24, 'p2', 'Хит 24 (L16)'] },
+
+      // Суббота R2A & R2B (Нижняя сетка)
+      17: { round: 'R2A', placeholder1: 'L1', placeholder2: 'L2', nextW: [33, 'p1', 'Вскр Хит 33'], nextL: [null, null, 'Выбывание'] },
+      18: { round: 'R2A', placeholder1: 'L3', placeholder2: 'L4', nextW: [34, 'p1', 'Вскр Хит 34'], nextL: [null, null, 'Выбывание'] },
+      19: { round: 'R2A', placeholder1: 'L5', placeholder2: 'L6', nextW: [35, 'p1', 'Вскр Хит 35'], nextL: [null, null, 'Выбывание'] },
+      20: { round: 'R2A', placeholder1: 'L7', placeholder2: 'L8', nextW: [36, 'p1', 'Вскр Хит 36'], nextL: [null, null, 'Выбывание'] },
+      21: { round: 'R2B', placeholder1: 'L9', placeholder2: 'L10', nextW: [37, 'p1', 'Вскр Хит 37'], nextL: [null, null, 'Выбывание'] },
+      22: { round: 'R2B', placeholder1: 'L11', placeholder2: 'L12', nextW: [38, 'p1', 'Вскр Хит 38'], nextL: [null, null, 'Выбывание'] },
+      23: { round: 'R2B', placeholder1: 'L13', placeholder2: 'L14', nextW: [39, 'p1', 'Вскр Хит 39'], nextL: [null, null, 'Выбывание'] },
+      24: { round: 'R2B', placeholder1: 'L15', placeholder2: 'L16', nextW: [40, 'p1', 'Вскр Хит 40'], nextL: [null, null, 'Выбывание'] },
+
+      // Суббота R3A & R3B (Стыки за выход в воскресный ТОП-8)
+      25: { round: 'R3A', placeholder1: 'W1', placeholder2: 'W2', nextW: [45, 'p1', 'Вскр Хит 45 (Top 8)'], nextL: [40, 'p2', 'Вскр Хит 40 (L25)'] },
+      26: { round: 'R3A', placeholder1: 'W3', placeholder2: 'W4', nextW: [45, 'p2', 'Вскр Хит 45 (Top 8)'], nextL: [39, 'p2', 'Вскр Хит 39 (L26)'] },
+      27: { round: 'R3A', placeholder1: 'W5', placeholder2: 'W6', nextW: [46, 'p1', 'Вскр Хит 46 (Top 8)'], nextL: [38, 'p2', 'Вскр Хит 38 (L27)'] },
+      28: { round: 'R3A', placeholder1: 'W7', placeholder2: 'W8', nextW: [46, 'p2', 'Вскр Хит 46 (Top 8)'], nextL: [37, 'p2', 'Вскр Хит 37 (L28)'] },
+      29: { round: 'R3B', placeholder1: 'W9', placeholder2: 'W10', nextW: [47, 'p1', 'Вскр Хит 47 (Top 8)'], nextL: [36, 'p2', 'Вскр Хит 36 (L29)'] },
+      30: { round: 'R3B', placeholder1: 'W11', placeholder2: 'W12', nextW: [47, 'p2', 'Вскр Хит 47 (Top 8)'], nextL: [35, 'p2', 'Вскр Хит 35 (L30)'] },
+      31: { round: 'R3B', placeholder1: 'W13', placeholder2: 'W14', nextW: [48, 'p1', 'Вскр Хит 48 (Top 8)'], nextL: [34, 'p2', 'Вскр Хит 34 (L31)'] },
+      32: { round: 'R3B', placeholder1: 'W15', placeholder2: 'W16', nextW: [48, 'p2', 'Вскр Хит 48 (Top 8)'], nextL: [33, 'p2', 'Вскр Хит 33 (L32)'] },
+
+      // Воскресенье Нижняя Сетка: Раунд 4
+      33: { round: 'R4', placeholder1: 'W17', placeholder2: 'L32', nextW: [41, 'p1', 'Хит 41 (Раунд 5)'], nextL: [null, null, 'Выбывание'] },
+      34: { round: 'R4', placeholder1: 'W18', placeholder2: 'L31', nextW: [41, 'p2', 'Хит 41 (Раунд 5)'], nextL: [null, null, 'Выбывание'] },
+      35: { round: 'R4', placeholder1: 'W19', placeholder2: 'L30', nextW: [42, 'p1', 'Хит 42 (Раунд 5)'], nextL: [null, null, 'Выбывание'] },
+      36: { round: 'R4', placeholder1: 'W20', placeholder2: 'L29', nextW: [42, 'p2', 'Хит 42 (Раунд 5)'], nextL: [null, null, 'Выбывание'] },
+      37: { round: 'R4', placeholder1: 'W21', placeholder2: 'L28', nextW: [43, 'p1', 'Хит 43 (Раунд 5)'], nextL: [null, null, 'Выбывание'] },
+      38: { round: 'R4', placeholder1: 'W22', placeholder2: 'L27', nextW: [43, 'p2', 'Хит 43 (Раунд 5)'], nextL: [null, null, 'Выбывание'] },
+      39: { round: 'R4', placeholder1: 'W23', placeholder2: 'L26', nextW: [44, 'p1', 'Хит 44 (Раунд 5)'], nextL: [null, null, 'Выбывание'] },
+      40: { round: 'R4', placeholder1: 'W24', placeholder2: 'L25', nextW: [44, 'p2', 'Хит 44 (Раунд 5)'], nextL: [null, null, 'Выбывание'] },
+
+      // Воскресенье Нижняя: Раунд 5
+      41: { round: 'R5', placeholder1: 'W33', placeholder2: 'W34', nextW: [49, 'p1', 'Хит 49 (Раунд 7)'], nextL: [null, null, 'Выбывание'] },
+      42: { round: 'R5', placeholder1: 'W35', placeholder2: 'W36', nextW: [50, 'p1', 'Хит 50 (Раунд 7)'], nextL: [null, null, 'Выбывание'] },
+      43: { round: 'R5', placeholder1: 'W37', placeholder2: 'W38', nextW: [51, 'p1', 'Хит 51 (Раунд 7)'], nextL: [null, null, 'Выбывание'] },
+      44: { round: 'R5', placeholder1: 'W39', placeholder2: 'W40', nextW: [52, 'p1', 'Хит 52 (Раунд 7)'], nextL: [null, null, 'Выбывание'] },
+
+      // Воскресенье Верхняя: Раунд 6 (ТОП-8 Winners)
+      45: { round: 'R6', placeholder1: 'W25', placeholder2: 'W26', nextW: [55, 'p1', 'Хит 55 (Раунд 9)'], nextL: [49, 'p2', 'Хит 49 (L45)'] },
+      46: { round: 'R6', placeholder1: 'W27', placeholder2: 'W28', nextW: [55, 'p2', 'Хит 55 (Раунд 9)'], nextL: [50, 'p2', 'Хит 50 (L46)'] },
+      47: { round: 'R6', placeholder1: 'W29', placeholder2: 'W30', nextW: [56, 'p1', 'Хит 56 (Раунд 9)'], nextL: [51, 'p2', 'Хит 51 (L47)'] },
+      48: { round: 'R6', placeholder1: 'W31', placeholder2: 'W32', nextW: [56, 'p2', 'Хит 56 (Раунд 9)'], nextL: [52, 'p2', 'Хит 52 (L48)'] },
+
+      // Воскресенье Нижняя: Раунд 7
+      49: { round: 'R7', placeholder1: 'W41', placeholder2: 'L45', nextW: [53, 'p1', 'Хит 53 (Раунд 8)'], nextL: [null, null, 'Выбывание'] },
+      50: { round: 'R7', placeholder1: 'W42', placeholder2: 'L46', nextW: [53, 'p2', 'Хит 53 (Раунд 8)'], nextL: [null, null, 'Выбывание'] },
+      51: { round: 'R7', placeholder1: 'W43', placeholder2: 'L47', nextW: [54, 'p1', 'Хит 54 (Раунд 8)'], nextL: [null, null, 'Выбывание'] },
+      52: { round: 'R7', placeholder1: 'W44', placeholder2: 'L48', nextW: [54, 'p2', 'Хит 54 (Раунд 8)'], nextL: [null, null, 'Выбывание'] },
+
+      // Воскресенье Нижняя: Раунд 8
+      53: { round: 'R8', placeholder1: 'W49', placeholder2: 'W50', nextW: [57, 'p1', 'Хит 57 (Раунд 10)'], nextL: [null, null, 'Выбывание'] },
+      54: { round: 'R8', placeholder1: 'W51', placeholder2: 'W52', nextW: [58, 'p1', 'Хит 58 (Раунд 10)'], nextL: [null, null, 'Выбывание'] },
+
+      // Воскресенье Верхняя: Раунд 9 (Полуфинал)
+      55: { round: 'R9', placeholder1: 'W45', placeholder2: 'W46', nextW: [60, 'p1', 'Хит 60 (Финал Виннеров)'], nextL: [57, 'p2', 'Хит 57 (L55)'] },
+      56: { round: 'R9', placeholder1: 'W47', placeholder2: 'W48', nextW: [60, 'p2', 'Хит 60 (Финал Виннеров)'], nextL: [58, 'p2', 'Хит 58 (L56)'] },
+
+      // Воскресенье Нижняя: Раунд 10
+      57: { round: 'R10', placeholder1: 'W53', placeholder2: 'L55', nextW: [59, 'p1', 'Хит 59 (Раунд 11)'], nextL: [null, null, 'Выбывание'] },
+      58: { round: 'R10', placeholder1: 'W54', placeholder2: 'L56', nextW: [59, 'p2', 'Хит 59 (Раунд 11)'], nextL: [null, null, 'Выбывание'] },
+
+      // Воскресенье Нижняя: Раунд 11
+      59: { round: 'R11', placeholder1: 'W57', placeholder2: 'W58', nextW: [61, 'p1', 'Хит 61 (Финал Лузеров)'], nextL: [null, null, '4-е место'] },
+
+      // Воскресенье Верхняя: Раунд 12 (Финал Виннеров)
+      60: { round: 'R12', placeholder1: 'W55', placeholder2: 'W56', nextW: [62, 'p1', 'СУПЕРФИНАЛ (Хит 62)'], nextL: [61, 'p2', 'Хит 61 (L60)'] },
+
+      // Воскресенье Нижняя: Раунд 13 (Финал Лузеров)
+      61: { round: 'R13', placeholder1: 'W59', placeholder2: 'L60', nextW: [62, 'p2', 'СУПЕРФИНАЛ (Хит 62)'], nextL: [null, null, '🥉 3-е место'] },
+
+      // Воскресенье: СУПЕРФИНАЛ
+      62: { round: 'FINAL', placeholder1: 'W60', placeholder2: 'W61', nextW: [null, null, '🏆 ЧЕМПИОН!'], nextL: [null, null, '🥈 2-е место'] }
+    };
+
+    // Проверка символа победы
+    function isWinVal(val) {
+      if (!val) return false;
+      const s = String(val).trim().toLowerCase();
+      return s === 'w' || s === 'ц' || s === 'win' || s === '+';
+    }
+
     function playWinSound() {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const now = audioCtx.currentTime;
-
-        const osc1 = audioCtx.createOscillator();
-        const osc2 = audioCtx.createOscillator();
+        const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-
-        osc1.type = 'triangle';
-        osc2.type = 'sawtooth';
-
-        // Гоночный мажорный сигнал
-        osc1.frequency.setValueAtTime(440, now); // A4
-        osc1.frequency.setValueAtTime(554.37, now + 0.12); // C#5
-        osc1.frequency.setValueAtTime(659.25, now + 0.24); // E5
-        osc1.frequency.setValueAtTime(880, now + 0.36); // A5
-
-        osc2.frequency.setValueAtTime(220, now);
-        osc2.frequency.setValueAtTime(330, now + 0.24);
-
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.9);
-
-        osc1.connect(gain);
-        osc2.connect(gain);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.setValueAtTime(554.37, now + 0.1);
+        osc.frequency.setValueAtTime(659.25, now + 0.2);
+        osc.frequency.setValueAtTime(880, now + 0.3);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.85);
+        osc.connect(gain);
         gain.connect(audioCtx.destination);
-
-        osc1.start(now);
-        osc2.start(now);
-        osc1.stop(now + 0.9);
-        osc2.stop(now + 0.9);
-      } catch (e) {
-        console.log('Audio Autoplay policy:', e);
-      }
+        osc.start(now);
+        osc.stop(now + 0.85);
+      } catch (e) {}
     }
 
-    // Запрос данных через Google Visualization API
-    async function fetchSheetData(sheetName) {
+    async function fetchSheetJSON(sheetName) {
       const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}&_nc=${Date.now()}`;
       const res = await fetch(url);
       const text = await res.text();
@@ -772,53 +797,296 @@
       return JSON.parse(jsonStr);
     }
 
-    // Показ модальной плашки победителя
-    function showWinnerModal(matchNumber, winner, loser, nextStep) {
+    // Инициализация пустой структуры хитов
+    function initTournamentMatches() {
+      for (let h = 1; h <= 62; h++) {
+        const info = DE_TREE[h];
+        matches[h] = {
+          heat: h,
+          round: info.round,
+          p1: null,
+          p2: null,
+          winner: null,
+          loser: null
+        };
+
+        // Заполняем базовые пары Раунда 1А и 1Б
+        if (info.s1 && info.s2) {
+          const pilot1 = pilotsCache[info.s1] || { seed: info.s1, name: `Пилот #${info.s1}`, car: '' };
+          const pilot2 = pilotsCache[info.s2] || { seed: info.s2, name: `Пилот #${info.s2}`, car: '' };
+          matches[h].p1 = { ...pilot1, seed: info.s1 };
+          matches[h].p2 = { ...pilot2, seed: info.s2 };
+        }
+      }
+    }
+
+    // Парсер побед из сырых строк таблицы
+    function scanWinnersFromRows(rows) {
+      if (!rows || !rows.length) return;
+
+      rows.forEach(r => {
+        if (!r.c) return;
+        r.c.forEach((cell, colIdx) => {
+          if (!cell || !cell.v) return;
+          if (isWinVal(cell.v)) {
+            // Ищем имя или номер пилота в радиусе 3 ячеек слева или справа
+            for (let offset = -3; offset <= 3; offset++) {
+              if (offset === 0) continue;
+              const neighborVal = r.c[colIdx + offset]?.v;
+              if (!neighborVal) continue;
+              const nStr = String(neighborVal).trim().toLowerCase();
+
+              // Сверяем с участниками всех хитов
+              for (let h = 1; h <= 62; h++) {
+                const m = matches[h];
+                if (m.p1 && (String(m.p1.name).toLowerCase() === nStr || String(m.p1.seed) === nStr)) {
+                  m.winner = m.p1;
+                  m.loser = m.p2;
+                } else if (m.p2 && (String(m.p2.name).toLowerCase() === nStr || String(m.p2.seed) === nStr)) {
+                  m.winner = m.p2;
+                  m.loser = m.p1;
+                }
+              }
+            }
+          }
+        });
+      });
+    }
+
+    // Движок продвижения по сетке
+    function propagateTournamentProgress() {
+      // Многопроходный алгоритм: переносим победителей и проигравших
+      for (let pass = 0; pass < 5; pass++) {
+        for (let h = 1; h <= 62; h++) {
+          const m = matches[h];
+          const info = DE_TREE[h];
+
+          if (m.winner && m.loser) {
+            // Переход победителя
+            if (info.nextW && info.nextW[0]) {
+              const targetHeat = matches[info.nextW[0]];
+              const slot = info.nextW[1];
+              if (targetHeat && !targetHeat[slot]) {
+                targetHeat[slot] = { ...m.winner };
+              }
+            }
+
+            // Переход проигравшего
+            if (info.nextL && info.nextL[0]) {
+              const targetHeat = matches[info.nextL[0]];
+              const slot = info.nextL[1];
+              if (targetHeat && !targetHeat[slot]) {
+                targetHeat[slot] = { ...m.loser };
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Проверка новых побед для вывода плашки
+    function checkNewWinnerAlerts() {
+      for (let h = 1; h <= 62; h++) {
+        const m = matches[h];
+        if (m.winner && m.loser) {
+          const prevWinSeed = previousWinners[h];
+          if (!prevWinSeed && !isFirstLoad) {
+            // Новый победитель!
+            const info = DE_TREE[h];
+            const loseAction = info.nextL[2] || 'Падает в нижнюю сетку';
+            showWinnerModal(h, m.winner, m.loser, loseAction);
+          }
+          previousWinners[h] = m.winner.seed;
+        }
+      }
+    }
+
+    function showWinnerModal(heatNum, winner, loser, nextStep) {
       playWinSound();
 
-      document.getElementById('modalHeatTitle').innerText = `ХИТ #${matchNumber} • РЕЗУЛЬТАТ ЗАЕЗДА`;
+      document.getElementById('modalHeatTitle').innerText = `ХИТ #${heatNum} • РЕЗУЛЬТАТ ЗАЕЗДА`;
       document.getElementById('modalWinSeed').innerText = winner.seed || 'W';
       document.getElementById('modalWinName').innerText = winner.name || 'Пилот';
-      document.getElementById('modalWinCar').innerText = winner.car || 'Автомобиль участника';
+      document.getElementById('modalWinCar').innerText = winner.car ? `${winner.car} / ${winner.region || ''}` : '';
 
       document.getElementById('modalLoseSeed').innerText = loser.seed || 'L';
       document.getElementById('modalLoseName').innerText = loser.name || 'Соперник';
-      document.getElementById('modalLoseCar').innerText = loser.car || '';
-      document.getElementById('modalLoseAction').innerText = nextStep || 'Переход по сетке';
+      document.getElementById('modalLoseCar').innerText = loser.car ? `${loser.car} / ${loser.region || ''}` : '';
+      document.getElementById('modalLoseAction').innerText = nextStep;
 
       const modal = document.getElementById('winnerModal');
       const progressBar = document.getElementById('modalProgressBar');
-      
       modal.classList.add('show');
+
       progressBar.style.transition = 'none';
       progressBar.style.transform = 'scaleX(1)';
-
       setTimeout(() => {
         progressBar.style.transition = 'transform 6s linear';
         progressBar.style.transform = 'scaleX(0)';
       }, 50);
 
-      clearTimeout(autoCloseTimer);
-      autoCloseTimer = setTimeout(() => {
-        closeModal();
-      }, 6100);
+      clearTimeout(modalTimer);
+      modalTimer = setTimeout(closeModal, 6100);
     }
 
     function closeModal() {
       document.getElementById('winnerModal').classList.remove('show');
-      clearTimeout(autoCloseTimer);
+      clearTimeout(modalTimer);
     }
 
-    // Тестовая кнопка
-    function triggerTestModal() {
-      showWinnerModal(1, 
-        { seed: '1', name: 'Иванов Иван', car: 'Nissan Silvia S15 / SPB' },
-        { seed: '32', name: 'Смирнов Алексей', car: 'Toyota Chaser JZX100 / KZN' },
-        'Падает в нижнюю сетку: Хит 17 (L1)'
-      );
+    function createHeatCardHTML(h) {
+      const m = matches[h];
+      const info = DE_TREE[h];
+      const p1 = m.p1 || { seed: info.placeholder1 || '-', name: 'Ожидание соперника', car: '' };
+      const p2 = m.p2 || { seed: info.placeholder2 || '-', name: 'Ожидание соперника', car: '' };
+
+      const isFinished = !!m.winner;
+      const isP1Win = m.winner && (m.winner.seed === p1.seed && m.winner.name === p1.name);
+      const isP2Win = m.winner && (m.winner.seed === p2.seed && m.winner.name === p2.name);
+
+      return `
+        <div class="heat-card ${h === 62 ? 'grand-final' : ''}" onclick="onHeatCardClick(${h})">
+          <div class="heat-header">
+            <span>Заезд #${h}</span>
+            <span class="heat-badge-status ${isFinished ? 'finished' : ''}">${isFinished ? 'ЗАВЕРШЕН' : 'ОЖИДАНИЕ'}</span>
+          </div>
+
+          <div class="pilot-row ${isP1Win ? 'winner' : (isP2Win ? 'loser' : '')}">
+            <div class="pilot-info">
+              <div class="pilot-seed">${p1.seed || '-'}</div>
+              <div class="pilot-names">
+                <span class="pilot-name">${p1.name}</span>
+                <span class="pilot-car">${p1.car || ''}</span>
+              </div>
+            </div>
+            ${isP1Win ? '<span class="win-badge">WIN</span>' : ''}
+          </div>
+
+          <div class="pilot-row ${isP2Win ? 'winner' : (isP1Win ? 'loser' : '')}">
+            <div class="pilot-info">
+              <div class="pilot-seed">${p2.seed || '-'}</div>
+              <div class="pilot-names">
+                <span class="pilot-name">${p2.name}</span>
+                <span class="pilot-car">${p2.car || ''}</span>
+              </div>
+            </div>
+            ${isP2Win ? '<span class="win-badge">WIN</span>' : ''}
+          </div>
+
+          <div class="heat-footer-flow">
+            <span>Победитель: ${info.nextW[2]}</span>
+            <span>${info.nextL[2]}</span>
+          </div>
+        </div>
+      `;
     }
 
-    // Переключение между вкладками
+    function onHeatCardClick(h) {
+      const m = matches[h];
+      if (m.winner && m.loser) {
+        showWinnerModal(h, m.winner, m.loser, DE_TREE[h].nextL[2]);
+      }
+    }
+
+    function renderDOM() {
+      // Суббота
+      renderGroupHTML('colR1A', [1,2,3,4,5,6,7,8]);
+      renderGroupHTML('colR1B', [9,10,11,12,13,14,15,16]);
+      renderGroupHTML('colR3A', [25,26,27,28]);
+      renderGroupHTML('colR3B', [29,30,31,32]);
+      renderGroupHTML('colR2A', [17,18,19,20]);
+      renderGroupHTML('colR2B', [21,22,23,24]);
+
+      // Воскресенье
+      renderGroupHTML('colR6', [45,46,47,48]);
+      renderGroupHTML('colR9', [55,56]);
+      renderGroupHTML('colR12', [60]);
+      renderGroupHTML('colFinal', [62]);
+
+      renderGroupHTML('colR4', [33,34,35,36,37,38,39,40]);
+      renderGroupHTML('colR5', [41,42,43,44]);
+      renderGroupHTML('colR7', [49,50,51,52]);
+      renderGroupHTML('colR8', [53,54]);
+      renderGroupHTML('colR10', [57,58]);
+      renderGroupHTML('colR11', [59]);
+      renderGroupHTML('colR13', [61]);
+    }
+
+    function renderGroupHTML(containerId, heatNums) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      el.innerHTML = heatNums.map(createHeatCardHTML).join('');
+    }
+
+    // Загрузка участников жеребьевки
+    async function loadPilots() {
+      try {
+        const data = await fetchSheetJSON('ЖЕРЕБЬЕВКА');
+        const rows = data.table.rows;
+        let html = '';
+
+        for (let i = 10; i < rows.length; i++) {
+          const c = rows[i].c;
+          if (!c || !c[0] || !c[2] || typeof c[0].v !== 'number') continue;
+
+          const num = c[0].v;
+          const carNum = c[1] ? c[1].v : num;
+          const name = c[2] ? c[2].v : '';
+          const car = c[3] ? c[3].v : '';
+          const region = c[4] ? c[4].v : '';
+
+          pilotsCache[num] = { seed: num, carNum, name, car, region };
+
+          html += `
+            <tr>
+              <td><strong>${num}</strong></td>
+              <td>${carNum}</td>
+              <td style="font-weight: 700;">${name}</td>
+              <td>${car}</td>
+              <td>${region}</td>
+            </tr>
+          `;
+        }
+        document.getElementById('pilotsTableBody').innerHTML = html;
+      } catch (e) {
+        console.error('Ошибка чтения Жеребьевки:', e);
+      }
+    }
+
+    // Основной цикл синхронизации
+    async function runSync() {
+      try {
+        document.getElementById('syncText').innerText = 'Обновление...';
+
+        initTournamentMatches();
+
+        // Читаем оба соревновательных листа
+        const [satData, sunData] = await Promise.all([
+          fetchSheetJSON('Sat 32DE'),
+          fetchSheetJSON('Sun 32DE')
+        ]);
+
+        // Сканируем победы
+        scanWinnersFromRows(satData.table.rows);
+        scanWinnersFromRows(sunData.table.rows);
+
+        // Проталкиваем результаты по цепочкам
+        propagateTournamentProgress();
+
+        // Проверяем новые алерты
+        checkNewWinnerAlerts();
+
+        // Отрисовываем
+        renderDOM();
+
+        document.getElementById('syncText').innerText = `OK (${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'})})`;
+        isFirstLoad = false;
+      } catch (err) {
+        console.error('Ошибка в цикле синхронизации:', err);
+        document.getElementById('syncText').innerText = 'Ошибка сети';
+      }
+    }
+
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('viewSat').classList.add('hidden');
@@ -837,237 +1105,10 @@
       }
     }
 
-    // Рендер карточки заезда
-    function createHeatCardHTML(heatNum, pilot1, pilot2) {
-      const isP1Win = (pilot1.isWinner || pilot1.wMarker);
-      const isP2Win = (pilot2.isWinner || pilot2.wMarker);
-
-      return `
-        <div class="heat-card" id="heat-${heatNum}">
-          <div class="heat-header">
-            <span>Заезд #${heatNum}</span>
-            <span>${isP1Win || isP2Win ? 'ЗАВЕРШЕН' : 'ОЖИДАНИЕ'}</span>
-          </div>
-          
-          <div class="pilot-row ${isP1Win ? 'winner' : (isP2Win ? 'loser' : '')}">
-            <div class="pilot-info">
-              <div class="pilot-seed">${pilot1.seed || '-'}</div>
-              <div class="pilot-names">
-                <span class="pilot-name">${pilot1.name || 'Ожидание соперника'}</span>
-                <span class="pilot-car">${pilot1.car || ''}</span>
-              </div>
-            </div>
-            ${isP1Win ? '<span class="win-badge">WIN</span>' : ''}
-          </div>
-
-          <div class="pilot-row ${isP2Win ? 'winner' : (isP1Win ? 'loser' : '')}">
-            <div class="pilot-info">
-              <div class="pilot-seed">${pilot2.seed || '-'}</div>
-              <div class="pilot-names">
-                <span class="pilot-name">${pilot2.name || 'Ожидание соперника'}</span>
-                <span class="pilot-car">${pilot2.car || ''}</span>
-              </div>
-            </div>
-            ${isP2Win ? '<span class="win-badge">WIN</span>' : ''}
-          </div>
-        </div>
-      `;
-    }
-
-    // Сбор и парсинг пилотов из жеребьевки
-    let pilotsCache = {};
-    async function updatePilotsDirectory() {
-      try {
-        const data = await fetchSheetData('ЖЕРЕБЬЕВКА');
-        const rows = data.table.rows;
-        const tbody = document.getElementById('pilotsTableBody');
-        let html = '';
-
-        // В таблице данные пилотов начинаются с 10-й строки (индекс 9-10)
-        for (let i = 10; i < rows.length; i++) {
-          const c = rows[i].c;
-          if (!c || !c[0] || !c[2] || typeof c[0].v !== 'number') continue;
-
-          const num = c[0].v;
-          const carNumber = c[1] ? c[1].v : num;
-          const name = c[2] ? c[2].v : '';
-          const car = c[3] ? c[3].v : '';
-          const region = c[4] ? c[4].v : '';
-
-          pilotsCache[num] = { num, carNumber, name, car, region };
-
-          html += `
-            <tr>
-              <td><strong>${num}</strong></td>
-              <td>${carNumber}</td>
-              <td style="font-weight: 700;">${name}</td>
-              <td>${car}</td>
-              <td>${region}</td>
-            </tr>
-          `;
-        }
-        tbody.innerHTML = html;
-      } catch (err) {
-        console.error('Ошибка загрузки жеребьевки:', err);
-      }
-    }
-
-    // Главный цикл синхронизации
-    async function syncTournamentData() {
-      try {
-        document.getElementById('syncText').innerText = 'Синхронизация...';
-
-        // 1. Читаем субботу
-        const satData = await fetchSheetData('Sat 32DE');
-        renderSaturday(satData);
-
-        // 2. Читаем воскресенье
-        const sunData = await fetchSheetData('Sun 32DE');
-        renderSunday(sunData);
-
-        document.getElementById('syncText').innerText = `OK (${new Date().toLocaleTimeString()})`;
-        isInitialLoad = false;
-      } catch (e) {
-        console.error('Ошибка синхронизации:', e);
-        document.getElementById('syncText').innerText = 'Ошибка сети';
-      }
-    }
-
-    function renderSaturday(data) {
-      const rows = data.table.rows;
-      // В Sat 32DE структура:
-      // Раунд 1А (Хиты 1-8): Строки 9..32, колонки A..E
-      // Раунд 1Б (Хиты 9-16): колонки V..Z
-      // Раунд 2А/2Б (Нижняя сетка): строки ниже 34
-      
-      let r1aHtml = '';
-      let r1bHtml = '';
-
-      // Базовые пары Раунда 1А по классической сетке 32DE
-      const r1Pairs = [
-        { heat: 1, s1: 1, s2: 32 },
-        { heat: 2, s1: 16, s2: 17 },
-        { heat: 3, s1: 8, s2: 25 },
-        { heat: 4, s1: 9, s2: 24 },
-        { heat: 5, s1: 4, s2: 29 },
-        { heat: 6, s1: 13, s2: 20 },
-        { heat: 7, s1: 5, s2: 28 },
-        { heat: 8, s1: 12, s2: 21 },
-        { heat: 9, s1: 2, s2: 31 },
-        { heat: 10, s1: 15, s2: 18 },
-        { heat: 11, s1: 7, s2: 26 },
-        { heat: 12, s1: 10, s2: 23 },
-        { heat: 13, s1: 3, s2: 30 },
-        { heat: 14, s1: 14, s2: 19 },
-        { heat: 15, s1: 6, s2: 27 },
-        { heat: 16, s1: 11, s2: 22 }
-      ];
-
-      // Проверяем наличие отметки 'w' в таблице
-      r1Pairs.forEach(pair => {
-        const p1 = pilotsCache[pair.s1] || { seed: pair.s1, name: `Пилот #${pair.s1}` };
-        const p2 = pilotsCache[pair.s2] || { seed: pair.s2, name: `Пилот #${pair.s2}` };
-        p1.seed = pair.s1;
-        p2.seed = pair.s2;
-
-        // Поиск буквы 'w' рядом со строкой заезда в сырых данных
-        // Если находим 'w' в строках соответствующего хита:
-        checkMatchWinner(pair.heat, p1, p2, rows, `Падает в нижнюю сетку: Хит #${16 + Math.ceil(pair.heat/2)} (L${pair.heat})`);
-
-        const card = createHeatCardHTML(pair.heat, p1, p2);
-        if (pair.heat <= 8) r1aHtml += card;
-        else r1bHtml += card;
-      });
-
-      document.getElementById('satWinnersGrid').innerHTML = `
-        <div class="round-column">
-          <div class="round-header">Раунд 1А <span>Хиты 1 - 8</span></div>
-          ${r1aHtml}
-        </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 1Б <span>Хиты 9 - 16</span></div>
-          ${r1bHtml}
-        </div>
-      `;
-
-      // Генерация нижней сетки субботы (Раунд 2А и 2Б)
-      let r2aHtml = '';
-      for (let h = 17; h <= 24; h++) {
-        const lNum1 = (h - 16) * 2 - 1;
-        const lNum2 = (h - 16) * 2;
-        r2aHtml += createHeatCardHTML(h, { seed: `L${lNum1}`, name: `Проигравший Хита #${lNum1}` }, { seed: `L${lNum2}`, name: `Проигравший Хита #${lNum2}` });
-      }
-
-      document.getElementById('satLosersGrid').innerHTML = `
-        <div class="round-column">
-          <div class="round-header">Раунд 2А & 2Б (Losers) <span>Хиты 17 - 24</span></div>
-          ${r2aHtml}
-        </div>
-      `;
-    }
-
-    function renderSunday(data) {
-      // Воскресные заезды (Top 16 Winners, Losers rounds и Суперфинал)
-      document.getElementById('sunGrid').innerHTML = `
-        <div class="round-column">
-          <div class="round-header">Раунд 6 (Top 8 Winners) <span>Хиты 45 - 48</span></div>
-          ${createHeatCardHTML(45, { seed: 'W25', name: 'Победитель Хита 25' }, { seed: 'W26', name: 'Победитель Хита 26' })}
-          ${createHeatCardHTML(46, { seed: 'W27', name: 'Победитель Хита 27' }, { seed: 'W28', name: 'Победитель Хита 28' })}
-          ${createHeatCardHTML(47, { seed: 'W29', name: 'Победитель Хита 29' }, { seed: 'W30', name: 'Победитель Хита 30' })}
-          ${createHeatCardHTML(48, { seed: 'W31', name: 'Победитель Хита 31' }, { seed: 'W32', name: 'Победитель Хита 32' })}
-        </div>
-        <div class="round-column">
-          <div class="round-header">Финалы <span>Хит 60 & 62</span></div>
-          ${createHeatCardHTML(60, { seed: 'W55', name: 'Финал верхней сетки' }, { seed: 'W56', name: 'Финал верхней сетки' })}
-          ${createHeatCardHTML(62, { seed: 'W60', name: 'СУПЕРФИНАЛ (Победитель Winners)' }, { seed: 'W61', name: 'СУПЕРФИНАЛ (Победитель Losers)' })}
-        </div>
-      `;
-    }
-
-    // Детекция появления новой победы 'w'
-    function checkMatchWinner(heatNum, p1, p2, rows, nextStepDesc) {
-      // Проверка строки на наличие "w" или "W"
-      let winner = null;
-      let loser = null;
-
-      // Сканируем строки таблицы на наличие отметки 'w' рядом с фамилией пилота
-      rows.forEach(r => {
-        if (!r.c) return;
-        r.c.forEach((cell, colIdx) => {
-          if (!cell || !cell.v) return;
-          const val = String(cell.v).trim().toLowerCase();
-          
-          if (val === 'w') {
-            // Проверяем соседнюю ячейку слева (где имя пилота)
-            const neighbor = r.c[colIdx - 1]?.v || r.c[colIdx - 2]?.v || '';
-            if (String(neighbor).includes(p1.name)) {
-              winner = p1;
-              loser = p2;
-            } else if (String(neighbor).includes(p2.name)) {
-              winner = p2;
-              loser = p1;
-            }
-          }
-        });
-      });
-
-      if (winner && loser) {
-        winner.isWinner = true;
-        loser.isWinner = false;
-
-        // Если при предыдущем опросе победителя еще не было — показываем плашку!
-        if (!isInitialLoad && !previousMatchesState[heatNum]) {
-          showWinnerModal(heatNum, winner, loser, nextStepDesc);
-        }
-        previousMatchesState[heatNum] = winner.seed;
-      }
-    }
-
-    // Инициализация при старте
     window.addEventListener('DOMContentLoaded', async () => {
-      await updatePilotsDirectory();
-      await syncTournamentData();
-      setInterval(syncTournamentData, POLL_INTERVAL);
+      await loadPilots();
+      await runSync();
+      setInterval(runSync, POLL_INTERVAL);
     });
   </script>
 </body>
