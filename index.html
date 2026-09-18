@@ -3,31 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IDDC Broadcast Overlay</title>
+  <title>IDDC Live Bracket</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Montserrat:wght@500;700;800;900&family=Russo+One&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      /* Цвета в точности по макету */
-      --bg-dark: #0a0d14;
+      --bg-color: #0b0f16;
       --header-bg: #000000;
-      --iddc-crimson: #d4003c;
-      --igora-red: #e10600;
+      --iddc-red: #d3003c;
+      --card-bg: rgba(15, 19, 25, 0.85);
+      --card-border: #1f2937;
+      --win-green: #10b981;
+      --lose-red: #f43f5e;
       --text-main: #ffffff;
-      --text-dim: #737c8e;
-      --card-bg: rgba(18, 22, 31, 0.6);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --win-green: #00e676;
-      --lose-red: #ff1744;
-      --grid-color: rgba(255, 255, 255, 0.03);
+      --text-muted: #6b7280;
+      --grid-line: rgba(255, 255, 255, 0.03);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
 
     body {
-      background-color: var(--bg-dark);
+      background-color: var(--bg-color);
       color: var(--text-main);
       height: 100vh;
       display: flex;
@@ -36,221 +34,141 @@
       position: relative;
     }
 
-    /* Фоновая клетка как на референсе */
+    /* Фоновая клетка из референса */
     body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-image: 
-        linear-gradient(var(--grid-color) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-      background-size: 32px 32px;
-      z-index: -1;
+      content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 32px 32px; z-index: -1;
     }
 
-    /* =========================================
-       ШАПКА (HEADER)
-    ========================================= */
+    /* =========================================================
+       ШАПКА ТРАНСЛЯЦИИ
+       ========================================================= */
     header {
       background-color: var(--header-bg);
-      border-bottom: 2px solid var(--iddc-crimson);
+      border-bottom: 2px solid var(--iddc-red);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 24px;
-      height: 70px;
+      padding: 10px 24px;
+      height: 64px;
     }
 
     .head-left { display: flex; align-items: center; gap: 16px; }
-    .iddc-logo { font-family: 'Russo One', sans-serif; font-size: 28px; color: var(--iddc-crimson); font-style: italic; letter-spacing: 1px; }
+    .iddc-logo {
+      background: #000; border: 2px solid var(--iddc-red);
+      padding: 2px 10px; transform: skewX(-15deg);
+      box-shadow: 0 0 10px rgba(211, 0, 60, 0.3);
+    }
+    .iddc-logo span { display: block; font-family: 'Russo One', sans-serif; color: var(--iddc-red); font-size: 24px; transform: skewX(15deg); letter-spacing: 1px; }
     .head-titles { display: flex; flex-direction: column; }
-    .title-ru { font-weight: 900; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .title-en { font-family: 'Chakra Petch', sans-serif; font-weight: 600; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; }
+    .title-ru { font-weight: 900; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .title-en { font-family: 'Chakra Petch', sans-serif; font-weight: 600; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; }
 
     .head-right { display: flex; align-items: center; gap: 24px; }
     .brand-igora { display: flex; align-items: center; gap: 6px; }
-    .brand-igora .cursive { font-family: 'Georgia', serif; font-style: italic; font-size: 22px; }
-    .brand-igora .bold { font-weight: 900; font-size: 12px; color: var(--iddc-crimson); letter-spacing: 1px; }
+    .brand-igora .cursive { font-family: 'Georgia', serif; font-style: italic; font-size: 20px; }
+    .brand-igora .bold { font-weight: 900; font-size: 11px; color: var(--iddc-red); letter-spacing: 1px; }
     
     .brand-matsuri { display: flex; flex-direction: column; align-items: center; line-height: 1; transform: rotate(-3deg); }
-    .brand-matsuri span:first-child { font-family: 'Russo One', sans-serif; font-size: 11px; color: #ffeb3b; }
-    .brand-matsuri span:last-child { font-family: 'Russo One', sans-serif; font-size: 15px; color: #e91e63; }
+    .brand-matsuri span:first-child { font-family: 'Russo One', sans-serif; font-size: 10px; color: #ffeb3b; }
+    .brand-matsuri span:last-child { font-family: 'Russo One', sans-serif; font-size: 14px; color: #e91e63; }
     
-    .brand-kf { font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 15px; font-style: italic; letter-spacing: 1px; border-left: 1px solid #333; padding-left: 20px;}
+    .brand-kf { font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 14px; font-style: italic; letter-spacing: 1px; border-left: 1px solid #333; padding-left: 16px;}
 
-    /* =========================================
-       ПАНЕЛЬ УПРАВЛЕНИЯ (SUB-NAV)
-    ========================================= */
+    /* =========================================================
+       ПАНЕЛЬ УПРАВЛЕНИЯ
+       ========================================================= */
     .sub-nav {
       background: rgba(0, 0, 0, 0.4);
       border-bottom: 1px solid var(--card-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 24px;
+      height: 44px;
+      padding: 0 24px;
     }
-    .nav-tabs { display: flex; gap: 8px; }
+    .tabs-left { display: flex; height: 100%; }
     .tab-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      color: var(--text-dim);
-      padding: 6px 14px;
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: 0.2s;
+      background: transparent; color: var(--text-muted); border: none; padding: 0 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.2s; height: 100%;
     }
-    .tab-btn.active { background: var(--iddc-crimson); color: #fff; }
+    .tab-btn.active { background: var(--iddc-red); color: #fff; }
     
-    .nav-controls { display: flex; align-items: center; gap: 8px; }
-    .nav-controls span { font-size: 10px; color: var(--text-dim); font-weight: 700; margin-right: 8px;}
+    .tabs-right { display: flex; align-items: center; gap: 8px; }
+    .tabs-right span { font-size: 10px; color: var(--text-muted); font-weight: 700; margin-right: 8px;}
     .ctrl-btn {
-      background: transparent;
-      border: 1px solid var(--text-dim);
-      color: var(--text-dim);
-      padding: 4px 12px;
-      font-size: 9px;
-      font-weight: 800;
-      cursor: pointer;
-      border-radius: 2px;
+      background: transparent; border: 1px solid var(--text-muted); color: var(--text-muted); padding: 4px 12px; font-size: 9px; font-weight: 800; cursor: pointer; border-radius: 3px;
     }
-    .ctrl-btn.active { border-color: var(--iddc-crimson); color: #fff; }
+    .ctrl-btn.active { border-color: var(--iddc-red); color: var(--iddc-red); }
 
-    /* =========================================
-       ТУРНИРНАЯ СЕТКА (BRACKET)
-    ========================================= */
-    .board-container {
-      flex: 1;
-      padding: 24px;
-      display: flex;
-      gap: 20px;
-      position: relative;
+    /* =========================================================
+       СЕТКА ХИТОВ
+       ========================================================= */
+    .board {
+      flex: 1; padding: 24px; display: flex; gap: 20px;
     }
-    
-    .round-col {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .round-title {
-      font-family: 'Chakra Petch', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      text-transform: uppercase;
-      color: #fff;
-      text-align: center;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--card-border);
-      margin-bottom: 8px;
-    }
+    .round-col { flex: 1; display: flex; flex-direction: column; gap: 12px; transition: 0.4s; }
+    .round-title { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 13px; text-transform: uppercase; color: #fff; text-align: center; padding-bottom: 8px; border-bottom: 1px solid var(--card-border); margin-bottom: 4px; }
 
     .heat-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 4px;
-      display: flex;
-      flex-direction: column;
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 4px; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s;
     }
+    .heat-card:hover { border-color: #3b82f6; }
     .heat-header {
-      background: rgba(0,0,0,0.5);
-      padding: 4px 8px;
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 10px;
-      color: var(--text-dim);
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--card-border);
+      background: rgba(0,0,0,0.5); padding: 4px 10px; font-family: 'Chakra Petch', sans-serif; font-size: 10px; color: var(--text-muted); display: flex; justify-content: space-between; border-bottom: 1px solid var(--card-border); text-transform: uppercase;
     }
     .pilot-row {
-      display: flex;
-      align-items: center;
-      padding: 8px 10px;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-      position: relative;
+      display: flex; align-items: center; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.03); position: relative;
     }
     .pilot-row:last-child { border-bottom: none; }
-    
-    .pilot-row.is-winner { background: rgba(0, 230, 118, 0.1); }
-    .pilot-row.is-winner::before {
-      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--win-green);
-    }
-    .pilot-row.is-loser { opacity: 0.4; }
+    .pilot-row.winner { background: rgba(16, 185, 129, 0.12); }
+    .pilot-row.winner::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--win-green); }
+    .pilot-row.loser { opacity: 0.4; }
 
-    .pilot-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: #fff;
-      flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .win-badge {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--win-green);
-      border: 1px solid var(--win-green);
-      padding: 2px 4px;
-      border-radius: 2px;
-    }
+    .pilot-seed { font-family: 'Chakra Petch', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-muted); width: 26px; }
+    .pilot-name { font-size: 13px; font-weight: 700; color: #fff; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .win-badge { font-family: 'Chakra Petch', sans-serif; font-size: 10px; font-weight: 800; color: var(--win-green); border: 1px solid var(--win-green); padding: 2px 4px; border-radius: 2px; }
 
-    /* =========================================
-       ОВЕРЛЕЙ ПОБЕДИТЕЛЯ (POPUP)
-    ========================================= */
+    /* =========================================================
+       ОВЕРЛЕЙ ПОБЕДИТЕЛЯ
+       ========================================================= */
     .popup-overlay {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(4, 6, 10, 0.95);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(5, 7, 12, 0.92); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s;
     }
     .popup-overlay.active { opacity: 1; pointer-events: all; }
 
     .popup-box {
-      background: #0d111a;
-      border: 2px solid var(--iddc-crimson);
-      width: 900px;
-      padding: 40px 60px;
-      border-radius: 6px;
-      text-align: center;
-      box-shadow: 0 0 60px rgba(212, 0, 60, 0.3);
-      transform: scale(0.95);
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background: #11151c; border: 2px solid #fbbf24; width: 840px; padding: 40px 50px; border-radius: 8px; text-align: center; box-shadow: 0 0 60px rgba(251, 191, 36, 0.15); transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
     }
     .popup-overlay.active .popup-box { transform: scale(1); }
+    
+    .pop-close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: #6b7280; font-size: 20px; cursor: pointer; }
+    .pop-close:hover { color: #fff; }
 
-    .pop-subtitle { font-family: 'Chakra Petch', sans-serif; font-size: 13px; color: var(--iddc-crimson); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; font-weight: 700;}
-    .pop-title { font-family: 'Russo One', sans-serif; font-size: 52px; color: #fff; text-transform: uppercase; margin-bottom: 30px; line-height: 1; }
+    .pop-subtitle { font-family: 'Chakra Petch', sans-serif; font-size: 12px; color: #fbbf24; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; font-weight: 700;}
+    .pop-title { font-family: 'Russo One', sans-serif; font-size: 48px; color: #fff; text-transform: uppercase; margin-bottom: 30px; line-height: 1; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
     
     .pop-split { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--card-border); padding-top: 24px; margin-bottom: 24px; }
     .pop-side { display: flex; flex-direction: column; width: 40%; }
-    .pop-label { font-family: 'Chakra Petch', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+    .pop-label { font-family: 'Chakra Petch', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
     .pop-label.win { color: var(--win-green); }
     .pop-label.lose { color: var(--lose-red); }
-    .pop-name { font-size: 22px; font-weight: 800; color: #fff; }
-    .pop-vs { font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 24px; color: var(--text-dim); }
+    .pop-name { font-size: 20px; font-weight: 800; color: #fff; }
+    .pop-vs { font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 22px; color: var(--text-muted); }
 
     .timer-line { width: 100%; height: 4px; background: #222; overflow: hidden; border-radius: 2px; }
-    .timer-progress { height: 100%; background: var(--iddc-crimson); width: 100%; }
+    .timer-progress { height: 100%; background: #fbbf24; width: 100%; }
     .timer-progress.run { animation: shrink 10s linear forwards; }
     @keyframes shrink { to { width: 0%; } }
 
-    #sync-status { position: fixed; bottom: 8px; right: 16px; font-size: 10px; color: var(--text-dim); z-index: 100; font-family: 'Chakra Petch', sans-serif; }
+    #sync-status { position: fixed; bottom: 8px; right: 16px; font-size: 10px; color: var(--text-muted); z-index: 100; font-family: 'Chakra Petch', sans-serif; }
   </style>
 </head>
 <body>
 
-  <!-- ШАПКА -->
   <header>
     <div class="head-left">
-      <div class="iddc-logo">IDDC</div>
+      <div class="iddc-logo"><span>IDDC</span></div>
       <div class="head-titles">
         <div class="title-ru">«Игора Драйв Дрифт-Вызов»</div>
         <div class="title-en">IGORA DRIVE DRIFT CHALLENGE</div>
@@ -263,30 +181,26 @@
     </div>
   </header>
 
-  <!-- МЕНЮ -->
   <div class="sub-nav">
-    <div class="nav-tabs">
+    <div class="tabs-left">
       <button class="tab-btn active">СЕТКА СУББОТА (SAT 32DE)</button>
       <button class="tab-btn">СЕТКА ВОСКРЕСЕНЬЕ (SUN 32DE)</button>
     </div>
-    <div class="nav-controls">
+    <div class="tabs-right">
       <span>КАМЕРА:</span>
       <button class="ctrl-btn active">ВЕРХНЯЯ СЕТКА</button>
       <button class="ctrl-btn">НИЖНЯЯ СЕТКА</button>
-      <button class="ctrl-btn">АВТО: ВЫКЛ</button>
+      <button class="ctrl-btn" id="btn-auto" onclick="toggleAuto()">АВТО: ВЫКЛ</button>
     </div>
   </div>
 
-  <!-- СЕТКА -->
-  <main class="board-container" id="bracket-board">
-    <!-- Сюда JS вставит колонки -->
-  </main>
+  <main class="board" id="bracket-board"></main>
 
-  <div id="sync-status">Ожидание данных...</div>
+  <div id="sync-status">Синхронизация...</div>
 
-  <!-- ОВЕРЛЕЙ -->
   <div class="popup-overlay" id="popup">
     <div class="popup-box">
+      <button class="pop-close" onclick="closePopup()">✖</button>
       <div class="pop-subtitle" id="pop-heat">РЕЗУЛЬТАТ ЗАЕЗДА</div>
       <div class="pop-title" id="pop-winner">ИМЯ ПИЛОТА</div>
       <div class="pop-split">
@@ -306,137 +220,129 @@
 
   <script>
     // =========================================================================
-    // НАСТРОЙКИ: ПРЯМЫЕ КООРДИНАТЫ ЯЧЕЕК (EXCEL-ФОРМАТ)
+    // НАСТРОЙКИ СЕТКИ (УКАЖИТЕ СТОЛБЦЫ И СТРОКИ ИЗ ВАШЕГО EXCEL)
     // =========================================================================
-    // Если в таблице Пилот 1 находится в ячейке C9, напишите "C9".
-    // Если его результат (буква W) ставится в ячейку D9, напишите "D9".
-    // Отредактируйте этот блок, чтобы он ИДЕАЛЬНО совпадал с вашей Google-таблицей.
-
     const SPREADSHEET_ID = '1ydV36JHtw8T00uJwsZYAxU-tCaWIrQv5yPkKpqtCtTk';
-    const SHEET_NAME = 'Sat 32DE';
-
-    const BRACKET_MAP = [
+    
+    // col - номер столбца с именами пилотов (A=0, B=1, C=2, D=3, E=4...)
+    // winCol - номер столбца с буквой 'w' (обычно соседний справа от имени)
+    // r1, r2 - номера строк пилотов минус 1 (т.е. если Пилот в 9 строке, пишем 8)
+    const SAT_TOP_CONFIG = [
       {
-        roundName: "Раунд 1А (ТОП-32)",
+        title: "РАУНД 1А", col: 3, winCol: 4, // Колонки D и E
         heats: [
-          // Пример: Имя пилота в C9, его победа (w) в D9. Второй пилот в C10, его победа в D10.
-          { id: "Хит 1", p1: "C9",  w1: "D9",  p2: "C10", w2: "D10" },
-          { id: "Хит 2", p1: "C11", w1: "D11", p2: "C12", w2: "D12" },
-          { id: "Хит 3", p1: "C13", w1: "D13", p2: "C14", w2: "D14" },
-          { id: "Хит 4", p1: "C15", w1: "D15", p2: "C16", w2: "D16" },
-          { id: "Хит 5", p1: "C17", w1: "D17", p2: "C18", w2: "D18" },
-          { id: "Хит 6", p1: "C19", w1: "D19", p2: "C20", w2: "D20" },
-          { id: "Хит 7", p1: "C21", w1: "D21", p2: "C22", w2: "D22" },
-          { id: "Хит 8", p1: "C23", w1: "D23", p2: "C24", w2: "D24" }
+          { id: "Хит 1", r1: 8, r2: 10 },
+          { id: "Хит 2", r1: 12, r2: 14 },
+          { id: "Хит 3", r1: 16, r2: 18 },
+          { id: "Хит 4", r1: 20, r2: 22 },
+          { id: "Хит 5", r1: 24, r2: 26 },
+          { id: "Хит 6", r1: 28, r2: 30 },
+          { id: "Хит 7", r1: 32, r2: 34 },
+          { id: "Хит 8", r1: 36, r2: 38 }
         ]
       },
       {
-        roundName: "Раунд 1Б (ТОП-32)",
+        title: "РАУНД 3А", col: 8, winCol: 9, // Колонки I и J
         heats: [
-          // Пример: Правая половина сетки. Имена в I9, победы в J9.
-          { id: "Хит 9",  p1: "I9",  w1: "J9",  p2: "I10", w2: "J10" },
-          { id: "Хит 10", p1: "I11", w1: "J11", p2: "I12", w2: "J12" },
-          { id: "Хит 11", p1: "I13", w1: "J13", p2: "I14", w2: "J14" },
-          { id: "Хит 12", p1: "I15", w1: "J15", p2: "I16", w2: "J16" },
-          { id: "Хит 13", p1: "I17", w1: "J17", p2: "I18", w2: "J18" },
-          { id: "Хит 14", p1: "I19", w1: "J19", p2: "I20", w2: "J20" },
-          { id: "Хит 15", p1: "I21", w1: "J21", p2: "I22", w2: "J22" },
-          { id: "Хит 16", p1: "I23", w1: "J23", p2: "I24", w2: "J24" }
+          { id: "Хит 25", r1: 9, r2: 13 },
+          { id: "Хит 26", r1: 17, r2: 21 },
+          { id: "Хит 27", r1: 25, r2: 29 },
+          { id: "Хит 28", r1: 33, r2: 37 }
         ]
       },
       {
-        roundName: "Раунд 3А (ТОП-16)",
+        title: "РАУНД 3Б", col: 21, winCol: 22, // Колонки V и W
         heats: [
-          // Укажите точные ячейки для Раунда 3А
-          { id: "Хит 25", p1: "E10", w1: "F10", p2: "E11", w2: "F11" },
-          { id: "Хит 26", p1: "E14", w1: "F14", p2: "E15", w2: "F15" },
-          { id: "Хит 27", p1: "E18", w1: "F18", p2: "E19", w2: "F19" },
-          { id: "Хит 28", p1: "E22", w1: "F22", p2: "E23", w2: "F23" }
+          { id: "Хит 29", r1: 9, r2: 13 },
+          { id: "Хит 30", r1: 17, r2: 21 },
+          { id: "Хит 31", r1: 25, r2: 29 },
+          { id: "Хит 32", r1: 33, r2: 37 }
+        ]
+      },
+      {
+        title: "РАУНД 1Б", col: 26, winCol: 27, // Колонки AA и AB
+        heats: [
+          { id: "Хит 9", r1: 8, r2: 10 },
+          { id: "Хит 10", r1: 12, r2: 14 },
+          { id: "Хит 11", r1: 16, r2: 18 },
+          { id: "Хит 12", r1: 20, r2: 22 },
+          { id: "Хит 13", r1: 24, r2: 26 },
+          { id: "Хит 14", r1: 28, r2: 30 },
+          { id: "Хит 15", r1: 32, r2: 34 },
+          { id: "Хит 16", r1: 36, r2: 38 }
         ]
       }
     ];
 
     // =========================================================================
-    // СИСТЕМНЫЙ КОД (НИЖЕ МОЖНО НЕ МЕНЯТЬ)
+    // ЛОГИКА ТРАНСЛЯЦИИ (МЕНЯТЬ НЕ НУЖНО)
     // =========================================================================
-
-    let previousWinners = {};
+    let knownWinners = {};
     let popupTimer = null;
+    let autoZoomEnabled = true;
 
-    // Конвертер: Превращает "C10" в координаты для массива Google JSON (row: 9, col: 2)
-    function getCellData(rows, excelRef) {
-      if (!excelRef) return "";
-      try {
-        const colStr = excelRef.match(/[A-Z]+/i)[0].toUpperCase();
-        const rowStr = excelRef.match(/[0-9]+/)[0];
-        
-        let col = 0;
-        for (let i = 0; i < colStr.length; i++) {
-          col = col * 26 + (colStr.charCodeAt(i) - 64);
-        }
-        col -= 1; // Google columns are 0-indexed
-        let row = parseInt(rowStr, 10) - 1; // Google rows are 0-indexed
-
-        let val = rows[row].c[col];
-        if (val && val.v !== null && val.v !== undefined) {
-          let str = String(val.v).trim();
-          // Очистка от ошибок формул
-          if (str === "0" || str === "#N/A" || str === "#REF!") return "";
-          return str;
-        }
-      } catch (e) {}
-      return "";
+    // Безопасное получение значения из ячейки
+    function getVal(rows, r, c) {
+      if (!rows[r] || !rows[r].c || !rows[r].c[c]) return "";
+      let v = String(rows[r].c[c].v).trim();
+      if (v === "0" || v === "#N/A" || v === "#REF!" || v === "null") return "";
+      return v;
     }
 
+    // Проверка на победу (ищем 1 или w)
     function checkWin(val) {
-      let v = String(val).toLowerCase().trim();
-      return (v === 'w' || v === '1' || v === 'в' || v === 'win');
+      let v = val.toLowerCase();
+      return v === 'w' || v === '1' || v === 'в' || v === 'win';
     }
 
-    // Отрисовка колонок и карточек
     function renderBoard(rows) {
       const board = document.getElementById('bracket-board');
       let html = "";
+      
+      let allR1ACompleted = true;
+      let allR1BCompleted = true;
 
-      BRACKET_MAP.forEach(round => {
-        html += `<div class="round-col"><div class="round-title">${round.roundName}</div>`;
+      SAT_TOP_CONFIG.forEach((round, colIndex) => {
+        html += `<div class="round-col" id="col-${colIndex}"><div class="round-title">${round.title}</div>`;
         
         round.heats.forEach(heat => {
-          let p1Name = getCellData(rows, heat.p1) || "";
-          let p1Win = checkWin(getCellData(rows, heat.w1));
+          let p1Name = getVal(rows, heat.r1, round.col);
+          let p1Win = checkWin(getVal(rows, heat.r1, round.winCol));
           
-          let p2Name = getCellData(rows, heat.p2) || "";
-          let p2Win = checkWin(getCellData(rows, heat.w2));
-
-          // Не показываем пустые карточки
-          if (!p1Name && !p2Name) return;
+          let p2Name = getVal(rows, heat.r2, round.col);
+          let p2Win = checkWin(getVal(rows, heat.r2, round.winCol));
 
           let winner = null, loser = null;
-          if (p1Win) { winner = p1Name; loser = p2Name; }
-          else if (p2Win) { winner = p2Name; loser = p1Name; }
+          if (p1Win && p1Name) { winner = p1Name; loser = p2Name; }
+          else if (p2Win && p2Name) { winner = p2Name; loser = p1Name; }
 
-          let s1Class = p1Win ? "is-winner" : (winner ? "is-loser" : "");
-          let s2Class = p2Win ? "is-winner" : (winner ? "is-loser" : "");
-          let s1Badge = p1Win ? `<span class="win-badge">WIN</span>` : "";
-          let s2Badge = p2Win ? `<span class="win-badge">WIN</span>` : "";
+          // Проверка завершенности первых раундов для Авто-Зума
+          if (colIndex === 0 && !winner) allR1ACompleted = false;
+          if (colIndex === 3 && !winner) allR1BCompleted = false;
+
+          let s1Class = p1Win ? "winner" : (winner ? "loser" : "");
+          let s2Class = p2Win ? "winner" : (winner ? "loser" : "");
           let statusText = winner ? "ЗАВЕРШЕН" : "ОЖИДАНИЕ";
 
+          // Если ячейка совсем пустая (нет пилота) - не показываем пустую рамку
+          if (!p1Name && !p2Name) return;
+
           html += `
-            <div class="heat-card" onclick="triggerPopup('${heat.id}', '${winner || p1Name}', '${loser || p2Name}')">
+            <div class="heat-card" onclick="forcePopup('${heat.id}', '${winner || p1Name}', '${loser || p2Name}')">
               <div class="heat-header"><span>${heat.id}</span><span>${statusText}</span></div>
-              <div class="pilot-row ${s1Class}"><span class="pilot-name">${p1Name}</span>${s1Badge}</div>
-              <div class="pilot-row ${s2Class}"><span class="pilot-name">${p2Name}</span>${s2Badge}</div>
+              <div class="pilot-row ${s1Class}"><span class="pilot-seed">P1</span><span class="pilot-name">${p1Name}</span>${p1Win ? '<span class="win-badge">WIN</span>' : ''}</div>
+              <div class="pilot-row ${s2Class}"><span class="pilot-seed">P2</span><span class="pilot-name">${p2Name}</span>${p2Win ? '<span class="win-badge">WIN</span>' : ''}</div>
             </div>
           `;
 
-          // Логика вызова Оверлея при появлении нового победителя
-          if (winner && winner !== "") {
-            if (previousWinners[heat.id] !== winner && previousWinners[heat.id] !== undefined) {
-              triggerPopup(heat.id, winner, loser);
+          // Если появился НОВЫЙ победитель -> Вызываем Оверлей
+          if (winner) {
+            if (knownWinners[heat.id] !== undefined && knownWinners[heat.id] !== winner) {
+              forcePopup(heat.id, winner, loser);
             }
-            previousWinners[heat.id] = winner;
+            knownWinners[heat.id] = winner;
           } else {
-            previousWinners[heat.id] = null;
+            knownWinners[heat.id] = null;
           }
         });
 
@@ -444,10 +350,15 @@
       });
 
       board.innerHTML = html;
+
+      // Авто-зум: скрываем первый раунд, если он полностью сыгран
+      if (allR1ACompleted && allR1BCompleted && autoZoomEnabled) {
+        document.getElementById('col-0').style.display = 'none';
+        document.getElementById('col-3').style.display = 'none';
+      }
     }
 
-    // Вызов анимации победителя (на 10 секунд)
-    function triggerPopup(heatId, winner, loser) {
+    function forcePopup(heatId, winner, loser) {
       if (!winner || winner === "") return;
 
       document.getElementById('pop-heat').innerText = `РЕЗУЛЬТАТ ЗАЕЗДА • ${heatId}`;
@@ -458,42 +369,47 @@
       const popup = document.getElementById('popup');
       const timer = document.getElementById('pop-timer');
 
-      // Перезапуск анимации таймера
       timer.classList.remove('run');
       void timer.offsetWidth;
       timer.classList.add('run');
-
       popup.classList.add('active');
 
       if (popupTimer) clearTimeout(popupTimer);
-      popupTimer = setTimeout(() => {
-        popup.classList.remove('active');
-      }, 10000);
+      popupTimer = setTimeout(closePopup, 10000);
     }
 
-    // Загрузка данных (headers=0 гарантирует, что 1-я строка таблицы = 0 индекс в JSON)
+    function closePopup() {
+      document.getElementById('popup').classList.remove('active');
+    }
+
+    let isAutoCam = false;
+    function toggleAuto() {
+      isAutoCam = !isAutoCam;
+      const btn = document.getElementById('btn-auto');
+      btn.innerText = isAutoCam ? "АВТО: ВКЛ" : "АВТО: ВЫКЛ";
+      btn.style.color = isAutoCam ? "var(--iddc-red)" : "var(--text-muted)";
+      btn.style.borderColor = isAutoCam ? "var(--iddc-red)" : "var(--text-muted)";
+    }
+
     async function loadData() {
       try {
-        const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&headers=0&sheet=${encodeURIComponent(SHEET_NAME)}`;
+        const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&headers=0&sheet=Sat%2032DE`;
         const res = await fetch(url);
         const txt = await res.text();
         const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
         
         renderBoard(json.table.rows);
-        
         document.getElementById('sync-status').innerText = "Live: Синхронизировано " + new Date().toLocaleTimeString();
       } catch (e) {
         document.getElementById('sync-status').innerText = "Ожидание обновления...";
       }
     }
 
-    // Запуск цикла (опрос раз в 2 секунды)
     window.addEventListener('DOMContentLoaded', () => {
-      // Инициализация пустых состояний, чтобы не триггерить попапы при первой загрузке
-      BRACKET_MAP.forEach(r => r.heats.forEach(h => previousWinners[h.id] = null));
-      
+      // Инициализируем историю, чтобы не спамить плашками при первой загрузке
+      SAT_TOP_CONFIG.forEach(r => r.heats.forEach(h => knownWinners[h.id] = null));
       loadData();
-      setInterval(loadData, 2000);
+      setInterval(loadData, 2000); // Опрос каждые 2 секунды
     });
   </script>
 </body>
