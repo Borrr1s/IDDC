@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ИГОРА ДРАЙВ | Drift Matsuri SPb — Сетка ТОП-32 DE</title>
+  <title>ИГОРА ДРАЙВ | Drift Matsuri SPb — Double Elimination Top 32</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -55,7 +55,7 @@
     }
 
     .header-content {
-      max-width: 1850px;
+      max-width: 1880px;
       margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
@@ -468,7 +468,7 @@
       position: absolute; bottom: 0; left: 0; height: 4px; background: var(--matsuri-lime); width: 100%; transform-origin: left;
     }
 
-    /* PILOTS TABLE */
+    /* TABLE */
     .table-container {
       background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto;
     }
@@ -493,7 +493,7 @@
         <div class="badge-circuit">Игора Драйв</div>
         <div class="titles">
           <h1>Дрифт-Вызов <span>// Drift Matsuri SPb</span></h1>
-          <p>Double Elimination Top 32 • Сетка соревнований</p>
+          <p>Double Elimination Top 32 • Онлайн сетка заездов</p>
         </div>
       </div>
 
@@ -668,7 +668,7 @@
     let isFirstLoad = true;
     let modalTimer = null;
 
-    // Структура всех 62 хитов и точные переходы по сетке
+    // Регламентная сетка всех 62 хитов
     const DE_TREE = {
       // Суббота R1A & R1B
       1:  { round: 'R1A', sheet: 'sat', s1: 1, s2: 32, nextW: [25, 'p1', 'Хит 25 (Раунд 3А)'], nextL: [17, 'p1', 'Хит 17 (L1)'] },
@@ -709,7 +709,7 @@
       31: { round: 'R3B', sheet: 'sat', ph1: 'W13', ph2: 'W14', nextW: [48, 'p1', 'Вскр Хит 48 (Top 8)'], nextL: [34, 'p2', 'Вскр Хит 34 (L31)'] },
       32: { round: 'R3B', sheet: 'sat', ph1: 'W15', ph2: 'W16', nextW: [48, 'p2', 'Вскр Хит 48 (Top 8)'], nextL: [33, 'p2', 'Вскр Хит 33 (L32)'] },
 
-      // Воскресенье Нижняя Сетка: Раунд 4
+      // Воскресенье Нижняя: Раунд 4
       33: { round: 'R4', sheet: 'sun', ph1: 'W17', ph2: 'L32', nextW: [41, 'p1', 'Хит 41 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
       34: { round: 'R4', sheet: 'sun', ph1: 'W18', ph2: 'L31', nextW: [41, 'p2', 'Хит 41 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
       35: { round: 'R4', sheet: 'sun', ph1: 'W19', ph2: 'L30', nextW: [42, 'p1', 'Хит 42 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
@@ -719,7 +719,7 @@
       39: { round: 'R4', sheet: 'sun', ph1: 'W23', ph2: 'L26', nextW: [44, 'p1', 'Хит 44 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
       40: { round: 'R4', sheet: 'sun', ph1: 'W24', ph2: 'L25', nextW: [44, 'p2', 'Хит 44 (Раунд 5)'], nextL: [null, null, 'Выбывание (17-24 место)'] },
 
-      // Воскресенье Нижняя Сетка: Раунд 5
+      // Воскресенье Нижняя: Раунд 5
       41: { round: 'R5', sheet: 'sun', ph1: 'W33', ph2: 'W34', nextW: [49, 'p1', 'Хит 49 (Раунд 7)'], nextL: [null, null, 'Выбывание (13-16 место)'] },
       42: { round: 'R5', sheet: 'sun', ph1: 'W35', ph2: 'W36', nextW: [50, 'p1', 'Хит 50 (Раунд 7)'], nextL: [null, null, 'Выбывание (13-16 место)'] },
       43: { round: 'R5', sheet: 'sun', ph1: 'W37', ph2: 'W38', nextW: [51, 'p1', 'Хит 51 (Раунд 7)'], nextL: [null, null, 'Выбывание (13-16 место)'] },
@@ -809,36 +809,60 @@
       return JSON.parse(jsonStr);
     }
 
-    // Загрузка справочника пилотов из жеребьевки
+    // ИСПРАВЛЕННЫЙ СКАНЕР: Читает ВСЕ строки (от 0), загружая пилотов 1..32
     async function loadPilotsCatalog() {
       try {
         const data = await fetchSheetJSON('ЖЕРЕБЬЕВКА');
         const rows = data.table.rows;
-        let html = '';
+        pilotsByNum = {};
+        pilotsByName = {};
 
-        for (let i = 10; i < rows.length; i++) {
-          const c = rows[i].c;
-          if (!c || !c[0] || !c[2] || typeof c[0].v !== 'number') continue;
+        // Заполняем дефолтными значениями, чтобы ни один номер не остался пустым
+        for (let num = 1; num <= 32; num++) {
+          pilotsByNum[num] = { seed: num, carNum: num, name: `Пилот #${num}`, car: '', region: '' };
+        }
 
-          const num = c[0].v;
-          const carNum = c[1] ? c[1].v : num;
-          const name = c[2] ? String(c[2].v).trim() : '';
-          const car = c[3] ? String(c[3].v).trim() : '';
-          const region = c[4] ? String(c[4].v).trim() : '';
+        // Сканируем абсолютно ВСЕ строки листа
+        for (let i = 0; i < rows.length; i++) {
+          const c = rows[i]?.c;
+          if (!c) continue;
 
-          const pilotObj = { seed: num, carNum, name, car, region };
-          pilotsByNum[num] = pilotObj;
-          if (name) {
-            pilotsByName[name.toLowerCase()] = pilotObj;
+          let foundNum = null;
+          // Ищем номер участника в первых 2-х ячейках
+          for (let col = 0; col <= 1; col++) {
+            const val = c[col]?.v;
+            if (typeof val === 'number' && val >= 1 && val <= 32) {
+              foundNum = val;
+              break;
+            }
+          }
+          if (foundNum === null) continue;
+
+          const carNum = c[1]?.v || foundNum;
+          const name = c[2]?.v ? String(c[2].v).trim() : '';
+          const car = c[3]?.v ? String(c[3].v).trim() : '';
+          const region = c[4]?.v ? String(c[4].v).trim() : '';
+
+          if (!name || name.toLowerCase().includes('судья') || name.toLowerCase().includes('секретарь')) {
+            continue;
           }
 
+          const pilotObj = { seed: foundNum, carNum, name, car, region };
+          pilotsByNum[foundNum] = pilotObj;
+          pilotsByName[name.toLowerCase()] = pilotObj;
+        }
+
+        // Рендерим вкладку "Список пилотов" строго по порядку 1..32
+        let html = '';
+        for (let num = 1; num <= 32; num++) {
+          const p = pilotsByNum[num];
           html += `
             <tr>
-              <td><strong>${num}</strong></td>
-              <td>${carNum}</td>
-              <td style="font-weight: 700;">${name}</td>
-              <td>${car}</td>
-              <td>${region}</td>
+              <td><strong>${p.seed}</strong></td>
+              <td>${p.carNum}</td>
+              <td style="font-weight: 700;">${p.name}</td>
+              <td>${p.car}</td>
+              <td>${p.region}</td>
             </tr>
           `;
         }
@@ -848,7 +872,7 @@
       }
     }
 
-    // Инициализация турнира
+    // Инициализация турнирной сетки
     function initBlankTournament() {
       for (let h = 1; h <= 62; h++) {
         const tree = DE_TREE[h];
@@ -862,23 +886,21 @@
           loser: null
         };
 
-        // Заполняем базовые пары Раунда 1А и 1Б
+        // Заезды 1..16 получают своих пилотов строго по посеву жеребьевки
         if (tree.s1 && tree.s2) {
-          const pilot1 = pilotsByNum[tree.s1] || { seed: tree.s1, name: `Пилот #${tree.s1}`, car: '' };
-          const pilot2 = pilotsByNum[tree.s2] || { seed: tree.s2, name: `Пилот #${tree.s2}`, car: '' };
-          tournamentMatches[h].p1 = { ...pilot1, seed: tree.s1 };
-          tournamentMatches[h].p2 = { ...pilot2, seed: tree.s2 };
+          tournamentMatches[h].p1 = { ...pilotsByNum[tree.s1] };
+          tournamentMatches[h].p2 = { ...pilotsByNum[tree.s2] };
         }
       }
     }
 
-    // ПОИСК И ПАРСИНГ КОНКРЕТНОГО ХИТА ВНУТРИ ЕГО BOUNDING BOX В ТАБЛИЦЕ
+    // Локальный парсер результатов заезда
     function parseHeatFromSheet(sheetRows, heatNum) {
       const match = tournamentMatches[heatNum];
       const tree = DE_TREE[heatNum];
       if (!sheetRows || !sheetRows.length) return;
 
-      // 1. Находим координаты ячейки с номером хита
+      // Ищем координаты ячейки с номером хита
       let heatR = -1;
       let heatC = -1;
 
@@ -889,11 +911,10 @@
           const cell = row.c[c];
           if (!cell || cell.v === null || cell.v === undefined) continue;
 
-          // Точное числовое или строковое совпадение с номером хита
           if (cell.v === heatNum || String(cell.v).trim() === String(heatNum)) {
-            // Для субботы 1..8 номер строго в левой колонке (col 0)
+            // Для субботы 1..8 номер строго слева
             if (heatNum <= 8 && c > 2) continue;
-            // Для субботы 9..16 номер строго в правой колонке
+            // Для субботы 9..16 номер строго справа
             if (heatNum >= 9 && heatNum <= 16 && c < 20) continue;
             
             heatR = r;
@@ -904,98 +925,91 @@
         if (heatR !== -1) break;
       }
 
-      if (heatR === -1) return; // Хит ещё не найден в таблице
+      if (heatR === -1) return;
 
-      // 2. Определяем локальный Bounding Box для этого заезда
-      const rMin = Math.max(0, heatR - 1);
-      const rMax = Math.min(sheetRows.length - 1, heatR + 4);
-      const cMin = Math.max(0, heatC - 3);
-      const cMax = Math.min(35, heatC + 5);
+      // Локальная область заезда: максимум 3 строки вниз
+      const rMin = heatR;
+      const rMax = Math.min(sheetRows.length - 1, heatR + 3);
+      const cMin = Math.max(0, heatC - 2);
+      const cMax = Math.min(35, heatC + 6);
 
-      // 3. Собираем пилотов и отметки победы ТОЛЬКО внутри этого блока
-      let candidates = [];
+      // Для заездов 17..62: если соперники еще не подтянуты, считываем их из ячеек этого заезда
+      if (heatNum > 16 && (!match.p1 || !match.p2)) {
+        let detected = [];
+        for (let r = rMin; r <= rMax; r++) {
+          const row = sheetRows[r];
+          if (!row || !row.c) continue;
+          for (let c = cMin; c <= cMax; c++) {
+            const v = row.c[c]?.v;
+            if (!v) continue;
+            if (typeof v === 'number' && pilotsByNum[v] && v !== heatNum) {
+              if (!detected.find(d => d.seed === v)) detected.push(pilotsByNum[v]);
+            } else if (typeof v === 'string') {
+              const low = v.trim().toLowerCase();
+              if (pilotsByName[low] && !detected.find(d => d.seed === pilotsByName[low].seed)) {
+                detected.push(pilotsByName[low]);
+              }
+            }
+          }
+        }
+        if (detected[0] && !match.p1) match.p1 = detected[0];
+        if (detected[1] && !match.p2) match.p2 = detected[1];
+      }
+
+      if (!match.p1 || !match.p2) return;
+
+      // Проверяем наличие отметки 'w' строго в строках этого заезда
+      let p1HasWin = false;
+      let p2HasWin = false;
 
       for (let r = rMin; r <= rMax; r++) {
         const row = sheetRows[r];
         if (!row || !row.c) continue;
 
-        let rowPilot = null;
-        let rowHasWin = false;
+        let rowMentionsP1 = false;
+        let rowMentionsP2 = false;
+        let rowHasW = false;
 
         for (let c = cMin; c <= cMax; c++) {
-          const cell = row.c[c];
-          if (!cell || cell.v === null || cell.v === undefined) continue;
+          const v = row.c[c]?.v;
+          if (!v) continue;
 
-          const val = cell.v;
-          const strVal = String(val).trim();
+          if (isWinChar(v)) rowHasW = true;
 
-          // Проверяем 'w' в этой строке
-          if (isWinChar(val)) {
-            rowHasWin = true;
+          const strV = String(v).trim().toLowerCase();
+          if (v === match.p1.seed || strV === String(match.p1.name).toLowerCase()) {
+            rowMentionsP1 = true;
           }
-
-          // Проверяем, есть ли пилот в этой ячейке
-          if (typeof val === 'number' && pilotsByNum[val] && !rowPilot && val !== heatNum) {
-            rowPilot = { ...pilotsByNum[val] };
-          } else if (typeof val === 'string') {
-            const low = strVal.toLowerCase();
-            if (pilotsByName[low] && !rowPilot) {
-              rowPilot = { ...pilotsByName[low] };
-            } else if (low.startsWith('l') || low.startsWith('w')) {
-              // Плейсхолдер формулы, например "L32" или "W25"
-              if (!rowPilot && !isWinChar(val)) {
-                rowPilot = { seed: strVal, name: `Ожидание (${strVal})`, car: '' };
-              }
-            }
+          if (v === match.p2.seed || strV === String(match.p2.name).toLowerCase()) {
+            rowMentionsP2 = true;
           }
         }
 
-        if (rowPilot) {
-          // Исключаем дублирование того же пилота из соседних объединённых ячеек
-          if (!candidates.find(item => item.pilot.seed === rowPilot.seed && item.pilot.name === rowPilot.name)) {
-            candidates.push({ pilot: rowPilot, hasWin: rowHasWin, rowIdx: r });
-          } else if (rowHasWin) {
-            // Если 'w' стояла на строку ниже/выше в объединенной ячейке
-            const existing = candidates.find(item => item.pilot.seed === rowPilot.seed && item.pilot.name === rowPilot.name);
-            if (existing) existing.hasWin = true;
-          }
+        if (rowHasW) {
+          if (rowMentionsP1) p1HasWin = true;
+          if (rowMentionsP2) p2HasWin = true;
         }
       }
 
-      // Привязываем найденных кандидатов к слотам p1 и p2
-      if (candidates[0]) {
-        match.p1 = candidates[0].pilot;
-      }
-      if (candidates[1]) {
-        match.p2 = candidates[1].pilot;
-      }
-
-      // 4. ОПРЕДЕЛЯЕМ ПОБЕДИТЕЛЯ ХИТА (СТРОГО ЛОКАЛЬНО)
-      if (candidates.length >= 2) {
-        if (candidates[0].hasWin && !candidates[1].hasWin) {
-          match.winner = candidates[0].pilot;
-          match.loser = candidates[1].pilot;
-        } else if (candidates[1].hasWin && !candidates[0].hasWin) {
-          match.winner = candidates[1].pilot;
-          match.loser = candidates[0].pilot;
-        }
-      } else if (candidates.length === 1 && candidates[0].hasWin && match.p2) {
-        // Если соперник ещё формально не назван, но пилот уже победил
-        match.winner = candidates[0].pilot;
+      // Назначаем победителя строго локально
+      if (p1HasWin && !p2HasWin) {
+        match.winner = match.p1;
         match.loser = match.p2;
+      } else if (p2HasWin && !p1HasWin) {
+        match.winner = match.p2;
+        match.loser = match.p1;
       }
     }
 
-    // Двухуровневый движок: если на следующем листе формула ещё рассчитывается,
-    // скрипт подставляет победителей/проигравших автоматически
+    // Автоматическое продвижение по сетке Double Elimination
     function propagateTreeFallback() {
-      for (let pass = 0; pass < 5; pass++) {
+      for (let pass = 0; pass < 6; pass++) {
         for (let h = 1; h <= 62; h++) {
           const m = tournamentMatches[h];
           const tree = DE_TREE[h];
 
           if (m.winner && m.loser) {
-            // Переход победителя
+            // Победитель идет дальше
             if (tree.nextW && tree.nextW[0]) {
               const targetHeat = tournamentMatches[tree.nextW[0]];
               const slot = tree.nextW[1];
@@ -1004,7 +1018,7 @@
               }
             }
 
-            // Переход проигравшего
+            // Проигравший падает в нижнюю сетку
             if (tree.nextL && tree.nextL[0]) {
               const targetHeat = tournamentMatches[tree.nextL[0]];
               const slot = tree.nextL[1];
@@ -1017,7 +1031,7 @@
       }
     }
 
-    // ПРОВЕРКА ПОЯВЛЕНИЯ НОВЫХ ПОБЕД НА ВСЕХ 62 ХИТАХ
+    // Отслеживание новых побед для вывода плашки (для всех 62 хитов)
     function checkAlertsForAllHeats() {
       for (let h = 1; h <= 62; h++) {
         const m = tournamentMatches[h];
@@ -1026,7 +1040,6 @@
           const currentWinKey = `${m.winner.seed}_${m.winner.name}`;
 
           if (!prevWinKey && !isFirstLoad) {
-            // Новая победа зафиксирована! Показываем плашку!
             const tree = DE_TREE[h];
             const loseText = tree.nextL[2] || 'Выбывание';
             showWinnerModal(h, m.winner, m.loser, loseText);
@@ -1125,7 +1138,6 @@
     }
 
     function renderDOM() {
-      // Суббота
       renderGroupHTML('colR1A', [1,2,3,4,5,6,7,8]);
       renderGroupHTML('colR1B', [9,10,11,12,13,14,15,16]);
       renderGroupHTML('colR3A', [25,26,27,28]);
@@ -1133,7 +1145,6 @@
       renderGroupHTML('colR2A', [17,18,19,20]);
       renderGroupHTML('colR2B', [21,22,23,24]);
 
-      // Воскресенье
       renderGroupHTML('colR6', [45,46,47,48]);
       renderGroupHTML('colR9', [55,56]);
       renderGroupHTML('colR12', [60]);
@@ -1154,14 +1165,13 @@
       el.innerHTML = heats.map(createHeatCardHTML).join('');
     }
 
-    // Главный цикл синхронизации
+    // Синхронизация данных в реальном времени
     async function runSync() {
       try {
         document.getElementById('syncText').innerText = 'Обновление...';
 
         initBlankTournament();
 
-        // Читаем оба соревновательных листа
         const [satData, sunData] = await Promise.all([
           fetchSheetJSON('Sat 32DE'),
           fetchSheetJSON('Sun 32DE')
@@ -1170,23 +1180,23 @@
         const satRows = satData.table.rows;
         const sunRows = sunData.table.rows;
 
-        // 1. Сканируем заезды субботы (хиты 1..32)
+        // Суббота: хиты 1..32
         for (let h = 1; h <= 32; h++) {
           parseHeatFromSheet(satRows, h);
         }
 
-        // 2. Сканируем заезды воскресенья (хиты 33..62)
+        // Воскресенье: хиты 33..62
         for (let h = 33; h <= 62; h++) {
           parseHeatFromSheet(sunRows, h);
         }
 
-        // 3. Применяем fallback-продвижение, если формулы ещё не рассчитали следующую строку
+        // Продвижение по дереву
         propagateTreeFallback();
 
-        // 4. Проверяем новые победы для плашки по ВСЕМ 62 хитам
+        // Проверка новых побед
         checkAlertsForAllHeats();
 
-        // 5. Отрисовываем обновленную сетку
+        // Отрисовка
         renderDOM();
 
         document.getElementById('syncText').innerText = `OK (${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'})})`;
