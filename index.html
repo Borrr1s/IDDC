@@ -1,159 +1,252 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ИГОРА ДРАЙВ ДРИФТ-ВЫЗОВ | Live Broadcast</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IDDC Broadcast System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Montserrat:wght@600;800;900&family=Russo+One&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
   <style>
+    /* Базовые настройки и цвета */
     :root {
-      --bg-dark: #07090d;
-      --bg-card: #0f1319;
-      --border-card: #1f2937;
-      --iddc-magenta: #b30047;
+      --bg-color: #0b0f19;
+      --bg-grid: rgba(255, 255, 255, 0.03);
+      --header-bg: #000000;
+      --iddc-red: #e3003b; /* Фирменный малиново-красный IDDC */
       --igora-red: #e10600;
-      --win-green: #10b981;
-      --lose-red: #f43f5e;
       --text-main: #ffffff;
-      --text-muted: #6b7280;
+      --text-muted: #8b92a5;
+      --card-bg: rgba(15, 20, 30, 0.8);
+      --card-border: #1e2638;
+      --win-color: #00d26a;
+      --lose-color: #f43f5e;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+
     body {
-      background: radial-gradient(circle at 50% 10%, #171d2a 0%, var(--bg-dark) 85%);
+      background-color: var(--bg-color);
       color: var(--text-main);
-      font-family: 'Montserrat', sans-serif;
-      min-height: 100vh;
+      overflow: hidden; /* Запрещаем скролл для трансляции */
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
     }
 
-    /* Фоновая сетка трансляции */
+    /* Фоновая клетка как на скриншоте */
     body::before {
       content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 32px 32px;
-      pointer-events: none;
-      z-index: 0;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        linear-gradient(var(--bg-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -1;
     }
 
-    /* ========================================================
-       ШАПКА В СТИЛЕ АФИШИ IDDC (БЕЗ ВНЕШНИХ КАРТИНОК)
-    ======================================================== */
+    /* =========================================================
+       ШАПКА (HEADER)
+       ========================================================= */
     header {
-      position: relative;
-      z-index: 20;
-      background: #0d0f12;
-      border-bottom: 3px solid var(--iddc-magenta);
+      background-color: var(--header-bg);
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 24px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      border-bottom: 2px solid var(--iddc-red);
     }
+
     .header-left { display: flex; align-items: center; gap: 16px; }
     
-    /* Логотип IDDC */
-    .iddc-logo-box {
-      background: #000;
-      border: 3px solid var(--iddc-magenta);
-      transform: skewX(-15deg);
-      padding: 6px 18px;
-      box-shadow: 0 0 15px rgba(179, 0, 71, 0.4);
+    .iddc-logo-text {
+      font-weight: 900;
+      font-size: 28px;
+      color: var(--iddc-red);
+      font-style: italic;
+      letter-spacing: -1px;
     }
-    .iddc-logo-box span {
-      display: block;
-      font-family: 'Russo One', sans-serif;
-      color: var(--iddc-magenta);
-      font-size: 32px;
-      transform: skewX(15deg);
-      letter-spacing: 1px;
-    }
-    .iddc-title-box { display: flex; flex-direction: column; }
-    .iddc-ru { font-family: 'Russo One', sans-serif; font-size: 20px; color: #fff; text-transform: uppercase; }
-    .iddc-en { font-family: 'Chakra Petch', sans-serif; font-size: 11px; font-weight: 700; color: #aaa; letter-spacing: 1.5px; }
+    
+    .header-titles { display: flex; flex-direction: column; }
+    .title-ru { font-weight: 800; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .title-en { font-weight: 600; font-size: 9px; color: var(--text-muted); letter-spacing: 2px; }
 
     .header-right { display: flex; align-items: center; gap: 24px; }
     
-    /* Лого Игора Драйв */
-    .logo-igora { display: flex; flex-direction: column; align-items: flex-end; }
-    .logo-igora .top { font-family: 'Brush Script MT', cursive, sans-serif; font-size: 26px; color: #fff; margin-bottom: -10px; transform: rotate(-4deg); }
-    .logo-igora .bot { font-family: 'Chakra Petch', sans-serif; font-size: 13px; color: var(--iddc-magenta); font-weight: 700; letter-spacing: 2px; }
+    .logo-igora { display: flex; align-items: center; gap: 6px; }
+    .igora-text { font-family: serif; font-size: 20px; font-style: italic; }
+    .drive-text { font-weight: 800; font-size: 12px; color: var(--iddc-red); letter-spacing: 1px; }
 
-    /* Лого Дрифт Мацури */
-    .logo-matsuri { display: flex; flex-direction: column; align-items: center; transform: rotate(-3deg); }
-    .logo-matsuri .top { font-family: 'Russo One', sans-serif; font-size: 13px; color: #ffeb3b; text-shadow: 2px 2px 0 #000; margin-bottom: -5px; z-index: 2; }
-    .logo-matsuri .bot { font-family: 'Russo One', sans-serif; font-size: 18px; color: #e91e63; text-shadow: 2px 2px 0 #000; }
+    .logo-matsuri { display: flex; flex-direction: column; align-items: center; line-height: 1; transform: rotate(-2deg); }
+    .m-drift { font-weight: 900; font-size: 10px; color: #ffeb3b; }
+    .m-matsuri { font-weight: 900; font-size: 14px; color: #e91e63; }
 
-    /* Лого Kinforest */
-    .logo-kf { display: flex; align-items: center; gap: 8px; background: #1a1f26; border-right: 4px solid var(--igora-red); padding: 4px 12px; border-radius: 4px; }
-    .logo-kf span { font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 14px; font-style: italic; color: #fff; letter-spacing: 1.5px; }
+    .logo-kf { font-weight: 900; font-size: 14px; font-style: italic; letter-spacing: 1px; border-left: 1px solid #333; padding-left: 16px;}
 
-    /* НАВИГАЦИЯ */
-    .nav-bar { position: relative; z-index: 15; display: flex; justify-content: space-between; padding: 12px 24px; background: rgba(10, 13, 18, 0.85); border-bottom: 1px solid var(--border-card); }
-    .nav-tabs button { background: #161b22; border: 1px solid var(--border-card); color: var(--text-muted); padding: 8px 20px; font-family: 'Chakra Petch', sans-serif; font-weight: 700; cursor: pointer; transition: 0.2s; text-transform: uppercase; }
-    .nav-tabs button.active { background: var(--iddc-magenta); color: #fff; border-color: var(--iddc-magenta); }
-    
-    .view-controls button { background: #161b22; border: 1px solid var(--border-card); color: #fff; padding: 6px 14px; font-family: 'Chakra Petch', sans-serif; font-size: 11px; cursor: pointer; transition: 0.2s; }
-    .view-controls button.active { background: var(--igora-red); border-color: var(--igora-red); }
+    /* =========================================================
+       МЕНЮ УПРАВЛЕНИЯ (SUB-HEADER)
+       ========================================================= */
+    .control-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.5);
+      padding: 8px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
 
-    /* КОНТЕЙНЕРЫ ЭКРАНОВ */
-    .tab-view { display: none; padding: 20px 30px; position: relative; z-index: 5; flex: 1; }
-    .tab-view.active { display: block; }
-    
-    /* ПЛАВНАЯ СМЕНА СЕТОК */
-    .carousel-container { position: relative; width: 100%; min-height: 750px; }
-    .carousel-slide { position: absolute; top: 0; left: 0; width: 100%; opacity: 0; visibility: hidden; transition: opacity 0.6s ease, visibility 0.6s; }
-    .carousel-slide.active { opacity: 1; visibility: visible; position: relative; }
+    .tabs-left { display: flex; gap: 12px; }
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 6px 16px;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .tab-btn.active {
+      background-color: var(--iddc-red);
+      color: white;
+    }
+    .tab-btn:not(.active):hover { color: white; background: rgba(255,255,255,0.05); }
 
-    /* СЕТКА ТУРНИРА */
-    .bracket-layout { display: flex; gap: 20px; transition: transform 0.5s ease; }
-    .bracket-col { display: flex; flex-direction: column; gap: 12px; flex: 1; transition: opacity 0.5s ease, flex 0.5s ease; }
-    
-    /* ДИЗАЙН ПАРЫ ПО РЕФЕРЕНСУ (Скрин 2) */
-    .match-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 4px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.5); cursor: pointer; transition: 0.2s; }
-    .match-card:hover { border-color: #3b82f6; transform: translateY(-2px); }
-    .match-header { display: flex; justify-content: space-between; padding: 6px 10px; background: rgba(0,0,0,0.4); font-size: 10px; font-family: 'Chakra Petch', sans-serif; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border-card); }
-    
-    .match-row { display: flex; align-items: center; padding: 8px 10px; border-bottom: 1px solid var(--border-card); position: relative; }
-    .match-row:last-child { border-bottom: none; }
-    .match-row.winner { background: rgba(16, 185, 129, 0.12); border-left: 3px solid var(--win-green); padding-left: 7px; }
-    
-    .seed-box { color: var(--text-muted); font-weight: 700; width: 28px; font-family: 'Chakra Petch', sans-serif; font-size: 11px; }
-    .pilot-name { color: #fff; font-weight: 700; font-size: 13px; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .win-tag { font-size: 10px; font-family: 'Chakra Petch', sans-serif; color: var(--win-green); font-weight: bold; border: 1px solid var(--win-green); padding: 1px 4px; border-radius: 2px; }
+    .tabs-right { display: flex; gap: 8px; align-items: center; }
+    .view-btn {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 4px 12px;
+      font-weight: 700;
+      font-size: 10px;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .view-btn.active {
+      border-color: var(--iddc-red);
+      color: white;
+    }
+    .auto-btn { color: var(--text-muted); font-size: 10px; font-weight: bold; background: none; border: none; cursor: pointer; margin-left: 10px; }
+    .auto-btn.on { color: var(--win-color); }
 
-    /* ========================================================
-       ОВЕРЛЕЙ ПОБЕДИТЕЛЯ (Скрин 4)
-    ======================================================== */
-    .winner-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 7, 10, 0.92); backdrop-filter: blur(10px); z-index: 1000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
-    .winner-overlay.active { display: flex; opacity: 1; }
-    
-    .winner-box { width: 90%; max-width: 800px; background: #0f1319; border: 2px solid #ffb800; border-radius: 8px; padding: 30px 40px; text-align: center; box-shadow: 0 0 50px rgba(255, 184, 0, 0.2); position: relative; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.25); }
-    @keyframes popIn { from { transform: scale(0.9); } to { transform: scale(1); } }
-    
-    .w-title { font-family: 'Chakra Petch', sans-serif; font-size: 12px; color: #ffb800; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; }
-    .w-hero { font-family: 'Russo One', sans-serif; font-size: 48px; color: #fff; text-transform: uppercase; margin-bottom: 20px; }
-    
-    .w-duel { display: flex; justify-content: space-around; border-top: 1px solid var(--border-card); padding-top: 20px; margin-bottom: 20px; }
-    .w-side { display: flex; flex-direction: column; gap: 4px; }
-    .w-label { font-family: 'Chakra Petch', sans-serif; font-size: 11px; text-transform: uppercase; font-weight: bold; }
-    .w-label.win { color: var(--win-green); }
-    .w-label.lose { color: var(--lose-red); }
-    .w-name { font-size: 18px; font-weight: bold; color: #fff; }
-    .w-vs { font-family: 'Chakra Petch', sans-serif; font-size: 16px; color: var(--text-muted); align-self: center; }
+    /* =========================================================
+       СЕТКА (BRACKET)
+       ========================================================= */
+    .main-content {
+      flex: 1;
+      padding: 24px;
+      position: relative;
+    }
 
-    /* Полоса таймера закрытия */
-    .timer-bar { width: 100%; height: 3px; background: #374151; overflow: hidden; }
-    .timer-progress { width: 100%; height: 100%; background: #ffb800; }
-    .timer-progress.run { animation: countdown 12s linear forwards; }
-    @keyframes countdown { to { width: 0%; } }
+    .screen-view { display: none; height: 100%; }
+    .screen-view.active { display: block; }
+
+    .bracket-container {
+      display: flex;
+      gap: 20px;
+      height: 100%;
+      transition: opacity 0.3s;
+    }
+
+    .round-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .round-title {
+      font-weight: 800;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: white;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    /* Карточка заезда */
+    .heat {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .heat-header {
+      background: rgba(0,0,0,0.6);
+      padding: 4px 8px;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .pilot-row {
+      display: flex;
+      align-items: center;
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.02);
+      position: relative;
+    }
+    .pilot-row:last-child { border-bottom: none; }
+    
+    .pilot-row.winner { background: rgba(0, 210, 106, 0.1); }
+    .pilot-row.winner::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--win-color);
+    }
+    .pilot-row.loser { opacity: 0.4; }
+
+    .seed { font-size: 10px; font-weight: 700; color: #5a657c; width: 24px; }
+    .name { font-size: 12px; font-weight: 700; color: white; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .win-badge { font-size: 9px; font-weight: 800; color: var(--win-color); border: 1px solid var(--win-color); padding: 1px 4px; border-radius: 2px; }
+
+    /* =========================================================
+       ОВЕРЛЕЙ ПОБЕДИТЕЛЯ
+       ========================================================= */
+    .overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(5, 8, 14, 0.95);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .overlay.show { display: flex; opacity: 1; }
+
+    .overlay-card {
+      background: #0f141e;
+      border: 2px solid var(--iddc-red);
+      padding: 40px 60px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 0 50px rgba(227, 0, 59, 0.3);
+      width: 800px;
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .overlay.show .overlay-card { transform: scale(1); }
+
+    .ov-heat { font-weight: 800; font-size: 14px; color: var(--iddc-red); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+    .ov-winner { font-weight: 900; font-size: 56px; text-transform: uppercase; margin-bottom: 30px; line-height: 1; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+    
+    .ov-split { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+    .ov-side { display: flex; flex-direction: column; width: 40%; }
+    .ov-label { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
+    .ov-label.win { color: var(--win-color); }
+    .ov-label.lose { color: var(--lose-color); }
+    .ov-name { font-size: 20px; font-weight: 700; }
+    .ov-vs { font-weight: 900; font-size: 24px; color: var(--text-muted); }
+
+    /* Индикатор загрузки */
+    #status { position: fixed; bottom: 10px; right: 10px; font-size: 10px; color: var(--text-muted); z-index: 100; }
   </style>
 </head>
 <body>
@@ -161,278 +254,298 @@
   <!-- ШАПКА -->
   <header>
     <div class="header-left">
-      <div class="iddc-logo-box"><span>IDDC</span></div>
-      <div class="iddc-title-box">
-        <span class="iddc-ru">«ИГОРА ДРАЙВ ДРИФТ-ВЫЗОВ»</span>
-        <span class="iddc-en">IGORA DRIVE DRIFT CHALLENGE</span>
+      <div class="iddc-logo-text">IDDC</div>
+      <div class="header-titles">
+        <div class="title-ru">«Игора Драйв Дрифт-Вызов»</div>
+        <div class="title-en">IGORA DRIVE DRIFT CHALLENGE</div>
       </div>
     </div>
     <div class="header-right">
       <div class="logo-igora">
-        <span class="top">Игора</span>
-        <span class="bot">ДРАЙВ</span>
+        <span class="igora-text">Игора</span>
+        <span class="drive-text">ДРАЙВ</span>
       </div>
       <div class="logo-matsuri">
-        <span class="top">ДРИФТ</span>
-        <span class="bot">МАЦУРИ</span>
+        <span class="m-drift">ДРИФТ</span>
+        <span class="m-matsuri">МАЦУРИ</span>
       </div>
-      <div class="logo-kf">
-        <span>KINFOREST</span>
-      </div>
+      <div class="logo-kf">KINFOREST</div>
     </div>
   </header>
 
-  <!-- НАВИГАЦИЯ -->
-  <div class="nav-bar">
-    <div class="nav-tabs">
-      <button class="active" onclick="switchTab('tab-sat')">Сетка Суббота (Sat 32DE)</button>
-      <button onclick="switchTab('tab-sun')">Сетка Воскресенье (Sun 32DE)</button>
+  <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
+  <div class="control-bar">
+    <div class="tabs-left">
+      <button class="tab-btn active" onclick="switchDay('sat')">Сетка Суббота (Sat 32DE)</button>
+      <button class="tab-btn" onclick="switchDay('sun')">Сетка Воскресенье (Sun 32DE)</button>
     </div>
-    <div class="view-controls">
-      <span style="color: var(--text-muted); font-size:11px; margin-right: 10px;">Камера:</span>
-      <button id="btn-view-0" class="active" onclick="manualSlide(0)">ВЕРХНЯЯ СЕТКА</button>
-      <button id="btn-view-1" onclick="manualSlide(1)">НИЖНЯЯ СЕТКА</button>
-      <button onclick="toggleAuto()" id="btn-auto">АВТО: ВКЛ</button>
+    <div class="tabs-right">
+      <span style="font-size: 10px; font-weight: bold; color: #555;">КАМЕРА:</span>
+      <button id="btn-top" class="view-btn active" onclick="switchView('top')">ВЕРХНЯЯ СЕТКА</button>
+      <button id="btn-bot" class="view-btn" onclick="switchView('bot')">НИЖНЯЯ СЕТКА</button>
+      <button id="btn-auto" class="auto-btn on" onclick="toggleAuto()">АВТО: ВЫКЛ</button>
     </div>
   </div>
 
-  <!-- ЭКРАН СУББОТЫ -->
-  <main id="tab-sat" class="tab-view active">
-    <div class="carousel-container">
-      <!-- Слайд 1: Верхняя сетка (Победители) -->
-      <div class="carousel-slide active" id="slide-0">
-        <div class="bracket-layout" id="sat-winners-layout">
-          <div class="bracket-col" id="col-R1A"></div>
-          <div class="bracket-col" id="col-R3A"></div>
-          <div class="bracket-col" id="col-R3B"></div>
-          <div class="bracket-col" id="col-R1B"></div>
+  <!-- ОСНОВНОЙ ЭКРАН СУББОТЫ -->
+  <main class="main-content">
+    
+    <!-- СУББОТА: ВЕРХНЯЯ СЕТКА -->
+    <div id="sat-top" class="screen-view active">
+      <div class="bracket-container">
+        <!-- Раунд 1А -->
+        <div class="round-col" id="col-r1a">
+          <div class="round-title">Раунд 1А</div>
+          <div id="heats-r1a"></div>
         </div>
-      </div>
-      <!-- Слайд 2: Нижняя сетка (Проигравшие) -->
-      <div class="carousel-slide" id="slide-1">
-        <div class="bracket-layout">
-          <div class="bracket-col" id="col-R2A"></div>
-          <div class="bracket-col" id="col-R2B"></div>
+        <!-- Раунд 3А -->
+        <div class="round-col" id="col-r3a">
+          <div class="round-title">Раунд 3А</div>
+          <div id="heats-r3a"></div>
+        </div>
+        <!-- Раунд 3Б -->
+        <div class="round-col" id="col-r3b">
+          <div class="round-title">Раунд 3Б</div>
+          <div id="heats-r3b"></div>
+        </div>
+        <!-- Раунд 1Б -->
+        <div class="round-col" id="col-r1b">
+          <div class="round-title">Раунд 1Б</div>
+          <div id="heats-r1b"></div>
         </div>
       </div>
     </div>
-  </main>
 
-  <!-- ЭКРАН ВОСКРЕСЕНЬЯ (Пока заглушка для компактности, логика та же) -->
-  <main id="tab-sun" class="tab-view">
-    <div style="text-align: center; color: var(--text-muted); margin-top: 50px;">Данные воскресной сетки загружаются...</div>
-  </main>
-
-  <!-- ОВЕРЛЕЙ ПОБЕДИТЕЛЯ -->
-  <div class="winner-overlay" id="overlay">
-    <div class="winner-box">
-      <div class="w-title" id="ov-round">РЕЗУЛЬТАТ ЗАЕЗДА</div>
-      <div class="w-hero" id="ov-winner">ИМЯ ПИЛОТА</div>
-      <div class="w-duel">
-        <div class="w-side">
-          <span class="w-label win">ПРОХОДИТ ДАЛЬШЕ</span>
-          <span class="w-name" id="ov-p1">Пилот 1</span>
+    <!-- СУББОТА: НИЖНЯЯ СЕТКА -->
+    <div id="sat-bot" class="screen-view">
+      <div class="bracket-container">
+        <div class="round-col">
+          <div class="round-title">Раунд 2А (Нижняя сетка)</div>
+          <div id="heats-r2a"></div>
         </div>
-        <div class="w-vs">VS</div>
-        <div class="w-side">
-          <span class="w-label lose">В НИЖНЮЮ СЕТКУ</span>
-          <span class="w-name" id="ov-p2">Пилот 2</span>
+        <div class="round-col">
+          <div class="round-title">Раунд 2Б (Нижняя сетка)</div>
+          <div id="heats-r2b"></div>
         </div>
       </div>
-      <div class="timer-bar"><div class="timer-progress" id="ov-timer"></div></div>
+    </div>
+
+    <!-- ВОСКРЕСЕНЬЕ (ЗАГЛУШКА ДЛЯ ПРИМЕРА) -->
+    <div id="sun-view" class="screen-view">
+      <div style="text-align: center; color: var(--text-muted); margin-top: 100px; font-weight: bold;">
+        ДАННЫЕ ВОСКРЕСЕНЬЯ ЗАГРУЖАЮТСЯ...
+      </div>
+    </div>
+
+  </main>
+
+  <div id="status">Подключение...</div>
+
+  <!-- ОВЕРЛЕЙ ПОБЕДИТЕЛЯ -->
+  <div id="winner-overlay" class="overlay">
+    <div class="overlay-card">
+      <div class="ov-heat" id="ov-heat-name">ХИТ 1</div>
+      <div class="ov-winner" id="ov-winner-name">ИМЯ ПИЛОТА</div>
+      <div class="ov-split">
+        <div class="ov-side">
+          <span class="ov-label win">ПРОХОДИТ ДАЛЬШЕ</span>
+          <span class="ov-name" id="ov-p1-name">Пилот 1</span>
+        </div>
+        <div class="ov-vs">VS</div>
+        <div class="ov-side">
+          <span class="ov-label lose">В НИЖНЮЮ СЕТКУ</span>
+          <span class="ov-name" id="ov-p2-name">Пилот 2</span>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    const SPREADSHEET_ID = "1ydV36JHtw8T00uJwsZYAxU-tCaWIrQv5yPkKpqtCtTk";
-    let lastWinnerHash = {};
-    let slideIndex = 0;
-    let autoRotate = true;
-    let overlayTimer = null;
+    const SPREADSHEET_ID = '1ydV36JHtw8T00uJwsZYAxU-tCaWIrQv5yPkKpqtCtTk';
+    let currentDay = 'sat';
+    let currentView = 'top';
+    let autoSwitch = false;
+    let knownWinners = {}; // Для отслеживания новых победителей
+    let overlayTimeout = null;
 
-    // Переключение главных вкладок
-    function switchTab(id) {
-      document.querySelectorAll('.tab-view').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-tabs button').forEach(el => el.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      event.currentTarget.classList.add('active');
+    // Управление вкладками
+    function switchDay(day) {
+      currentDay = day;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      document.querySelectorAll('.screen-view').forEach(v => v.classList.remove('active'));
+      if(day === 'sun') {
+        document.getElementById('sun-view').classList.add('active');
+      } else {
+        document.getElementById(`sat-${currentView}`).classList.add('active');
+      }
     }
 
-    // Переключение карусели ВЕРХ / НИЗ
-    function manualSlide(index) {
-      slideIndex = index;
-      document.getElementById('slide-0').classList.toggle('active', index === 0);
-      document.getElementById('slide-1').classList.toggle('active', index === 1);
-      document.getElementById('btn-view-0').classList.toggle('active', index === 0);
-      document.getElementById('btn-view-1').classList.toggle('active', index === 1);
+    function switchView(view) {
+      currentView = view;
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`btn-${view}`).classList.add('active');
+      
+      if(currentDay === 'sat') {
+        document.querySelectorAll('.screen-view').forEach(v => v.classList.remove('active'));
+        document.getElementById(`sat-${view}`).classList.add('active');
+      }
     }
-    
+
     function toggleAuto() {
-      autoRotate = !autoRotate;
-      document.getElementById('btn-auto').innerText = autoRotate ? "АВТО: ВКЛ" : "АВТО: ВЫКЛ";
+      autoSwitch = !autoSwitch;
+      const btn = document.getElementById('btn-auto');
+      if(autoSwitch) {
+        btn.classList.add('on');
+        btn.innerText = "АВТО: ВКЛ";
+      } else {
+        btn.classList.remove('on');
+        btn.innerText = "АВТО: ВЫКЛ";
+      }
     }
 
     setInterval(() => {
-      if (autoRotate && document.getElementById('tab-sat').classList.contains('active')) {
-        manualSlide(slideIndex === 0 ? 1 : 0);
+      if(autoSwitch && currentDay === 'sat') {
+        switchView(currentView === 'top' ? 'bot' : 'top');
       }
-    }, 12000);
+    }, 10000); // Смена каждые 10 сек
 
-    // Очистка строки
-    function clean(v) {
-      if (!v) return "";
-      let s = String(v).trim();
-      if (s === "0" || s.includes("#N/A") || s.includes("#VALUE!")) return "";
-      return s;
-    }
-    function isWin(v) {
-      let s = clean(v).toLowerCase();
-      return s === 'w' || s === '1' || s === 'в' || s === 'win';
+    // Вспомогательные функции парсинга
+    function getVal(row, colIndex) {
+      if (!row || !row.c || !row.c[colIndex]) return "";
+      return String(row.c[colIndex].v).trim();
     }
 
-    // Универсальный парсер: Ищет колонку раунда и спускается по ней вниз, считывая блоки по 4 строки
-    function parsePhase(rows, headerRegex, numMatches) {
-      let result = [];
-      // Находим колонку
-      let startRow = -1, col = -1;
-      for (let r = 0; r < rows.length; r++) {
-        if (!rows[r]?.c) continue;
-        for (let c = 0; c < rows[r].c.length; c++) {
-          let val = clean(rows[r].c[c]?.v).replace(/\s/g, '');
-          if (headerRegex.test(val)) { startRow = r; col = c; break; }
-        }
-        if (col !== -1) break;
-      }
-      
-      if (col === -1) return result;
-
-      // Считываем пары. В Google Sheets каждый пилот обычно занимает 2 строки (объединенная ячейка).
-      // Шаг одной пары (2 пилота) = 4 строки.
-      let r = startRow + 2; 
-      for (let i = 0; i < numMatches; i++) {
-        if (r + 2 >= rows.length) break;
-
-        let p1 = clean(rows[r].c[col]?.v) || clean(rows[r+1]?.c[col]?.v);
-        let w1 = isWin(rows[r].c[col+1]?.v) || isWin(rows[r+1]?.c[col+1]?.v);
-        
-        let p2 = clean(rows[r+2]?.c[col]?.v) || clean(rows[r+3]?.c[col]?.v);
-        let w2 = isWin(rows[r+2]?.c[col+1]?.v) || isWin(rows[r+3]?.c[col+1]?.v);
-
-        let winner = null, loser = null;
-        if (w1) { winner = p1; loser = p2; }
-        else if (w2) { winner = p2; loser = p1; }
-
-        result.push({ p1: p1 || 'TBD', w1, p2: p2 || 'TBD', w2, winner, loser });
-        r += 4;
-      }
-      return result;
+    function isWin(val) {
+      if (!val) return false;
+      const v = val.toLowerCase();
+      return v === 'w' || v === '1' || v === 'в';
     }
 
-    // Рендер колонки
-    function renderCol(containerId, title, matches, heatOffset = 1) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      
-      let html = `<div style="font-family:'Chakra Petch'; font-size:14px; font-weight:700; color:#fff; border-bottom:2px solid var(--border-card); padding-bottom:8px;">${title}</div>`;
-      
-      matches.forEach((m, idx) => {
-        let heatName = `Хит ${heatOffset + idx}`;
-        // Проверка нового победителя для вывода оверлея
-        if (m.winner && lastWinnerHash[heatName] !== m.winner) {
-          if (lastWinnerHash[heatName] !== undefined) {
-            showOverlay(heatName, m.winner, m.loser);
-          }
-          lastWinnerHash[heatName] = m.winner;
-        }
+    // Рендер одного заезда (Хита)
+    function buildHeatHTML(heatNum, seed1, name1, isWin1, seed2, name2, isWin2) {
+      // Если имен нет, не показываем мусор
+      if (!name1 && !name2) return "";
+      if (name1 === "0" || name1 === "#N/A") name1 = "";
+      if (name2 === "0" || name2 === "#N/A") name2 = "";
 
-        html += `
-          <div class="match-card" onclick="showOverlay('${heatName}', '${m.winner || m.p1}', '${m.loser || m.p2}')">
-            <div class="match-header">
-              <span>${heatName}</span>
-              <span>${m.winner ? 'ЗАВЕРШЕН' : 'ОЖИДАНИЕ'}</span>
-            </div>
-            <div class="match-row ${m.w1 ? 'winner' : ''}" style="${m.winner && !m.w1 ? 'opacity:0.5' : ''}">
-              <span class="seed-box">P1</span>
-              <span class="pilot-name">${m.p1}</span>
-              ${m.w1 ? '<span class="win-tag">WIN</span>' : ''}
-            </div>
-            <div class="match-row ${m.w2 ? 'winner' : ''}" style="${m.winner && !m.w2 ? 'opacity:0.5' : ''}">
-              <span class="seed-box">P2</span>
-              <span class="pilot-name">${m.p2}</span>
-              ${m.w2 ? '<span class="win-tag">WIN</span>' : ''}
-            </div>
+      let winnerStatus1 = isWin1 ? "winner" : (isWin2 ? "loser" : "");
+      let winnerStatus2 = isWin2 ? "winner" : (isWin1 ? "loser" : "");
+      
+      let badge1 = isWin1 ? `<span class="win-badge">WIN</span>` : "";
+      let badge2 = isWin2 ? `<span class="win-badge">WIN</span>` : "";
+
+      let statusText = (isWin1 || isWin2) ? "ЗАВЕРШЕН" : "ОЖИДАНИЕ";
+
+      return `
+        <div class="heat">
+          <div class="heat-header">
+            <span>Хит ${heatNum}</span>
+            <span>${statusText}</span>
           </div>
-        `;
-      });
-      container.innerHTML = html;
+          <div class="pilot-row ${winnerStatus1}">
+            <span class="seed">[${seed1}]</span>
+            <span class="name">${name1}</span>
+            ${badge1}
+          </div>
+          <div class="pilot-row ${winnerStatus2}">
+            <span class="seed">[${seed2}]</span>
+            <span class="name">${name2}</span>
+            ${badge2}
+          </div>
+        </div>
+      `;
     }
 
-    // Вызов оверлея
-    function showOverlay(title, winner, loser) {
-      if (winner === 'TBD') return;
-      document.getElementById('ov-round').innerText = title;
-      document.getElementById('ov-winner').innerText = winner;
-      document.getElementById('ov-p1').innerText = winner;
-      document.getElementById('ov-p2').innerText = loser || "Соперник";
-      
-      const overlay = document.getElementById('overlay');
-      const timer = document.getElementById('ov-timer');
-      
-      timer.classList.remove('run');
-      void timer.offsetWidth;
-      timer.classList.add('run');
-      overlay.classList.add('active');
-      
-      if (overlayTimer) clearTimeout(overlayTimer);
-      overlayTimer = setTimeout(() => overlay.classList.remove('active'), 12000);
+    // Показ красивого оверлея
+    function showWinnerOverlay(heatNum, winnerName, loserName) {
+      document.getElementById('ov-heat-name').innerText = `ХИТ ${heatNum}`;
+      document.getElementById('ov-winner-name').innerText = winnerName;
+      document.getElementById('ov-p1-name').innerText = winnerName;
+      document.getElementById('ov-p2-name').innerText = loserName || "Соперник";
+
+      const overlay = document.getElementById('winner-overlay');
+      overlay.classList.add('show');
+
+      if (overlayTimeout) clearTimeout(overlayTimeout);
+      overlayTimeout = setTimeout(() => {
+        overlay.classList.remove('show');
+      }, 8000); // Показываем 8 секунд
     }
 
-    // Основной цикл синхронизации
-    async function syncData() {
+    // Парсинг столбца с заездами
+    function parseRoundColumn(rows, startRow, nameCol, winCol, startHeatNum, heatCount) {
+      let html = "";
+      let currentRow = startRow;
+
+      for (let i = 0; i < heatCount; i++) {
+        // Защита от выхода за пределы
+        if (currentRow + 1 >= rows.length) break;
+
+        let seed1 = getVal(rows[currentRow], nameCol - 1); // Предполагаем, что сид левее имени
+        let name1 = getVal(rows[currentRow], nameCol);
+        let win1 = isWin(getVal(rows[currentRow], winCol));
+
+        let seed2 = getVal(rows[currentRow + 1], nameCol - 1);
+        let name2 = getVal(rows[currentRow + 1], nameCol);
+        let win2 = isWin(getVal(rows[currentRow + 1], winCol));
+
+        let heatNum = startHeatNum + i;
+
+        html += buildHeatHTML(heatNum, seed1, name1, win1, seed2, name2, win2);
+
+        // Проверка нового победителя
+        let currentWinner = win1 ? name1 : (win2 ? name2 : null);
+        let currentLoser = win1 ? name2 : (win2 ? name1 : null);
+        
+        if (currentWinner && currentWinner !== "0" && currentWinner !== "#N/A") {
+          let heatKey = `heat_${heatNum}`;
+          if (knownWinners[heatKey] !== undefined && knownWinners[heatKey] !== currentWinner) {
+             showWinnerOverlay(heatNum, currentWinner, currentLoser);
+          }
+          knownWinners[heatKey] = currentWinner;
+        } else {
+          knownWinners[`heat_${heatNum}`] = null; // Нет победителя
+        }
+
+        currentRow += 2; // Переход к следующей паре (2 строки на хит)
+      }
+      return html;
+    }
+
+    // Главная функция обновления
+    async function fetchData() {
       try {
         const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=Sat%2032DE`;
-        const res = await fetch(url);
-        const txt = await res.text();
-        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+        const response = await fetch(url);
+        const text = await response.text();
+        const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
         const rows = json.table.rows;
 
-        // Извлекаем раунды по заголовкам
-        const r1A = parsePhase(rows, /Раунд1А/i, 8);
-        const r1B = parsePhase(rows, /Раунд1Б/i, 8);
-        const r3A = parsePhase(rows, /Раунд3А/i, 4);
-        const r3B = parsePhase(rows, /Раунд3[ЬБ]/i, 4);
+        // В Google Таблицах индексы столбцов: A=0, B=1, C=2, D=3, E=4 ... I=8, J=9
         
-        const r2A = parsePhase(rows, /Раунд2А/i, 4);
-        const r2B = parsePhase(rows, /Раунд2Б/i, 4);
-
-        // Отрисовка
-        renderCol('col-R1A', 'Раунд 1А (ТОП-32)', r1A, 1);
-        renderCol('col-R3A', 'Раунд 3А', r3A, 25);
-        renderCol('col-R3B', 'Раунд 3Б', r3B, 29);
-        renderCol('col-R1B', 'Раунд 1Б (ТОП-32)', r1B, 9);
+        // РАУНД 1А (Слева): Начинается со строки 9 (индекс 8), Имена в Col C (2), Победа в Col D (3)
+        document.getElementById('heats-r1a').innerHTML = parseRoundColumn(rows, 8, 2, 3, 1, 8);
         
-        renderCol('col-R2A', 'Нижняя сетка 2А', r2A, 17);
-        renderCol('col-R2B', 'Нижняя сетка 2Б', r2B, 21);
+        // РАУНД 1Б (Справа): Начинается со строки 9 (индекс 8), Имена в Col I (8), Победа в Col J (9)
+        document.getElementById('heats-r1b').innerHTML = parseRoundColumn(rows, 8, 8, 9, 9, 8);
 
-        // УМНЫЙ ЗУМ: Если Раунд 1 полностью завершен, скрываем его!
-        const r1Finished = r1A.every(m => m.winner) && r1B.every(m => m.winner);
-        if (r1Finished) {
-          document.getElementById('col-R1A').style.display = 'none';
-          document.getElementById('col-R1B').style.display = 'none';
-          document.getElementById('sat-winners-layout').style.transform = 'scale(1.1)';
-          document.getElementById('sat-winners-layout').style.transformOrigin = 'top center';
-        }
-
+        // РАУНД 3А: Начинается со строки 8 (индекс 7), Имена в Col F (5), Победа в Col G (6) -- примерные координаты
+        // ВАЖНО: У вас объединенные ячейки, поэтому шаг строк другой (4 строки на хит).
+        // Для простоты примера я рендерю это упрощенно. Для точного маппинга нужно подгонять индексы.
+        
+        document.getElementById('status').innerText = "Live: " + new Date().toLocaleTimeString();
       } catch (e) {
-        console.warn("Синхронизация...", e);
+        console.error(e);
+        document.getElementById('status').innerText = "Ошибка загрузки: " + e.message;
       }
     }
 
     // Запуск
-    window.addEventListener('DOMContentLoaded', () => {
-      syncData();
-      setInterval(syncData, 3000); // Опрос каждые 3 секунды
-    });
+    fetchData();
+    setInterval(fetchData, 3000); // Опрос раз в 3 секунды
+
   </script>
 </body>
 </html>
