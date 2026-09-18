@@ -3,53 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ИГОРА ДРАЙВ | ДРИФТ-ВЫЗОВ — Live Broadcast System</title>
-  <!-- Google Fonts: спорт и киберспорт шрифты -->
+  <title>ИГОРА ДРАЙВ ДРИФТ-ВЫЗОВ | Live Broadcast</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,700;1,700&family=Montserrat:wght@400;600;800;900&family=Russo+One&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,700&family=Montserrat:wght@500;700;900&family=Russo+One&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg-dark: #0a0c10;
-      --card-bg: rgba(18, 22, 31, 0.92);
-      --card-border: rgba(255, 255, 255, 0.1);
+      --bg-base: #090b0e;
+      --bg-panel: rgba(15, 19, 26, 0.94);
+      --border-subtle: rgba(255, 255, 255, 0.1);
       --igora-red: #e10600;
-      --igora-red-glow: rgba(225, 6, 0, 0.5);
+      --igora-glow: rgba(225, 6, 0, 0.6);
       --matsuri-cyan: #00f0ff;
-      --gold-win: #ffb800;
-      --gold-win-glow: rgba(255, 184, 0, 0.45);
-      --defeat-red: #ff334b;
-      --text-main: #f0f3f8;
-      --text-muted: #8a94a6;
-      --clip-angle: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+      --gold-cup: #ffb800;
+      --green-advance: #10b981;
+      --red-drop: #f43f5e;
+      --text-bright: #ffffff;
+      --text-dim: #8b98a9;
+      --slant-cut: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: radial-gradient(circle at 50% 20%, #151a24 0%, var(--bg-dark) 85%);
-      color: var(--text-main);
+      background: radial-gradient(circle at 50% 10%, #141a24 0%, var(--bg-base) 80%);
+      color: var(--text-bright);
       font-family: 'Montserrat', sans-serif;
       min-height: 100vh;
-      overflow-x: hidden;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
     }
 
-    /* Фоновый паттерн гоночного асфальта / сетки */
+    /* Фоновый гоночный паттерн */
     body::before {
       content: "";
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
       background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
       background-size: 32px 32px;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Верхний Хедер с партнерами */
+    /* Верхняя панель */
     header {
       position: relative;
       z-index: 10;
@@ -57,465 +56,313 @@
       justify-content: space-between;
       align-items: center;
       padding: 12px 32px;
-      background: rgba(10, 12, 16, 0.95);
+      background: rgba(9, 11, 14, 0.96);
       border-bottom: 2px solid var(--igora-red);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
     }
 
-    .brand-cluster {
+    .header-left-title {
       display: flex;
-      align-items: center;
-      gap: 20px;
+      flex-direction: column;
     }
-
-    /* Логотипы организаторов */
-    .logo-igora {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .header-main-tag {
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
       letter-spacing: 2px;
-      color: #fff;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .logo-badge-red {
-      background: var(--igora-red);
-      color: #fff;
-      padding: 4px 10px;
-      clip-path: var(--clip-angle);
-      font-weight: 900;
-      font-style: italic;
-    }
-
-    .matsuri-badge {
-      font-family: 'Russo One', sans-serif;
-      font-size: 14px;
-      padding: 4px 12px;
-      border: 1px solid var(--matsuri-cyan);
-      color: var(--matsuri-cyan);
+    .header-main-tag span { color: var(--igora-red); }
+    .header-sub-tag {
+      font-size: 11px;
+      color: var(--text-dim);
       letter-spacing: 1px;
-      clip-path: var(--clip-angle);
-      text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+      text-transform: uppercase;
     }
 
-    /* Спонсорская плашка KINFOREST */
-    .sponsor-badge-kinforest {
+    /* ========================================================
+       ЕДИНАЯ АНИМИРОВАННАЯ РОТИРУЮЩАЯСЯ ПЛАШКА СПОНСОРОВ/ПАРТНЕРОВ
+    ======================================================== */
+    .partner-cycler-widget {
+      position: relative;
+      width: 380px;
+      height: 52px;
+      background: linear-gradient(135deg, #131720, #0c0e14);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-right: 4px solid var(--igora-red);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .cycler-slide {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
       display: flex;
       align-items: center;
       gap: 12px;
-      background: linear-gradient(135deg, #181c24, #0f1217);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-right: 4px solid var(--igora-red);
-      padding: 8px 18px;
+      padding: 0 16px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+    .cycler-slide.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .brand-icon-box {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Russo One', sans-serif;
+      font-size: 13px;
       border-radius: 4px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      flex-shrink: 0;
     }
-    .sponsor-tire-icon {
-      width: 24px;
-      height: 24px;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e10600"><circle cx="12" cy="12" r="10" stroke="%23fff" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="%23fff"/></svg>') no-repeat center;
+    .brand-desc-box {
+      display: flex;
+      flex-direction: column;
     }
-    .sponsor-title {
+    .brand-name {
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 16px;
-      font-weight: 900;
-      font-style: italic;
-      color: #fff;
-      letter-spacing: 2px;
-    }
-    .sponsor-sub {
-      font-size: 9px;
-      color: var(--text-muted);
-      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 15px;
       letter-spacing: 1.5px;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .brand-role {
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    /* Навигация / Табы переключения */
-    .nav-bar {
+    /* Навигация: Четкая подсветка активного экрана */
+    .tabs-strip {
       position: relative;
       z-index: 10;
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 14px;
       padding: 16px 20px;
     }
-
-    .nav-btn {
+    .tab-item-btn {
+      position: relative;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-dim);
+      padding: 11px 26px;
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 15px;
       font-weight: 700;
+      font-size: 14px;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      color: var(--text-muted);
-      padding: 10px 24px;
       cursor: pointer;
-      clip-path: var(--clip-angle);
+      clip-path: var(--slant-cut);
       transition: all 0.25s ease;
     }
-
-    .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.12);
+    .tab-item-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
       color: #fff;
     }
-
-    .nav-btn.active {
+    /* Активная вкладка */
+    .tab-item-btn.active {
       background: var(--igora-red);
-      color: #fff;
-      border-color: var(--igora-red);
-      box-shadow: 0 0 16px var(--igora-red-glow);
+      color: #ffffff;
+      border-color: #ff3b30;
+      box-shadow: 0 0 24px var(--igora-glow), inset 0 0 10px rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
+    .tab-item-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 40%;
+      height: 3px;
+      background: #fff;
+      box-shadow: 0 0 8px #fff;
     }
 
-    /* Индикатор подключения */
-    .live-status {
-      position: fixed;
-      bottom: 16px;
-      right: 20px;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(12, 15, 20, 0.85);
-      padding: 6px 14px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.1);
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 8px #10b981;
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-    /* Экраны */
-    .view-section {
+    /* Контейнеры страниц */
+    .tab-page {
       display: none;
       position: relative;
       z-index: 5;
       padding: 10px 32px 60px;
       flex: 1;
     }
-    .view-section.active { display: block; }
+    .tab-page.active { display: block; }
 
-    /* ========================================================
-       ЭКРАН 1: СЕТКА DOUBLE ELIMINATION
-    ======================================================== */
-    .bracket-container {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      max-width: 1600px;
+    /* Таблица Жеребьевки */
+    .table-wrapper {
+      max-width: 1560px;
       margin: 0 auto;
-    }
-    .bracket-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      border-left: 4px solid var(--igora-red);
-      padding-left: 14px;
-    }
-    .bracket-header h2 {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 24px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-    .rounds-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .round-column {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .round-title {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding-bottom: 6px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .battle-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
       border-radius: 6px;
       overflow: hidden;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.3);
-      transition: border-color 0.2s;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.5);
     }
-    .battle-card.live-now {
-      border: 2px solid var(--matsuri-cyan);
-      box-shadow: 0 0 16px rgba(0, 240, 255, 0.4);
-    }
-    .battle-card-header {
-      background: rgba(255,255,255,0.03);
-      padding: 6px 12px;
-      font-size: 11px;
-      font-family: 'Chakra Petch', sans-serif;
-      color: var(--text-muted);
-      display: flex;
-      justify-content: space-between;
-    }
-    .pilot-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      position: relative;
-    }
-    .pilot-row.winner {
-      background: rgba(255, 184, 0, 0.12);
-    }
-    .pilot-row.winner::before {
-      content: "";
-      position: absolute;
-      left: 0; top: 0; bottom: 0; width: 4px;
-      background: var(--gold-win);
-    }
-    .pilot-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .pilot-seed {
-      font-family: 'Chakra Petch', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--text-muted);
-      width: 24px;
-    }
-    .pilot-name {
-      font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 0.5px;
-    }
-    .winner-badge {
-      font-size: 11px;
-      font-family: 'Chakra Petch', sans-serif;
-      font-weight: 700;
-      color: var(--gold-win);
-      text-transform: uppercase;
-    }
-
-    /* ========================================================
-       ЭКРАН 2: LIVE BATTLE OVERLAY (ДЛЯ ОБС И ТРАНСЛЯЦИИ)
-    ======================================================== */
-    .live-broadcast-stage {
-      max-width: 1400px;
-      margin: 20px auto;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
-    .vs-matchup-box {
-      display: grid;
-      grid-template-columns: 1fr 120px 1fr;
-      align-items: center;
-      background: linear-gradient(180deg, rgba(20,25,36,0.95) 0%, rgba(10,12,16,0.98) 100%);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.6);
-      position: relative;
-    }
-    .driver-column {
-      padding: 36px 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      position: relative;
-    }
-    .driver-column.lead {
+    .grid-protocol {
+      width: 100%;
+      border-collapse: collapse;
       text-align: left;
-      border-left: 6px solid var(--igora-red);
     }
-    .driver-column.chase {
-      text-align: right;
-      border-right: 6px solid var(--matsuri-cyan);
-    }
-    .role-tag {
+    .grid-protocol th {
+      background: rgba(0, 0, 0, 0.65);
+      padding: 14px 18px;
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 13px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-    }
-    .lead .role-tag { color: var(--igora-red); }
-    .chase .role-tag { color: var(--matsuri-cyan); }
-    .driver-big-name {
-      font-family: 'Russo One', sans-serif;
-      font-size: 42px;
-      line-height: 1.1;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .driver-car-box {
-      font-size: 18px;
-      color: #cbd5e1;
-      font-weight: 600;
-    }
-    .driver-meta {
-      display: flex;
-      gap: 12px;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-    .chase .driver-meta { justify-content: flex-end; }
-
-    .vs-center-divider {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    .vs-circle {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: #000;
-      border: 2px solid var(--card-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Chakra Petch', sans-serif;
-      font-weight: 900;
-      font-size: 24px;
-      font-style: italic;
-      color: #fff;
-      box-shadow: 0 0 20px rgba(0,0,0,0.8);
-    }
-    .heat-round-label {
       font-size: 12px;
-      font-family: 'Chakra Petch', sans-serif;
-      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 1px;
+      color: var(--text-dim);
+      border-bottom: 2px solid var(--igora-red);
     }
-
-    /* Нижняя полоса телеметрии текущего заезда */
-    .battle-judges-bar {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 20px;
+    .grid-protocol td {
+      padding: 11px 18px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
-    .judge-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      padding: 16px 20px;
-      border-radius: 8px;
+    .grid-protocol tr:nth-child(even) { background: rgba(255, 255, 255, 0.015); }
+    .grid-protocol tr:hover { background: rgba(255, 255, 255, 0.05); }
+    .seed-badge {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      min-width: 30px;
       text-align: center;
     }
-    .judge-title {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-    .judge-val {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-    }
+    .empty-cell { color: #475569; font-style: italic; }
 
-    /* ========================================================
-       ЭКРАН 3: ЖЕРЕБЬЕВКА И СУДЕЙСКИЙ ПРОТОКОЛ
-    ======================================================== */
-    .protocol-container {
-      max-width: 1400px;
+    /* Сетки DE */
+    .bracket-layout {
+      max-width: 1680px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 26px;
     }
-    .protocol-officials {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      background: rgba(255,255,255,0.03);
-      padding: 18px 24px;
-      border-radius: 8px;
-      border: 1px solid var(--card-border);
-    }
-    .official-block h4 {
-      font-size: 12px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-      letter-spacing: 1px;
-    }
-    .official-block p {
+    .bracket-tier-title {
       font-family: 'Chakra Petch', sans-serif;
       font-size: 16px;
       font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
       color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 4px solid var(--igora-red);
+      padding-left: 10px;
     }
-    .official-block span {
-      font-size: 11px;
-      color: var(--text-muted);
+    .grid-rounds {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
     }
-
-    .roster-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--card-bg);
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid var(--card-border);
+    .column-round {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    .roster-table th {
-      background: rgba(0,0,0,0.5);
-      padding: 14px 18px;
-      text-align: left;
+    .round-header-box {
       font-family: 'Chakra Petch', sans-serif;
       font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--text-muted);
-      border-bottom: 2px solid var(--igora-red);
-    }
-    .roster-table td {
-      padding: 12px 18px;
-      font-size: 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .roster-table tr:hover {
-      background: rgba(255,255,255,0.04);
-    }
-    .num-pill {
-      display: inline-block;
-      padding: 2px 10px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 4px;
-      font-family: 'Chakra Petch', sans-serif;
       font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 7px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 2px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-dim);
+    }
+
+    /* Карточки дуэлей (кликабельные для проверки и эфира) */
+    .duel-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .duel-card:hover {
+      border-color: var(--matsuri-cyan);
+      transform: scale(1.01);
+    }
+    .duel-card-header {
+      padding: 5px 10px;
+      background: rgba(0, 0, 0, 0.4);
+      font-size: 11px;
+      font-family: 'Chakra Petch', sans-serif;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+    }
+    .duel-pilot-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+    }
+    .duel-pilot-row.winner {
+      background: rgba(16, 185, 129, 0.16);
+    }
+    .duel-pilot-row.winner::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0; width: 3px;
+      background: var(--green-advance);
+    }
+    .pilot-num-label {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      width: 26px;
+    }
+    .pilot-name-text {
+      font-size: 13px;
+      font-weight: 700;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .badge-win-tag {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--green-advance);
+      border: 1px solid var(--green-advance);
+      padding: 1px 4px;
+      border-radius: 2px;
     }
 
     /* ========================================================
-       ОТДЕЛЬНЫЙ ЭПИЧНЫЙ ОВЕРЛЕЙ: АНИМАЦИЯ ПОБЕДЫ В ЗАЕЗДЕ
+       ОВЕРЛЕЙ ПОБЕДИТЕЛЯ (12 СЕКУНД С ТАЙМЕРОМ)
     ======================================================== */
-    .winner-modal-overlay {
+    .winner-modal-view {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(5, 7, 10, 0.88);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
       z-index: 1000;
       display: none;
       align-items: center;
@@ -523,370 +370,516 @@
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-    .winner-modal-overlay.show {
+    .winner-modal-view.active {
       display: flex;
       opacity: 1;
     }
-    .winner-banner-box {
+    .winner-banner-card {
       width: 90%;
-      max-width: 960px;
-      background: linear-gradient(135deg, #181d28 0%, #0d1017 100%);
-      border: 2px solid var(--gold-win);
-      box-shadow: 0 0 60px var(--gold-win-glow);
-      border-radius: 12px;
-      padding: 40px 50px;
+      max-width: 880px;
+      background: linear-gradient(135deg, #151a24 0%, #0d1016 100%);
+      border: 2px solid var(--gold-cup);
+      box-shadow: 0 0 60px rgba(255, 184, 0, 0.35), inset 0 0 20px rgba(255, 184, 0, 0.15);
+      border-radius: 8px;
+      padding: 36px 44px 28px;
       text-align: center;
       position: relative;
       overflow: hidden;
-      transform: scale(0.85);
-      animation: bannerPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      animation: popBanner 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
     }
-    @keyframes bannerPop {
+    @keyframes popBanner {
+      from { transform: scale(0.9); }
       to { transform: scale(1); }
     }
-    .winner-banner-box::before {
-      content: "";
+
+    .btn-close-modal {
       position: absolute;
-      top: 0; left: -100%; width: 200%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      transform: skewX(-25deg);
-      animation: shine 2s infinite;
-    }
-    @keyframes shine {
-      to { left: 100%; }
-    }
-    .winner-super-title {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 16px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      color: var(--gold-win);
-      margin-bottom: 8px;
-    }
-    .winner-driver-name {
-      font-family: 'Russo One', sans-serif;
-      font-size: 54px;
+      top: 14px; right: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
       color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 8px;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+      font-size: 16px;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
     }
-    .winner-sub-car {
-      font-size: 20px;
+    .btn-close-modal:hover { background: var(--igora-red); }
+
+    .modal-tag-top {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: var(--gold-cup);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .modal-winner-hero {
+      font-family: 'Russo One', sans-serif;
+      font-size: 46px;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.8);
+    }
+    .modal-winner-vehicle {
+      font-size: 16px;
       color: #cbd5e1;
       margin-bottom: 24px;
+      font-weight: 600;
     }
-    .battle-result-dual {
-      display: flex;
-      justify-content: space-around;
-      gap: 20px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 24px;
+
+    .modal-duel-stats {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      margin-bottom: 18px;
     }
-    .result-side {
+    .stat-col {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
-    .res-label {
-      font-size: 12px;
+    .stat-role-badge {
       font-family: 'Chakra Petch', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      letter-spacing: 1px;
     }
-    .res-label.win { color: #10b981; font-weight: 700; }
-    .res-label.lose { color: var(--defeat-red); font-weight: 700; }
-    .res-name { font-size: 18px; font-weight: 700; }
+    .stat-role-badge.win { color: var(--green-advance); }
+    .stat-role-badge.lose { color: var(--red-drop); }
+    .stat-pilot-name {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .vs-sign {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      color: var(--text-dim);
+    }
 
-    /* Кнопка симуляции для тестирования режиссером трансляции */
-    .test-controls {
+    /* Полоса таймера показа (12 секунд) */
+    .timer-line-container {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .timer-line-bar {
+      height: 100%;
+      background: var(--gold-cup);
+      width: 100%;
+    }
+    .timer-line-bar.running {
+      animation: countdown 12s linear forwards;
+    }
+    @keyframes countdown {
+      from { width: 100%; }
+      to { width: 0%; }
+    }
+
+    /* Статус синхронизации */
+    .status-dock {
       position: fixed;
-      bottom: 16px;
-      left: 20px;
+      bottom: 14px;
+      right: 20px;
       z-index: 50;
       display: flex;
+      align-items: center;
       gap: 8px;
-    }
-    .test-btn {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #cbd5e1;
-      padding: 6px 12px;
+      background: rgba(10, 12, 16, 0.92);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border-subtle);
       font-size: 11px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: 'Chakra Petch', sans-serif;
+      color: var(--text-dim);
     }
-    .test-btn:hover { background: var(--igora-red); color: #fff; }
+    .pulse-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green-advance);
+      box-shadow: 0 0 8px var(--green-advance);
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
   </style>
 </head>
 <body>
 
-  <!-- ВЕРХНИЙ ХЕДЕР ТРАНСЛЯЦИИ -->
+  <!-- ВЕРХНЯЯ ШАПКА -->
   <header>
-    <div class="brand-cluster">
-      <div class="logo-igora">
-        <span class="logo-badge-red">IDDC</span>
-        <span>ИГОРА ДРАЙВ</span>
-      </div>
-      <div class="matsuri-badge">DRIFT MATSURI SPB</div>
+    <div class="header-left-title">
+      <div class="header-main-tag">ИГОРА ДРАЙВ <span>ДРИФТ-ВЫЗОВ</span></div>
+      <div class="header-sub-tag">Автодром «Игора Драйв» • Ленинградская область</div>
     </div>
 
-    <!-- СПОНСОРСКИЙ БЛОК KINFOREST -->
-    <div class="sponsor-badge-kinforest">
-      <div class="sponsor-tire-icon"></div>
-      <div>
-        <div class="sponsor-title">KINFOREST</div>
-        <div class="sponsor-sub">Official Tyre Partner</div>
+    <!-- ЕДИНАЯ АНИМИРОВАННАЯ ПЛАШКА ПАРТНЕРОВ (CYCLE WIDGET) -->
+    <div class="partner-cycler-widget">
+      <!-- Слайд 1: ИГОРА ДРАЙВ -->
+      <div class="cycler-slide active" id="slide-1">
+        <div class="brand-icon-box" style="background: var(--igora-red); color: #fff;">ID</div>
+        <div class="brand-desc-box">
+          <div class="brand-name">АВТОДРОМ «ИГОРА ДРАЙВ»</div>
+          <div class="brand-role">Организатор соревнования</div>
+        </div>
+      </div>
+
+      <!-- Слайд 2: DRIFT MATSURI SPB -->
+      <div class="cycler-slide" id="slide-2">
+        <div class="brand-icon-box" style="border: 1px solid var(--matsuri-cyan); color: var(--matsuri-cyan);">MS</div>
+        <div class="brand-desc-box">
+          <div class="brand-name" style="color: var(--matsuri-cyan);">DRIFT MATSURI SPB</div>
+          <div class="brand-role">Официальная дрифт-серия</div>
+        </div>
+      </div>
+
+      <!-- Слайд 3: KINFOREST TYRES -->
+      <div class="cycler-slide" id="slide-3">
+        <div class="brand-icon-box" style="background: #fff; color: #000;">KF</div>
+        <div class="brand-desc-box">
+          <div class="brand-name">KINFOREST RACING TYRES</div>
+          <div class="brand-role">Официальный шинный партнер</div>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- КНОПКИ ПЕРЕКЛЮЧЕНИЯ ЭКРАНОВ -->
-  <nav class="nav-bar">
-    <button class="nav-btn active" onclick="switchView('bracket')">🏆 Сетка TOP-32 DE</button>
-    <button class="nav-btn" onclick="switchView('live')">⚔️ Live Заезд (OBS)</button>
-    <button class="nav-btn" onclick="switchView('protocol')">📋 Жеребьевка и Судьи</button>
+  <!-- НАВИГАЦИЯ: 3 СТРАНИЦЫ С ЯРКОЙ ПОДСВЕТКОЙ -->
+  <nav class="tabs-strip">
+    <button class="tab-item-btn active" onclick="activateTab('page-protocol')">📋 Жеребьевка</button>
+    <button class="tab-item-btn" onclick="activateTab('page-sat')">🏁 Суббота (Sat 32DE)</button>
+    <button class="tab-item-btn" onclick="activateTab('page-sun')">🏆 Воскресенье (Sun 32DE)</button>
   </nav>
 
   <!-- ========================================================
-       ЭКРАН 1: ТУРНИРНАЯ СЕТКА DOUBLE ELIMINATION
+       СТРАНИЦА 1: ЖЕРЕБЬЕВКА
   ======================================================== -->
-  <main id="view-bracket" class="view-section active">
-    <div class="bracket-container">
-      <div class="bracket-header">
-        <h2>Сетка заездов ТОП-32 | Double Elimination</h2>
-        <span style="color: var(--text-muted); font-size: 13px;">Автодром «Игора Драйв» • 19–20 сентября</span>
-      </div>
-
-      <!-- Раунды 1/16, 1/8, Финалы -->
-      <div class="rounds-grid" id="bracket-grid">
-        <!-- Генерируется из данных Google Таблицы -->
-      </div>
-    </div>
-  </main>
-
-  <!-- ========================================================
-       ЭКРАН 2: LIVE BATTLE OVERLAY (ДЛЯ ТРАНСЛЯЦИИ)
-  ======================================================== -->
-  <main id="view-live" class="view-section">
-    <div class="live-broadcast-stage">
-      <div class="vs-matchup-box">
-        <!-- ЛИДЕР (LEAD) -->
-        <div class="driver-column lead" id="live-lead-box">
-          <div class="role-tag">Лидер (Run 1)</div>
-          <div class="driver-big-name" id="lead-name">Загрузка...</div>
-          <div class="driver-car-box" id="lead-car">—</div>
-          <div class="driver-meta">
-            <span>Ст. № <strong id="lead-num">—</strong></span>
-            <span>•</span>
-            <span id="lead-city">—</span>
-          </div>
-        </div>
-
-        <!-- ЦЕНТР VS -->
-        <div class="vs-center-divider">
-          <div class="heat-round-label" id="current-heat-label">ХИТ #12</div>
-          <div class="vs-circle">VS</div>
-          <div class="heat-round-label" style="color: var(--gold-win);">ТОП-16</div>
-        </div>
-
-        <!-- ПРЕСЛЕДОВАТЕЛЬ (CHASE) -->
-        <div class="driver-column chase" id="live-chase-box">
-          <div class="role-tag">Преследователь (Chase)</div>
-          <div class="driver-big-name" id="chase-name">Загрузка...</div>
-          <div class="driver-car-box" id="chase-car">—</div>
-          <div class="driver-meta">
-            <span id="chase-city">—</span>
-            <span>•</span>
-            <span>Ст. № <strong id="chase-num">—</strong></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- СУДЕЙСКАЯ ПАНЕЛЬ ТЕКУЩЕГО ЗАЕЗДА -->
-      <div class="battle-judges-bar">
-        <div class="judge-card">
-          <div class="judge-title">Траектория (Line)</div>
-          <div class="judge-val" id="judge-line">94.5 / 100</div>
-        </div>
-        <div class="judge-card">
-          <div class="judge-title">Угол (Angle)</div>
-          <div class="judge-val" id="judge-angle">96.0 / 100</div>
-        </div>
-        <div class="judge-card">
-          <div class="judge-title">Стиль и Темп (Style)</div>
-          <div class="judge-val" id="judge-style">92.0 / 100</div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- ========================================================
-       ЭКРАН 3: ПРОТОКОЛ ЖЕРЕБЬЕВКИ И ОФИЦИАЛЬНЫЕ ЛИЦА
-  ======================================================== -->
-  <main id="view-protocol" class="view-section">
-    <div class="protocol-container">
-      <div class="protocol-officials">
-        <div class="official-block">
-          <h4>Главный судья (Руководитель гонки)</h4>
-          <p>Шульга Игорь</p>
-          <span>Лицензия В+26-562, 1К</span>
-        </div>
-        <div class="official-block">
-          <h4>Главный секретарь</h4>
-          <p>Богаткина Юлия</p>
-          <span>Лицензия В+26-560, 1К</span>
-        </div>
-        <div class="official-block">
-          <h4>Трасса соревнований</h4>
-          <p>Автодром «Игора Драйв»</p>
-          <span>Ленинградская область, Приозерский р-н, д. Новожилово</span>
-        </div>
-      </div>
-
-      <table class="roster-table">
+  <main id="page-protocol" class="tab-page active">
+    <div class="table-wrapper">
+      <table class="grid-protocol">
         <thead>
           <tr>
-            <th>№</th>
-            <th>Ст. №</th>
+            <th style="width: 60px;">Посев</th>
+            <th style="width: 90px;">Ст. №</th>
             <th>Фамилия, Имя Пилота</th>
             <th>Автомобиль</th>
-            <th>Субъект РФ / Город</th>
-            <th>Статус</th>
+            <th>Субъект РФ</th>
           </tr>
         </thead>
-        <tbody id="roster-tbody">
-          <!-- Генерируется из вкладки ЖЕРЕБЬЕВКА -->
+        <tbody id="tbody-roster">
+          <tr><td colspan="5" class="empty-cell" style="text-align: center; padding: 26px;">Синхронизация таблицы жеребьевки...</td></tr>
         </tbody>
       </table>
     </div>
   </main>
 
-  <!-- ИНДИКАТОР СИНХРОНИЗАЦИИ -->
-  <div class="live-status">
-    <div class="status-dot"></div>
-    <span id="sync-text">Синхронизация с таблицей Google...</span>
-  </div>
+  <!-- ========================================================
+       СТРАНИЦА 2: СЕТКА СУББОТА (Sat 32DE)
+  ======================================================== -->
+  <main id="page-sat" class="tab-page">
+    <div class="bracket-layout">
+      <div class="bracket-tier-title">Верхняя сетка • Раунды 1А, 1Б, 3А, 3Б</div>
+      <div class="grid-rounds" id="grid-sat-top"></div>
 
-  <!-- ТЕСТОВЫЕ КНОПКИ ДЛЯ РЕЖИССЕРА (ТЕСТ ОВЕРЛЕЯ) -->
-  <div class="test-controls">
-    <button class="test-btn" onclick="testWinnerPopup()">⚡ Тест оверлея ПОБЕДИТЕЛЬ</button>
+      <div class="bracket-tier-title" style="margin-top: 14px;">Нижняя сетка выбывания • Раунды 2А, 2Б</div>
+      <div class="grid-rounds" id="grid-sat-bottom"></div>
+    </div>
+  </main>
+
+  <!-- ========================================================
+       СТРАНИЦА 3: СЕТКА ВОСКРЕСЕНЬЕ (Sun 32DE)
+  ======================================================== -->
+  <main id="page-sun" class="tab-page">
+    <div class="bracket-layout">
+      <div class="bracket-tier-title">Финальная сетка • Раунды 6, 9, 12 и ГЛАВНЫЙ ФИНАЛ</div>
+      <div class="grid-rounds" id="grid-sun-top"></div>
+
+      <div class="bracket-tier-title" style="margin-top: 14px;">Нижняя сетка • Раунды 4, 5, 7, 8, 10, 11, 13</div>
+      <div class="grid-rounds" id="grid-sun-bottom"></div>
+    </div>
+  </main>
+
+  <!-- ИНДИКАТОР СИНХРОНИЗАЦИИ -->
+  <div class="status-dock">
+    <div class="pulse-indicator"></div>
+    <span id="sync-clock">Синхронизация с таблицей...</span>
   </div>
 
   <!-- ========================================================
-       ВСПЛЫВАЮЩИЙ АНИМИРОВАННЫЙ ОВЕРЛЕЙ: ПОБЕДИТЕЛЬ ЗАЕЗДА
+       ОВЕРЛЕЙ: АНИМАЦИЯ ПОБЕДИТЕЛЯ (12 СЕКУНД)
   ======================================================== -->
-  <div class="winner-modal-overlay" id="winner-popup">
-    <div class="winner-banner-box">
-      <div class="winner-super-title">🏆 РЕЗУЛЬТАТ ЗАЕЗДА • WINNER</div>
-      <div class="winner-driver-name" id="modal-winner-name">ИВАН ИВАНОВ</div>
-      <div class="winner-sub-car" id="modal-winner-car">Nissan Silvia S15 • 750 hp</div>
+  <div class="winner-modal-view" id="winner-modal">
+    <div class="winner-banner-card">
+      <button class="btn-close-modal" onclick="closeWinnerModal()">✕</button>
+      <div class="modal-tag-top" id="modal-heat-num">РЕЗУЛЬТАТ ЗАЕЗДА • ХИТ 1</div>
+      <div class="modal-winner-hero" id="modal-winner-driver">—</div>
+      <div class="modal-winner-vehicle" id="modal-winner-car">—</div>
 
-      <div class="battle-result-dual">
-        <div class="result-side">
-          <span class="res-label win">ПРОХОДИТ В СЛЕДУЮЩИЙ РАУНД</span>
-          <span class="res-name" id="modal-lead-name">Иван Иванов</span>
+      <div class="modal-duel-stats">
+        <div class="stat-col">
+          <span class="stat-role-badge win">ПРОХОДИТ ДАЛЬШЕ</span>
+          <span class="stat-pilot-name" id="modal-lead-driver">—</span>
         </div>
-        <div class="result-side">
-          <span class="res-label lose">В НИЖНЮЮ СЕТКУ (LOSERS)</span>
-          <span class="res-name" id="modal-chase-name">Алексей Смирнов</span>
+        <div class="vs-sign">VS</div>
+        <div class="stat-col">
+          <span class="stat-role-badge lose">В НИЖНЮЮ СЕТКУ</span>
+          <span class="stat-pilot-name" id="modal-chase-driver">—</span>
         </div>
+      </div>
+
+      <!-- Полоса обратного отсчета 12 секунд -->
+      <div class="timer-line-container">
+        <div class="timer-line-bar" id="modal-timer-bar"></div>
       </div>
     </div>
   </div>
 
   <script>
-    // Идентификатор таблицы пользователя
-    const SPREADSHEET_ID = "1ydV36JHtw8T00uJwsZYAxU-tCaWIrQv5yPkKpqtCtTk";
+    const SHEET_ID = "1ydV36JHtw8T00uJwsZYAxU-tCaWIrQv5yPkKpqtCtTk";
     
-    // Начальные эталонные данные на случай задержки сети
-    let pilotsData = [
-      { id: 1, num: "17", name: "Сергей Кабаргин", car: "Flanker F", city: "Санкт-Петербург", status: "В сетке" },
-      { id: 2, num: "23", name: "Никита Шиков", car: "Toyota GR Supra", city: "Москва", status: "В сетке" },
-      { id: 3, num: "44", name: "Аркадий Цареградцев", car: "Nissan 370Z", city: "Сочи", status: "В сетке" },
-      { id: 4, num: "88", name: "Георгий Чивчян", car: "Nissan Silvia S15", city: "Красноярск", status: "В сетке" },
-      { id: 5, num: "12", name: "Дамир Идиятулин", car: "Toyota Altezza", city: "Красноярск", status: "В сетке" },
-      { id: 6, num: "05", name: "Роман Тиводар", car: "BMW E46 Eurofighter", city: "Сочи", status: "В сетке" },
-      { id: 7, num: "31", name: "Леонид Шнайдер", car: "Toyota Mark II", city: "Москва", status: "В сетке" },
-      { id: 8, num: "69", name: "Денис Мигаль", car: "BMW E92", city: "Москва", status: "В сетке" }
-    ];
+    // Структура пилотов
+    let pilotsRegistry = {};
+    let previousCellState = {};
+    let initialLoadDone = false;
+    let modalTimerId = null;
 
-    let roundsData = [
+    // Плавная ротация плашки партнеров каждые 4 секунды
+    let currentSlide = 1;
+    setInterval(() => {
+      document.getElementById(`slide-${currentSlide}`).classList.remove('active');
+      currentSlide = (currentSlide % 3) + 1;
+      document.getElementById(`slide-${currentSlide}`).classList.add('active');
+    }, 4000);
+
+    // Переключение вкладок с подсветкой
+    function activateTab(pageId) {
+      document.querySelectorAll('.tab-page').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-item-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(pageId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    // Очистка значений
+    function cleanVal(v) {
+      if (v === null || v === undefined) return "";
+      const s = String(v).trim();
+      if (s === "#N/A" || s === "0" || s === "#VALUE!" || s === "#REF!") return "";
+      return s;
+    }
+
+    // Запрос к Google Sheet
+    async function loadSheetRows(sheetTitle) {
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetTitle)}`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+      return json.table.rows;
+    }
+
+    // 1. Рендер ЖЕРЕБЬЕВКИ
+    function updateRoster(rows) {
+      const tbody = document.getElementById('tbody-roster');
+      let html = "";
+      const offset = 9; // Строка 10 в таблице
+      
+      for (let i = 0; i < 32; i++) {
+        const rowData = rows[offset + i]?.c;
+        const seed = i + 1;
+        const startNo = cleanVal(rowData?.[1]?.v);
+        const name = cleanVal(rowData?.[2]?.v);
+        const auto = cleanVal(rowData?.[3]?.v);
+        const city = cleanVal(rowData?.[4]?.v);
+
+        if (name) {
+          pilotsRegistry[seed] = { seed, startNo, name, auto, city };
+        } else {
+          pilotsRegistry[seed] = { seed, startNo, name: `Пилот #${seed}`, auto: "Спецподготовка", city: "РФ" };
+        }
+
+        html += `
+          <tr>
+            <td><span class="seed-badge">${seed}</span></td>
+            <td>${startNo ? `<strong>#${startNo}</strong>` : '<span class="empty-cell">—</span>'}</td>
+            <td>${name ? `<strong>${name}</strong>` : `<span class="empty-cell">Пилот #${seed}</span>`}</td>
+            <td>${auto || '<span class="empty-cell">—</span>'}</td>
+            <td>${city || '<span class="empty-cell">—</span>'}</td>
+          </tr>
+        `;
+      }
+      tbody.innerHTML = html;
+    }
+
+    // Конфигурация заездов субботы (Sat 32DE)
+    const satWinnersConfig = [
       {
-        title: "Раунд 1A (ТОП-32)",
+        round: "Раунд 1А (ТОП-32)",
         battles: [
-          { id: "Хит 1", p1: "Сергей Кабаргин", p2: "Роман Тиводар", winner: "Сергей Кабаргин" },
-          { id: "Хит 2", p1: "Никита Шиков", p2: "Дамир Идиятулин", winner: null }
+          { id: "Хит 1", s1: 1, s2: 32 },
+          { id: "Хит 2", s1: 16, s2: 17 },
+          { id: "Хит 3", s1: 8, s2: 25 },
+          { id: "Хит 4", s1: 9, s2: 24 },
+          { id: "Хит 5", s1: 4, s2: 29 },
+          { id: "Хит 6", s1: 13, s2: 20 },
+          { id: "Хит 7", s1: 5, s2: 28 },
+          { id: "Хит 8", s1: 12, s2: 21 }
         ]
       },
       {
-        title: "Раунд 1Б (ТОП-32)",
+        round: "Раунд 3А (ТОП-16)",
         battles: [
-          { id: "Хит 3", p1: "Аркадий Цареградцев", p2: "Леонид Шнайдер", winner: "Аркадий Цареградцев" },
-          { id: "Хит 4", p1: "Георгий Чивчян", p2: "Денис Мигаль", winner: null }
+          { id: "Хит 25", s1: "Победитель Хит 1", s2: "Победитель Хит 2" },
+          { id: "Хит 26", s1: "Победитель Хит 3", s2: "Победитель Хит 4" },
+          { id: "Хит 27", s1: "Победитель Хит 5", s2: "Победитель Хит 6" },
+          { id: "Хит 28", s1: "Победитель Хит 7", s2: "Победитель Хит 8" }
         ]
       },
       {
-        title: "Раунд 3A (ТОП-16)",
+        round: "Раунд 3Б (ТОП-16)",
         battles: [
-          { id: "Хит 25", p1: "Сергей Кабаргин", p2: "Победитель Хита 2", winner: null }
+          { id: "Хит 29", s1: "Победитель Хит 9", s2: "Победитель Хит 10" },
+          { id: "Хит 30", s1: "Победитель Хит 11", s2: "Победитель Хит 12" },
+          { id: "Хит 31", s1: "Победитель Хит 13", s2: "Победитель Хит 14" },
+          { id: "Хит 32", s1: "Победитель Хит 15", s2: "Победитель Хит 16" }
         ]
       },
       {
-        title: "Финал 32DE",
+        round: "Раунд 1Б (ТОП-32)",
         battles: [
-          { id: "Хит 62 (Финал)", p1: "TBD", p2: "TBD", winner: null }
+          { id: "Хит 9", s1: 2, s2: 31 },
+          { id: "Хит 10", s1: 15, s2: 18 },
+          { id: "Хит 11", s1: 7, s2: 26 },
+          { id: "Хит 12", s1: 10, s2: 23 },
+          { id: "Хит 13", s1: 3, s2: 30 },
+          { id: "Хит 14", s1: 14, s2: 19 },
+          { id: "Хит 15", s1: 6, s2: 27 },
+          { id: "Хит 16", s1: 11, s2: 22 }
         ]
       }
     ];
 
-    let lastKnownWinnerHash = "";
+    const satLosersConfig = [
+      {
+        round: "Раунд 2А",
+        battles: [
+          { id: "Хит 17", s1: "L32", s2: "L1" },
+          { id: "Хит 18", s1: "L31", s2: "L3" },
+          { id: "Хит 19", s1: "L30", s2: "L5" },
+          { id: "Хит 20", s1: "L29", s2: "L7" }
+        ]
+      },
+      {
+        round: "Раунд 2Б",
+        battles: [
+          { id: "Хит 21", s1: "L28", s2: "L9" },
+          { id: "Хит 22", s1: "L27", s2: "L11" },
+          { id: "Хит 23", s1: "L26", s2: "L13" },
+          { id: "Хит 24", s1: "L25", s2: "L15" }
+        ]
+      }
+    ];
 
-    // Функция переключения между 3 вкладками
-    function switchView(viewName) {
-      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-      
-      document.getElementById(`view-${viewName}`).classList.add('active');
-      event.target.classList.add('active');
-    }
+    // Конфигурация заездов воскресенья (Sun 32DE)
+    const sunTopConfig = [
+      {
+        round: "Раунд 6 (ТОП-8)",
+        battles: [
+          { id: "Хит 45", s1: "W25", s2: "W26" },
+          { id: "Хит 46", s1: "W27", s2: "W28" },
+          { id: "Хит 47", s1: "W29", s2: "W30" },
+          { id: "Хит 48", s1: "W31", s2: "W32" }
+        ]
+      },
+      {
+        round: "Раунд 9 (Полуфинал)",
+        battles: [
+          { id: "Хит 55", s1: "W45", s2: "W46" },
+          { id: "Хит 56", s1: "W47", s2: "W48" }
+        ]
+      },
+      {
+        round: "Раунд 12",
+        battles: [
+          { id: "Хит 60", s1: "W55", s2: "W56" }
+        ]
+      },
+      {
+        round: "ГЛАВНЫЙ ФИНАЛ",
+        battles: [
+          { id: "Хит 62 (ФИНАЛ)", s1: "Финалист 1", s2: "Финалист 2" }
+        ]
+      }
+    ];
 
-    // Рендер сетки Double Elimination
-    function renderBracket() {
-      const container = document.getElementById('bracket-grid');
+    const sunBottomConfig = [
+      {
+        round: "Раунд 4 (Нижняя сетка)",
+        battles: [
+          { id: "Хит 33", s1: "L", s2: "L" },
+          { id: "Хит 34", s1: "L", s2: "L" },
+          { id: "Хит 35", s1: "L", s2: "L" },
+          { id: "Хит 36", s1: "L", s2: "L" }
+        ]
+      },
+      {
+        round: "Раунды 5, 7, 8",
+        battles: [
+          { id: "Хит 41", s1: "R", s2: "R" },
+          { id: "Хит 42", s1: "R", s2: "R" },
+          { id: "Хит 49", s1: "R", s2: "R" },
+          { id: "Хит 50", s1: "R", s2: "R" }
+        ]
+      },
+      {
+        round: "Раунды 10, 11, 13",
+        battles: [
+          { id: "Хит 57", s1: "R", s2: "R" },
+          { id: "Хит 58", s1: "R", s2: "R" },
+          { id: "Хит 61", s1: "R", s2: "R" }
+        ]
+      }
+    ];
+
+    // Построение элементов сетки в DOM
+    function renderGridSection(targetId, roundsConfig) {
+      const container = document.getElementById(targetId);
       container.innerHTML = "";
 
-      roundsData.forEach(round => {
+      roundsConfig.forEach(group => {
         const col = document.createElement('div');
-        col.className = "round-column";
-        col.innerHTML = `<div class="round-title">${round.title} <span>${round.battles.length} пар</span></div>`;
+        col.className = "column-round";
+        col.innerHTML = `<div class="round-header-box"><span>${group.round}</span> <span>${group.battles.length} пар</span></div>`;
 
-        round.battles.forEach(battle => {
-          const isLive = !battle.winner && battle.p1 !== "TBD";
+        group.battles.forEach(battle => {
+          const p1 = typeof battle.s1 === 'number' ? (pilotsRegistry[battle.s1]?.name || `Пилот #${battle.s1}`) : battle.s1;
+          const p2 = typeof battle.s2 === 'number' ? (pilotsRegistry[battle.s2]?.name || `Пилот #${battle.s2}`) : battle.s2;
+
           const card = document.createElement('div');
-          card.className = `battle-card ${isLive ? 'live-now' : ''}`;
-          
+          card.className = "duel-card";
+          card.onclick = () => triggerWinnerScreen(battle.id, p1, p2);
+
           card.innerHTML = `
-            <div class="battle-card-header">
+            <div class="duel-card-header">
               <span>${battle.id}</span>
-              <span>${isLive ? '🔴 LIVE' : (battle.winner ? 'ЗАВЕРШЕН' : 'ОЖИДАНИЕ')}</span>
+              <span style="color: var(--text-dim);">НАЖМИТЕ ДЛЯ ОВЕРЛЕЯ</span>
             </div>
-            <div class="pilot-row ${battle.winner === battle.p1 ? 'winner' : ''}">
-              <div class="pilot-info">
-                <span class="pilot-seed">#</span>
-                <span class="pilot-name">${battle.p1}</span>
-              </div>
-              ${battle.winner === battle.p1 ? '<span class="winner-badge">WIN</span>' : ''}
+            <div class="duel-pilot-row">
+              <span class="pilot-num-label">[${battle.s1}]</span>
+              <span class="pilot-name-text">${p1}</span>
             </div>
-            <div class="pilot-row ${battle.winner === battle.p2 ? 'winner' : ''}">
-              <div class="pilot-info">
-                <span class="pilot-seed">#</span>
-                <span class="pilot-name">${battle.p2}</span>
-              </div>
-              ${battle.winner === battle.p2 ? '<span class="winner-badge">WIN</span>' : ''}
+            <div class="duel-pilot-row">
+              <span class="pilot-num-label">[${battle.s2}]</span>
+              <span class="pilot-name-text">${p2}</span>
             </div>
           `;
           col.appendChild(card);
@@ -896,140 +889,120 @@
       });
     }
 
-    // Рендер протокола жеребьевки
-    function renderProtocol() {
-      const tbody = document.getElementById('roster-tbody');
-      tbody.innerHTML = "";
+    // Вывод телевизионного оверлея победителя (12 секунд)
+    function triggerWinnerScreen(heatTitle, winnerName, loserName) {
+      if (!winnerName || winnerName === "—") return;
 
-      pilotsData.forEach((pilot, idx) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${idx + 1}</td>
-          <td><span class="num-pill">${pilot.num}</span></td>
-          <td><strong>${pilot.name}</strong></td>
-          <td>${pilot.car}</td>
-          <td>${pilot.city}</td>
-          <td><span style="color: #10b981;">● ${pilot.status}</span></td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+      const modal = document.getElementById('winner-modal');
+      const timerBar = document.getElementById('modal-timer-bar');
 
-    // Обновление экрана Live заезда (OBS)
-    function updateLiveStage(p1, p2, heatName) {
-      document.getElementById('lead-name').innerText = p1.name;
-      document.getElementById('lead-car').innerText = p1.car;
-      document.getElementById('lead-num').innerText = p1.num;
-      document.getElementById('lead-city').innerText = p1.city;
-
-      document.getElementById('chase-name').innerText = p2.name;
-      document.getElementById('chase-car').innerText = p2.car;
-      document.getElementById('chase-num').innerText = p2.num;
-      document.getElementById('chase-city').innerText = p2.city;
-
-      if(heatName) document.getElementById('current-heat-label').innerText = heatName;
-    }
-
-    // Звуковой синтез сигнала победы (Web Audio API без внешних файлов)
-    function playWinSound() {
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3);
-        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.6);
-      } catch(e) {}
-    }
-
-    // Вывод красивой анимированной плашки победы в эфир
-    function triggerWinnerAnnouncement(winnerName, loserName, winnerCar) {
-      playWinSound();
-      const popup = document.getElementById('winner-popup');
-      document.getElementById('modal-winner-name').innerText = winnerName;
-      document.getElementById('modal-winner-car').innerText = winnerCar || "Гоночный болид";
-      document.getElementById('modal-lead-name').innerText = winnerName;
-      document.getElementById('modal-chase-name').innerText = loserName;
-
-      popup.classList.add('show');
-
-      // Плашка висит 6 секунд, затем плавно скрывается и обновляет сетку
-      setTimeout(() => {
-        popup.classList.remove('show');
-        renderBracket();
-      }, 6000);
-    }
-
-    // Тестовый запуск анимации для проверки режиссером
-    function testWinnerPopup() {
-      triggerWinnerAnnouncement("Никита Шиков", "Дамир Идиятулин", "Toyota GR Supra • 1010 hp");
-    }
-
-    // Подключение к Google Таблице через Google Visualization API (GViz)
-    async function fetchGoogleSheetData() {
-      try {
-        // Запрос вкладки протокола ЖЕРЕБЬЕВКА
-        const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=ЖЕРЕБЬЕВКА`;
-        const res = await fetch(url);
-        const txt = await res.text();
-        
-        // Парсим JSON из ответа Google
-        const jsonString = txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1);
-        const data = JSON.parse(jsonString);
-        
-        if (data && data.table && data.table.rows) {
-          const rows = data.table.rows;
-          const parsedPilots = [];
-          
-          // Пропускаем шапку и читаем список пилотов (со строки с индексом 9)
-          for(let i = 9; i < rows.length; i++) {
-            const row = rows[i].c;
-            if(!row || !row[2] || !row[2].v) continue;
-            
-            parsedPilots.push({
-              id: row[0] ? row[0].v : i,
-              num: row[1] ? String(row[1].v) : "--",
-              name: row[2].v,
-              car: row[3] ? row[3].v : "Спецподготовка",
-              city: row[4] ? row[4].v : "РФ",
-              status: "В сетке"
-            });
-          }
-
-          if (parsedPilots.length > 0) {
-            pilotsData = parsedPilots;
-            renderProtocol();
-            if(pilotsData.length >= 2) {
-              updateLiveStage(pilotsData[0], pilotsData[1], "Хит 2 (ТОП-32)");
-            }
-          }
-        }
-        document.getElementById('sync-text').innerText = "Синхронизировано (" + new Date().toLocaleTimeString() + ")";
-      } catch (err) {
-        console.warn("Данные взяты из локального буфера (Таблица Google защищена настройками доступа)", err);
-        document.getElementById('sync-text').innerText = "Live режим (Буфер автодрома)";
-      }
-    }
-
-    // Инициализация при старте
-    window.addEventListener('DOMContentLoaded', () => {
-      renderBracket();
-      renderProtocol();
-      if(pilotsData.length >= 2) {
-        updateLiveStage(pilotsData[0], pilotsData[1], "Хит 1 (ТОП-32)");
-      }
+      document.getElementById('modal-heat-num').innerText = `РЕЗУЛЬТАТ ЗАЕЗДА • ${heatTitle}`;
+      document.getElementById('modal-winner-driver').innerText = winnerName;
       
-      // Первичный опрос таблицы
-      fetchGoogleSheetData();
+      // Ищем машину в реестре
+      let carFound = "Гоночный болид спецподготовки";
+      for (let s in pilotsRegistry) {
+        if (pilotsRegistry[s].name === winnerName && pilotsRegistry[s].auto) {
+          carFound = pilotsRegistry[s].auto;
+          break;
+        }
+      }
+      document.getElementById('modal-winner-car').innerText = carFound;
+      document.getElementById('modal-lead-driver').innerText = winnerName;
+      document.getElementById('modal-chase-driver').innerText = loserName || "Соперник";
 
-      // Автоматический опрос каждые 3 секунды
-      setInterval(fetchGoogleSheetData, 3000);
+      // Сброс и запуск анимации таймера
+      timerBar.classList.remove('running');
+      void timerBar.offsetWidth; // Force reflow
+      timerBar.classList.add('running');
+
+      modal.classList.add('active');
+
+      if (modalTimerId) clearTimeout(modalTimerId);
+      modalTimerId = setTimeout(() => {
+        closeWinnerModal();
+      }, 12000); // 12 секунд
+    }
+
+    function closeWinnerModal() {
+      document.getElementById('winner-modal').classList.remove('active');
+      if (modalTimerId) clearTimeout(modalTimerId);
+    }
+
+    // Синхронизация и точное выявление победителя из таблицы
+    async function performSync() {
+      try {
+        // Чтение листа жеребьевки
+        const protocolRows = await loadSheetRows("ЖЕРЕБЬЕВКА");
+        updateRoster(protocolRows);
+
+        // Чтение сеток
+        const satRows = await loadSheetRows("Sat 32DE");
+        const sunRows = await loadSheetRows("Sun 32DE");
+
+        // Проверка изменений в ячейках
+        if (initialLoadDone) {
+          // Проверяем лист субботы
+          satRows.forEach((r, rIdx) => {
+            r?.c?.forEach((cell, cIdx) => {
+              const val = cleanVal(cell?.v);
+              const key = `sat_${rIdx}_${cIdx}`;
+              const old = previousCellState[key];
+
+              if (old !== undefined && old !== val && val.length > 2) {
+                // В ячейку внесен результат/фамилия
+                triggerWinnerScreen("ХИТ СУББОТЫ", val, old || "Соперник");
+              }
+              previousCellState[key] = val;
+            });
+          });
+
+          // Проверяем лист воскресенья
+          sunRows.forEach((r, rIdx) => {
+            r?.c?.forEach((cell, cIdx) => {
+              const val = cleanVal(cell?.v);
+              const key = `sun_${rIdx}_${cIdx}`;
+              const old = previousCellState[key];
+
+              if (old !== undefined && old !== val && val.length > 2) {
+                triggerWinnerScreen("ФИНАЛЬНЫЙ ЭТАП", val, old || "Соперник");
+              }
+              previousCellState[key] = val;
+            });
+          });
+        } else {
+          // Первичная инициализация состояния
+          satRows.forEach((r, rIdx) => {
+            r?.c?.forEach((cell, cIdx) => {
+              previousCellState[`sat_${rIdx}_${cIdx}`] = cleanVal(cell?.v);
+            });
+          });
+          sunRows.forEach((r, rIdx) => {
+            r?.c?.forEach((cell, cIdx) => {
+              previousCellState[`sun_${rIdx}_${cIdx}`] = cleanVal(cell?.v);
+            });
+          });
+          initialLoadDone = true;
+        }
+
+        // Обновление отображения сеток
+        renderGridSection("grid-sat-top", satWinnersConfig);
+        renderGridSection("grid-sat-bottom", satLosersConfig);
+        renderGridSection("grid-sun-top", sunTopConfig);
+        renderGridSection("grid-sun-bottom", sunBottomConfig);
+
+        document.getElementById('sync-clock').innerText = `Live: ${new Date().toLocaleTimeString()}`;
+      } catch (err) {
+        console.warn("Ошибка синхронизации:", err);
+        document.getElementById('sync-clock').innerText = "Ожидание соединения...";
+      }
+    }
+
+    // Запуск приложения
+    window.addEventListener('DOMContentLoaded', () => {
+      performSync();
+      // Поллинг каждые 2.5 секунды
+      setInterval(performSync, 2500);
     });
   </script>
 </body>
