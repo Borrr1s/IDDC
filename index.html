@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ИГОРА ДРАЙВ | Drift Matsuri SPb — Double Elimination Top 32</title>
+  <title>ИГОРА ДРАЙВ | Drift Matsuri SPb — Live Broadcast Bracket</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -11,18 +11,18 @@
 
   <style>
     :root {
-      --bg-dark: #07080b;
-      --bg-card: #11131b;
-      --bg-card-header: #171a26;
+      --bg-dark: #06070a;
+      --bg-card: #0f121a;
+      --bg-card-header: #151924;
       --igora-red: #e30613;
       --igora-red-glow: rgba(227, 6, 19, 0.45);
       --matsuri-cyan: #00f0ff;
       --matsuri-cyan-glow: rgba(0, 240, 255, 0.35);
       --matsuri-lime: #ccff00;
       --matsuri-lime-glow: rgba(204, 255, 0, 0.35);
-      --text-main: #f5f6fa;
-      --text-dim: #7d8496;
-      --border-color: #212534;
+      --text-main: #f8fafc;
+      --text-dim: #848e9f;
+      --border-color: #202636;
       --gold: #ffd700;
       --kinforest-blue: #0b4ea2;
     }
@@ -32,27 +32,29 @@
     body {
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(circle at 5% 15%, rgba(227, 6, 19, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 95% 85%, rgba(0, 240, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 4% 12%, rgba(227, 6, 19, 0.16) 0%, transparent 45%),
+        radial-gradient(circle at 96% 88%, rgba(0, 240, 255, 0.11) 0%, transparent 45%),
         linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
       color: var(--text-main);
       font-family: 'Montserrat', sans-serif;
       min-height: 100vh;
-      padding-bottom: 60px;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* ШАПКА С ТРЕМЯ БРЕНДАМИ */
+    /* ШАПКА ТРАНСЛЯЦИИ С ТРЕМЯ БРЕНДАМИ */
     header {
-      background: linear-gradient(180deg, rgba(14, 16, 24, 0.98) 0%, rgba(7, 8, 11, 0.94) 100%);
+      background: linear-gradient(180deg, rgba(14, 17, 25, 0.98) 0%, rgba(6, 7, 10, 0.95) 100%);
       border-bottom: 2px solid var(--igora-red);
       position: sticky;
       top: 0;
       z-index: 100;
       backdrop-filter: blur(14px);
       padding: 10px 24px;
-      box-shadow: 0 6px 35px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.9);
     }
 
     .header-content {
@@ -65,7 +67,7 @@
       gap: 16px;
     }
 
-    /* ЛОГОТИПЫ */
+    /* КЛАСТЕР ЛОГОТИПОВ */
     .brand-cluster {
       display: flex;
       align-items: center;
@@ -76,12 +78,11 @@
     .logo-igora {
       display: flex;
       align-items: center;
-      gap: 10px;
       background: linear-gradient(135deg, #c4185d 0%, #681758 100%);
       padding: 6px 14px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 16px rgba(196, 24, 93, 0.35);
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 16px rgba(196, 24, 93, 0.4);
     }
 
     .logo-igora-text {
@@ -92,11 +93,11 @@
 
     .logo-igora-title {
       font-weight: 900;
-      font-size: 17px;
-      letter-spacing: 0.5px;
+      font-size: 16px;
       color: #ffffff;
       text-transform: uppercase;
       font-style: italic;
+      letter-spacing: 0.5px;
     }
 
     .logo-igora-sub {
@@ -105,7 +106,7 @@
       letter-spacing: 2px;
       color: #ffffff;
       text-transform: uppercase;
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
     /* 2. DRIFT MATSURI SPB */
@@ -116,16 +117,15 @@
     }
 
     .matsuri-top {
-      font-family: 'Montserrat', sans-serif;
       font-weight: 900;
       font-style: italic;
-      font-size: 21px;
-      letter-spacing: 1px;
+      font-size: 20px;
+      letter-spacing: 0.8px;
       background: linear-gradient(90deg, #ffde00 0%, #ff6a00 50%, #e6007e 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-transform: uppercase;
-      filter: drop-shadow(0 0 8px rgba(255, 106, 0, 0.4));
+      filter: drop-shadow(0 0 8px rgba(255, 106, 0, 0.45));
     }
 
     .matsuri-sub {
@@ -148,7 +148,7 @@
     .kinforest-name {
       font-weight: 900;
       font-style: italic;
-      font-size: 20px;
+      font-size: 19px;
       letter-spacing: 0.5px;
       color: #2b72db;
       display: flex;
@@ -158,7 +158,7 @@
 
     .kinforest-k {
       color: var(--igora-red);
-      font-size: 23px;
+      font-size: 22px;
       margin-right: 1px;
       filter: drop-shadow(0 0 5px rgba(227, 6, 19, 0.6));
     }
@@ -173,7 +173,7 @@
       margin-top: 2px;
     }
 
-    /* НАВИГАЦИЯ ПО ДНЯМ */
+    /* ВКЛАДКИ ДНЕЙ */
     .tabs-nav {
       display: flex;
       gap: 8px;
@@ -188,9 +188,9 @@
       border: none;
       color: var(--text-dim);
       font-family: 'Teko', sans-serif;
-      font-size: 22px;
+      font-size: 21px;
       letter-spacing: 1.2px;
-      padding: 4px 22px;
+      padding: 4px 20px;
       cursor: pointer;
       text-transform: uppercase;
       transition: all 0.25s ease;
@@ -238,66 +238,148 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    /* ОСНОВНОЙ КОНТЕНТ */
+    /* ПОДШАПКА: УПРАВЛЕНИЕ АВТОСМЕНОЙ ЭКРАНОВ */
+    .broadcast-subbar {
+      background: rgba(11, 14, 21, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      padding: 8px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .carousel-nav-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sub-switch-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-dim);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 6px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .sub-switch-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
+    .sub-switch-btn.active {
+      background: rgba(0, 240, 255, 0.12);
+      border-color: var(--matsuri-cyan);
+      color: var(--matsuri-cyan);
+      box-shadow: 0 0 12px var(--matsuri-cyan-glow);
+    }
+
+    .auto-toggle-btn {
+      background: rgba(204, 255, 0, 0.1);
+      border: 1px solid var(--matsuri-lime);
+      color: var(--matsuri-lime);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ТАЙМЕР АВТОСМЕНЫ */
+    .carousel-timer-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: var(--matsuri-cyan);
+      width: 0%;
+      transition: width 11s linear;
+    }
+
+    /* ОСНОВНОЙ КОНТЕНТ С КАРУСЕЛЬЮ */
     main {
       max-width: 1920px;
-      margin: 24px auto;
+      width: 100%;
+      margin: 16px auto;
       padding: 0 20px;
+      flex: 1;
+      position: relative;
+    }
+
+    /* СЛАЙДЫ КАРУСЕЛИ */
+    .view-slide {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(14px);
+      transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s;
+      display: none;
+    }
+
+    .view-slide.active-slide {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      display: block;
     }
 
     .section-title {
       font-family: 'Teko', sans-serif;
-      font-size: 30px;
+      font-size: 28px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin: 28px 0 14px 0;
+      margin: 10px 0 12px 0;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       color: #fff;
     }
 
     .section-title.red::before {
-      content: ''; display: inline-block; width: 6px; height: 24px; background: var(--igora-red); transform: skewX(-15deg);
+      content: ''; display: inline-block; width: 5px; height: 20px; background: var(--igora-red); transform: skewX(-15deg);
     }
 
     .section-title.cyan::before {
-      content: ''; display: inline-block; width: 6px; height: 24px; background: var(--matsuri-cyan); transform: skewX(-15deg);
+      content: ''; display: inline-block; width: 5px; height: 20px; background: var(--matsuri-cyan); transform: skewX(-15deg);
     }
 
     .rounds-flex-container {
       display: flex;
-      gap: 18px;
+      gap: 16px;
       overflow-x: auto;
-      padding-bottom: 18px;
+      padding-bottom: 12px;
       align-items: flex-start;
     }
 
-    .rounds-flex-container::-webkit-scrollbar { height: 8px; }
+    .rounds-flex-container::-webkit-scrollbar { height: 6px; }
     .rounds-flex-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); border-radius: 4px; }
     .rounds-flex-container::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
 
     .round-column {
-      flex: 1 0 320px;
-      max-width: 370px;
-      background: rgba(17, 19, 27, 0.7);
+      flex: 1 0 310px;
+      max-width: 360px;
+      background: rgba(15, 18, 26, 0.75);
       border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px;
+      border-radius: 6px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       backdrop-filter: blur(8px);
     }
 
     .round-header {
       font-family: 'Teko', sans-serif;
-      font-size: 24px;
+      font-size: 22px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--matsuri-cyan);
       border-bottom: 1px solid var(--border-color);
-      padding-bottom: 6px;
+      padding-bottom: 4px;
       display: flex;
       justify-content: space-between;
       align-items: baseline;
@@ -305,7 +387,7 @@
 
     .round-header.gold { color: var(--gold); }
     .round-header span {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-dim);
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
@@ -315,7 +397,7 @@
     .heat-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 6px;
+      border-radius: 5px;
       overflow: hidden;
       transition: all 0.2s ease;
       cursor: pointer;
@@ -325,17 +407,17 @@
     .heat-card:hover {
       border-color: rgba(0, 240, 255, 0.45);
       transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
     }
 
     .heat-card.grand-final {
       border: 2px solid var(--gold);
-      box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.25);
     }
 
     .heat-header {
       background: var(--bg-card-header);
-      padding: 6px 12px;
+      padding: 5px 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -347,8 +429,8 @@
     }
 
     .heat-badge-status {
-      font-size: 10px;
-      padding: 2px 6px;
+      font-size: 9px;
+      padding: 2px 5px;
       border-radius: 3px;
       background: rgba(255, 255, 255, 0.05);
     }
@@ -363,7 +445,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 9px 12px;
+      padding: 8px 10px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       transition: background 0.2s ease;
     }
@@ -371,19 +453,19 @@
     .pilot-row:last-child { border-bottom: none; }
 
     .pilot-row.winner {
-      background: rgba(204, 255, 0, 0.08);
+      background: rgba(204, 255, 0, 0.1);
       border-left: 3px solid var(--matsuri-lime);
     }
 
     .pilot-row.loser {
-      opacity: 0.45;
+      opacity: 0.4;
       background: rgba(0, 0, 0, 0.25);
     }
 
     .pilot-info {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       overflow: hidden;
       flex: 1;
     }
@@ -392,11 +474,11 @@
       background: rgba(255, 255, 255, 0.06);
       color: #fff;
       font-family: 'Teko', sans-serif;
-      font-size: 18px;
+      font-size: 17px;
       line-height: 1;
-      padding: 3px 7px;
+      padding: 2px 6px;
       border-radius: 3px;
-      min-width: 28px;
+      min-width: 26px;
       text-align: center;
     }
 
@@ -414,7 +496,7 @@
 
     .pilot-name {
       font-weight: 700;
-      font-size: 13px;
+      font-size: 12.5px;
       text-transform: uppercase;
       white-space: nowrap;
       overflow: hidden;
@@ -422,7 +504,7 @@
     }
 
     .pilot-car {
-      font-size: 10px;
+      font-size: 9.5px;
       color: var(--text-dim);
       white-space: nowrap;
       overflow: hidden;
@@ -431,12 +513,12 @@
 
     .win-badge {
       font-family: 'Teko', sans-serif;
-      font-size: 17px;
+      font-size: 16px;
       letter-spacing: 1px;
       background: var(--matsuri-lime);
       color: #000;
       font-weight: 700;
-      padding: 1px 8px;
+      padding: 1px 7px;
       border-radius: 2px;
       text-transform: uppercase;
       box-shadow: 0 0 10px var(--matsuri-lime-glow);
@@ -444,8 +526,8 @@
 
     .heat-footer-flow {
       background: rgba(0,0,0,0.3);
-      padding: 5px 12px;
-      font-size: 10px;
+      padding: 4px 10px;
+      font-size: 9.5px;
       color: var(--text-dim);
       display: flex;
       justify-content: space-between;
@@ -484,7 +566,7 @@
 
     .modal-banner-top {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 14px;
+      margin-bottom: 22px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;
     }
 
     .heat-title-badge {
@@ -564,6 +646,7 @@
 </head>
 <body>
 
+  <!-- ОФИЦИАЛЬНАЯ ШАПКА -->
   <header>
     <div class="header-content">
       <div class="brand-cluster">
@@ -590,12 +673,14 @@
         </div>
       </div>
 
+      <!-- ВЫБОР ДНЯ СОРЕВНОВАНИЙ -->
       <nav class="tabs-nav">
-        <button class="tab-btn active" id="tabSat" onclick="switchTab('sat')">Суббота (Sat 32DE)</button>
-        <button class="tab-btn" id="tabSun" onclick="switchTab('sun')">Воскресенье (Sun 32DE)</button>
-        <button class="tab-btn" id="tabPilots" onclick="switchTab('pilots')">Список пилотов</button>
+        <button class="tab-btn active" id="tabSat" onclick="switchDayTab('sat')">Суббота (Sat 32DE)</button>
+        <button class="tab-btn" id="tabSun" onclick="switchDayTab('sun')">Воскресенье (Sun 32DE)</button>
+        <button class="tab-btn" id="tabPilots" onclick="switchDayTab('pilots')">Список пилотов</button>
       </nav>
 
+      <!-- ИНДИКАТОР ТРАНСЛЯЦИИ -->
       <div class="controls-block">
         <div class="live-status">
           <div class="live-dot"></div>
@@ -605,98 +690,155 @@
     </div>
   </header>
 
+  <!-- ПАНЕЛЬ УПРАВЛЕНИЯ ЭКРАНАМИ ТРАНСЛЯЦИИ -->
+  <div class="broadcast-subbar" id="subbarControls">
+    <div class="carousel-nav-group" id="satScreenButtons">
+      <span style="font-size: 11px; color: var(--text-dim); font-weight: 700; text-transform: uppercase;">Экран:</span>
+      <button class="sub-switch-btn active" id="btnSatWinners" onclick="setManualSlide('sat', 0)">Верхняя сетка (Winners)</button>
+      <button class="sub-switch-btn" id="btnSatLosers" onclick="setManualSlide('sat', 1)">Нижняя сетка (Losers)</button>
+      <button class="sub-switch-btn" id="btnSatAll" onclick="setManualSlide('sat', 2)">Вся сетка сразу</button>
+    </div>
+
+    <div class="carousel-nav-group hidden" id="sunScreenButtons">
+      <span style="font-size: 11px; color: var(--text-dim); font-weight: 700; text-transform: uppercase;">Экран:</span>
+      <button class="sub-switch-btn active" id="btnSunFinals" onclick="setManualSlide('sun', 0)">Топ-8 & Финалы</button>
+      <button class="sub-switch-btn" id="btnSunLosers" onclick="setManualSlide('sun', 1)">Нижняя сетка выбывания</button>
+      <button class="sub-switch-btn" id="btnSunAll" onclick="setManualSlide('sun', 2)">Вся сетка сразу</button>
+    </div>
+
+    <div>
+      <button class="auto-toggle-btn" id="btnAutoCycle" onclick="toggleAutoCycle()">🔄 Автосмена: ВКЛ (11 сек)</button>
+    </div>
+
+    <div class="carousel-timer-bar" id="carouselTimerBar"></div>
+  </div>
+
   <main>
-    <!-- СУББОТА -->
+    <!-- ========================================== -->
+    <!-- СУББОТА (Sat 32DE) -->
+    <!-- ========================================== -->
     <div id="viewSat">
-      <div class="section-title red">Суббота • Верхняя сетка (Winners)</div>
-      <div class="rounds-flex-container">
-        <div class="round-column">
-          <div class="round-header">Раунд 1А <span>Хиты 1 - 8</span></div>
-          <div id="colR1A"></div>
-        </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 1Б <span>Хиты 9 - 16</span></div>
-          <div id="colR1B"></div>
-        </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 3А <span>Хиты 25 - 28</span></div>
-          <div id="colR3A"></div>
-        </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 3Б <span>Хиты 29 - 32</span></div>
-          <div id="colR3B"></div>
+      <!-- Слайд 0: Верхняя сетка субботы (Раунд 1А, 1Б, 3А, 3Б) -->
+      <div class="view-slide active-slide" id="satSlide0">
+        <div class="section-title red">Суббота • Верхняя сетка (Winners) — Раунды 1А/1Б & 3А/3Б</div>
+        <div class="rounds-flex-container">
+          <div class="round-column">
+            <div class="round-header">Раунд 1А <span>Хиты 1 - 8</span></div>
+            <div id="colR1A"></div>
+          </div>
+          <div class="round-column">
+            <div class="round-header">Раунд 3А (Стыки) <span>Хиты 25 - 28</span></div>
+            <div id="colR3A"></div>
+          </div>
+          <div class="round-column">
+            <div class="round-header">Раунд 3Б (Стыки) <span>Хиты 29 - 32</span></div>
+            <div id="colR3B"></div>
+          </div>
+          <div class="round-column">
+            <div class="round-header">Раунд 1Б <span>Хиты 9 - 16</span></div>
+            <div id="colR1B"></div>
+          </div>
         </div>
       </div>
 
-      <div class="section-title cyan">Суббота • Нижняя сетка (Losers)</div>
-      <div class="rounds-flex-container">
-        <div class="round-column">
-          <div class="round-header">Раунд 2А <span>Хиты 17 - 20</span></div>
-          <div id="colR2A"></div>
+      <!-- Слайд 1: Нижняя сетка субботы (Раунд 2А и 2Б) -->
+      <div class="view-slide" id="satSlide1">
+        <div class="section-title cyan">Суббота • Нижняя сетка выбывания (Losers) — Раунды 2А & 2Б</div>
+        <div class="rounds-flex-container">
+          <div class="round-column" style="max-width: 480px; flex: 1 0 420px;">
+            <div class="round-header">Раунд 2А (Losers) <span>Хиты 17 - 20</span></div>
+            <div id="colR2A"></div>
+          </div>
+          <div class="round-column" style="max-width: 480px; flex: 1 0 420px;">
+            <div class="round-header">Раунд 2Б (Losers) <span>Хиты 21 - 24</span></div>
+            <div id="colR2B"></div>
+          </div>
         </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 2Б <span>Хиты 21 - 24</span></div>
-          <div id="colR2B"></div>
+      </div>
+
+      <!-- Слайд 2: Вся сетка сразу (для полного обзора) -->
+      <div class="view-slide" id="satSlide2">
+        <div class="section-title red">Суббота • Верхняя сетка (Winners)</div>
+        <div class="rounds-flex-container">
+          <div class="round-column"><div class="round-header">Раунд 1А</div><div id="colR1A_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 3А</div><div id="colR3A_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 3Б</div><div id="colR3B_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 1Б</div><div id="colR1B_all"></div></div>
+        </div>
+        <div class="section-title cyan" style="margin-top: 24px;">Суббота • Нижняя сетка (Losers)</div>
+        <div class="rounds-flex-container">
+          <div class="round-column"><div class="round-header">Раунд 2А</div><div id="colR2A_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 2Б</div><div id="colR2B_all"></div></div>
         </div>
       </div>
     </div>
 
-    <!-- ВОСКРЕСЕНЬЕ -->
+    <!-- ========================================== -->
+    <!-- ВОСКРЕСЕНЬЕ (Sun 32DE) -->
+    <!-- ========================================== -->
     <div id="viewSun" class="hidden">
-      <div class="section-title red">Воскресенье • Верхняя сетка (Winners) & Финал</div>
-      <div class="rounds-flex-container">
-        <div class="round-column">
-          <div class="round-header">Раунд 6 (Top 8) <span>Хиты 45 - 48</span></div>
-          <div id="colR6"></div>
-        </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 9 (Полуфинал) <span>Хиты 55 - 56</span></div>
-          <div id="colR9"></div>
-        </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 12 (Финал Виннеров) <span>Хит 60</span></div>
-          <div id="colR12"></div>
-        </div>
-        <div class="round-column">
-          <div class="round-header gold">🏆 СУПЕРФИНАЛ <span>Хит 62</span></div>
-          <div id="colFinal"></div>
+      <!-- Слайд 0: Верхняя сетка воскресенья (ТОП-8, Полуфинал, Финалы) -->
+      <div class="view-slide active-slide" id="sunSlide0">
+        <div class="section-title red">Воскресенье • Верхняя сетка (Top 8 Winners & Finals)</div>
+        <div class="rounds-flex-container">
+          <div class="round-column">
+            <div class="round-header">Раунд 6 (Top 8) <span>Хиты 45 - 48</span></div>
+            <div id="colR6"></div>
+          </div>
+          <div class="round-column">
+            <div class="round-header">Раунд 9 (Полуфинал) <span>Хиты 55 - 56</span></div>
+            <div id="colR9"></div>
+          </div>
+          <div class="round-column">
+            <div class="round-header">Раунд 12 (Финал Виннеров) <span>Хит 60</span></div>
+            <div id="colR12"></div>
+          </div>
+          <div class="round-column">
+            <div class="round-header gold">🏆 СУПЕРФИНАЛ <span>Хит 62</span></div>
+            <div id="colFinal"></div>
+          </div>
         </div>
       </div>
 
-      <div class="section-title cyan">Воскресенье • Нижняя сетка (Losers)</div>
-      <div class="rounds-flex-container">
-        <div class="round-column">
-          <div class="round-header">Раунд 4 <span>Хиты 33 - 40</span></div>
-          <div id="colR4"></div>
+      <!-- Слайд 1: Нижняя сетка воскресенья (Все раунды лузеров) -->
+      <div class="view-slide" id="sunSlide1">
+        <div class="section-title cyan">Воскресенье • Нижняя сетка выбывания (Losers) — Раунды 4, 5, 7, 8, 10, 11, 13</div>
+        <div class="rounds-flex-container">
+          <div class="round-column"><div class="round-header">Раунд 4 <span>Хиты 33-40</span></div><div id="colR4"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 5 <span>Хиты 41-44</span></div><div id="colR5"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 7 <span>Хиты 49-52</span></div><div id="colR7"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 8 <span>Хиты 53-54</span></div><div id="colR8"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 10 <span>Хиты 57-58</span></div><div id="colR10"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 11 <span>Хит 59</span></div><div id="colR11"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 13 (Бронза) <span>Хит 61</span></div><div id="colR13"></div></div>
         </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 5 <span>Хиты 41 - 44</span></div>
-          <div id="colR5"></div>
+      </div>
+
+      <!-- Слайд 2: Вся воскресная сетка -->
+      <div class="view-slide" id="sunSlide2">
+        <div class="section-title red">Воскресенье • Верхняя сетка</div>
+        <div class="rounds-flex-container">
+          <div class="round-column"><div class="round-header">Раунд 6</div><div id="colR6_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 9</div><div id="colR9_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 12</div><div id="colR12_all"></div></div>
+          <div class="round-column"><div class="round-header gold">🏆 ФИНАЛ</div><div id="colFinal_all"></div></div>
         </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 7 <span>Хиты 49 - 52</span></div>
-          <div id="colR7"></div>
-        </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 8 <span>Хиты 53 - 54</span></div>
-          <div id="colR8"></div>
-        </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 10 <span>Хиты 57 - 58</span></div>
-          <div id="colR10"></div>
-        </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 11 <span>Хит 59</span></div>
-          <div id="colR11"></div>
-        </div>
-        <div class="round-column">
-          <div class="round-header">Раунд 13 (Финал Лузеров) <span>Хит 61</span></div>
-          <div id="colR13"></div>
+        <div class="section-title cyan" style="margin-top: 24px;">Воскресенье • Нижняя сетка</div>
+        <div class="rounds-flex-container">
+          <div class="round-column"><div class="round-header">Раунд 4</div><div id="colR4_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 5</div><div id="colR5_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 7</div><div id="colR7_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 8</div><div id="colR8_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 10</div><div id="colR10_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 11</div><div id="colR11_all"></div></div>
+          <div class="round-column"><div class="round-header">Раунд 13</div><div id="colR13_all"></div></div>
         </div>
       </div>
     </div>
 
-    <!-- ЖЕРЕБЬЕВКА -->
+    <!-- ========================================== -->
+    <!-- ЖЕРЕБЬЕВКА / СПИСОК ПИЛОТОВ -->
+    <!-- ========================================== -->
     <div id="viewPilots" class="hidden">
       <div class="section-title red">Протокол жеребьевки участников</div>
       <div class="table-container">
@@ -716,7 +858,7 @@
     </div>
   </main>
 
-  <!-- ПЛАШКА ПОБЕДИТЕЛЯ -->
+  <!-- ПЛАШКА ПОБЕДИТЕЛЯ (MODAL ALERT) -->
   <div class="winner-modal-overlay" id="winnerModal">
     <div class="winner-modal-card">
       <div class="modal-banner-top">
@@ -752,7 +894,8 @@
 
   <script>
     const SPREADSHEET_ID = '1ydV36JHtw8T00uJwsZYAxU-tCaWIrQv5yPkKpqtCtTk';
-    const POLL_INTERVAL = 3500;
+    const POLL_INTERVAL = 3000;
+    const CAROUSEL_INTERVAL = 11000; // 11 секунд на показ половины сетки
 
     let pilotsByNum = {};
     let pilotsByName = {};
@@ -761,7 +904,14 @@
     let isFirstLoad = true;
     let modalTimer = null;
 
-    // Регламентная сетка ТОП-32: пары и переходы
+    // Состояние авторотации экранов
+    let currentDayTab = 'sat';
+    let satSlideIdx = 0;
+    let sunSlideIdx = 0;
+    let autoCycleEnabled = true;
+    let carouselTimer = null;
+
+    // ТОЧНАЯ МАТРИЦА СВЯЗЕЙ DOUBLE ELIMINATION (1..62)
     const DE_CONFIG = {
       // 1A & 1B (Суббота)
       1:  { s1: 1,  s2: 32, ph1: '1',  ph2: '32', nextW: [25, 'p1', 'Хит 25 (Раунд 3А)'], nextL: [17, 'p1', 'Хит 17 (L1)'] },
@@ -782,7 +932,7 @@
       15: { s1: 6,  s2: 27, ph1: '6',  ph2: '27', nextW: [32, 'p1', 'Хит 32 (Раунд 3Б)'], nextL: [24, 'p1', 'Хит 24 (L15)'] },
       16: { s1: 11, s2: 22, ph1: '11', ph2: '22', nextW: [32, 'p2', 'Хит 32 (Раунд 3Б)'], nextL: [24, 'p2', 'Хит 24 (L16)'] },
 
-      // 2A & 2B (Лузера субботы)
+      // 2A & 2B (Лузера субботы: L1..L16)
       17: { ph1: 'L1',  ph2: 'L2',  nextW: [33, 'p1', 'Вскр Хит 33'], nextL: [null, null, 'Выбывание (25-32 место)'] },
       18: { ph1: 'L3',  ph2: 'L4',  nextW: [34, 'p1', 'Вскр Хит 34'], nextL: [null, null, 'Выбывание (25-32 место)'] },
       19: { ph1: 'L5',  ph2: 'L6',  nextW: [35, 'p1', 'Вскр Хит 35'], nextL: [null, null, 'Выбывание (25-32 место)'] },
@@ -792,7 +942,7 @@
       23: { ph1: 'L13', ph2: 'L14', nextW: [39, 'p1', 'Вскр Хит 39'], nextL: [null, null, 'Выбывание (25-32 место)'] },
       24: { ph1: 'L15', ph2: 'L16', nextW: [40, 'p1', 'Вскр Хит 40'], nextL: [null, null, 'Выбывание (25-32 место)'] },
 
-      // 3A & 3B (Стыки за Top 8)
+      // 3A & 3B (Стыки за Top 8: W1..W16)
       25: { ph1: 'W1',  ph2: 'W2',  nextW: [45, 'p1', 'Вскр Хит 45 (Top 8)'], nextL: [40, 'p2', 'Вскр Хит 40 (L25)'] },
       26: { ph1: 'W3',  ph2: 'W4',  nextW: [45, 'p2', 'Вскр Хит 45 (Top 8)'], nextL: [39, 'p2', 'Вскр Хит 39 (L26)'] },
       27: { ph1: 'W5',  ph2: 'W6',  nextW: [46, 'p1', 'Вскр Хит 46 (Top 8)'], nextL: [38, 'p2', 'Вскр Хит 38 (L27)'] },
@@ -834,7 +984,7 @@
       53: { ph1: 'W49', ph2: 'W50', nextW: [57, 'p1', 'Хит 57 (Раунд 10)'], nextL: [null, null, 'Выбывание (7-8 место)'] },
       54: { ph1: 'W51', ph2: 'W52', nextW: [58, 'p1', 'Хит 58 (Раунд 10)'], nextL: [null, null, 'Выбывание (7-8 место)'] },
 
-      // Воскресенье: Раунд 9 (Полуфинал)
+      // Воскресенье: Раунд 9 (Полуфинал Winners)
       55: { ph1: 'W45', ph2: 'W46', nextW: [60, 'p1', 'Хит 60 (Финал Виннеров)'], nextL: [57, 'p2', 'Хит 57 (L55)'] },
       56: { ph1: 'W47', ph2: 'W48', nextW: [60, 'p2', 'Хит 60 (Финал Виннеров)'], nextL: [58, 'p2', 'Хит 58 (L56)'] },
 
@@ -848,7 +998,7 @@
       // Воскресенье: Раунд 12 (Финал Виннеров)
       60: { ph1: 'W55', ph2: 'W56', nextW: [62, 'p1', 'СУПЕРФИНАЛ (Хит 62)'], nextL: [61, 'p2', 'Хит 61 (L60)'] },
 
-      // Воскресенье: Раунд 13 (Финал Лузеров)
+      // Воскресенье: Раунд 13 (Финал Лузеров / Бронза)
       61: { ph1: 'W59', ph2: 'L60', nextW: [62, 'p2', 'СУПЕРФИНАЛ (Хит 62)'], nextL: [null, null, '🥉 3-е место'] },
 
       // Воскресенье: СУПЕРФИНАЛ
@@ -858,7 +1008,7 @@
     function isWinChar(val) {
       if (val === null || val === undefined) return false;
       const s = String(val).trim().toLowerCase();
-      return s === 'w' || s === 'ц' || s === 'win' || s === '+' || s === 'победа';
+      return s === 'w' || s === 'ц' || s === 'win' || s === '+' || s === 'победа' || s === '1';
     }
 
     function playWinSound() {
@@ -972,199 +1122,206 @@
       }
     }
 
-    // ВСПОМОГАТЕЛЬНЫЙ ПОИСК КОЛОНОК РАУНДОВ
-    function findRoundHeaders(rows, targetRounds) {
-      let result = {};
-      for (let r = 0; r < rows.length; r++) {
-        const row = rows[r];
-        if (!row || !row.c) continue;
-        for (let c = 0; c < row.c.length; c++) {
-          const val = String(row.c[c]?.v || '').trim().toLowerCase().replace(/\s+/g, ' ');
-          targetRounds.forEach(tr => {
-            if (val.includes(tr.tag.toLowerCase())) {
-              if (!result[tr.id]) {
-                result[tr.id] = { row: r, col: c, heats: tr.heats };
-              }
-            }
-          });
-        }
-      }
-      return result;
-    }
-
-    // ДИНАМИЧЕСКИЙ ПАРСИНГ РАУНДОВ СУББОТЫ
-    function parseSaturdayDynamic(rows) {
+    // СКАНИРОВАНИЕ ЗАЕЗДОВ СУББОТЫ
+    function parseSaturdaySheet(rows) {
       if (!rows || !rows.length) return;
 
-      // 1. Находим разделитель между верхней и нижней сеткой (Раунд 2А/2Б)
-      let splitR = 40;
+      // Находим строку разделителя между Верхней и Нижней сеткой
+      let splitR = 42;
       for (let r = 0; r < rows.length; r++) {
         const txt = (rows[r]?.c || []).map(c => String(c?.v || '')).join(' ');
         if (txt.includes('Раунд 2')) { splitR = r; break; }
       }
 
-      // Спецификация раундов субботы
-      const satDefs = [
-        { id: 'R1A', tag: 'раунд 1а', heats: [1,2,3,4,5,6,7,8], rMin: 0, rMax: splitR, cMin: 0, cMax: 6 },
-        { id: 'R3A', tag: 'раунд 3а', heats: [25,26,27,28], rMin: 0, rMax: splitR, cMin: 6, cMax: 14 },
-        { id: 'R3B', tag: 'раунд 3б', heats: [29,30,31,32], rMin: 0, rMax: splitR, cMin: 17, cMax: 24 },
-        { id: 'R1B', tag: 'раунд 1б', heats: [9,10,11,12,13,14,15,16], rMin: 0, rMax: splitR, cMin: 23, cMax: 32 },
-        { id: 'R2A', tag: 'раунд 2а', heats: [17,18,19,20], rMin: splitR, rMax: rows.length, cMin: 0, cMax: 12 },
-        { id: 'R2B', tag: 'раунд 2б', heats: [21,22,23,24], rMin: splitR, rMax: rows.length, cMin: 18, cMax: 32 }
-      ];
+      // 1. ХИТЫ 1..16 (Раунд 1А и 1Б)
+      for (let h = 1; h <= 16; h++) {
+        const m = tournamentMatches[h];
+        const isB = (h >= 9);
+        const cMin = isB ? 22 : 0;
+        const cMax = isB ? 30 : 6;
 
-      satDefs.forEach(def => {
-        parseRoundBlock(rows, def);
-      });
-    }
+        for (let r = 0; r < splitR; r++) {
+          const row = rows[r];
+          if (!row || !row.c) continue;
 
-    // ДИНАМИЧЕСКИЙ ПАРСИНГ РАУНДОВ ВОСКРЕСЕНЬЯ
-    function parseSundayDynamic(rows) {
-      if (!rows || !rows.length) return;
+          let hasW = false;
+          let rowP1 = false;
+          let rowP2 = false;
 
-      // Находим разделитель между верхней и нижней сеткой воскресенья
-      let splitR = 25;
-      for (let r = 0; r < rows.length; r++) {
-        const txt = (rows[r]?.c || []).map(c => String(c?.v || '')).join(' ');
-        if (txt.includes('Раунд 4') || txt.includes('Раунд  4')) { splitR = r; break; }
+          for (let c = cMin; c <= Math.min(cMax, row.c.length - 1); c++) {
+            const v = row.c[c]?.v;
+            if (!v) continue;
+            if (isWinChar(v)) hasW = true;
+            if (v === m.p1.seed || String(v).trim().toLowerCase() === String(m.p1.name).toLowerCase()) rowP1 = true;
+            if (v === m.p2.seed || String(v).trim().toLowerCase() === String(m.p2.name).toLowerCase()) rowP2 = true;
+          }
+
+          if (hasW) {
+            if (rowP1) { m.winner = m.p1; m.loser = m.p2; }
+            if (rowP2) { m.winner = m.p2; m.loser = m.p1; }
+          }
+        }
       }
 
-      const sunDefs = [
-        // Верхняя сетка
-        { id: 'R6', tag: 'раунд 6', heats: [45,46,47,48], rMin: 0, rMax: splitR, cMin: 0, cMax: 5 },
-        { id: 'R9', tag: 'раунд 9', heats: [55,56], rMin: 0, rMax: splitR, cMin: 4, cMax: 10 },
-        { id: 'R12', tag: 'раунд 12', heats: [60], rMin: 0, rMax: splitR, cMin: 9, cMax: 16 },
-        { id: 'FINAL', tag: 'финал', heats: [62], rMin: 0, rMax: splitR, cMin: 14, cMax: 24 },
-        // Нижняя сетка
-        { id: 'R4', tag: 'раунд 4', heats: [33,34,35,36,37,38,39,40], rMin: splitR, rMax: rows.length, cMin: 0, cMax: 6 },
-        { id: 'R5', tag: 'раунд 5', heats: [41,42,43,44], rMin: splitR, rMax: rows.length, cMin: 4, cMax: 10 },
-        { id: 'R7', tag: 'раунд 7', heats: [49,50,51,52], rMin: splitR, rMax: rows.length, cMin: 8, cMax: 14 },
-        { id: 'R8', tag: 'раунд 8', heats: [53,54], rMin: splitR, rMax: rows.length, cMin: 12, cMax: 18 },
-        { id: 'R10', tag: 'раунд 10', heats: [57,58], rMin: splitR, rMax: rows.length, cMin: 16, cMax: 22 },
-        { id: 'R11', tag: 'раунд 11', heats: [59], rMin: splitR, rMax: rows.length, cMin: 20, cMax: 26 },
-        { id: 'R13', tag: 'раунд 13', heats: [61], rMin: splitR, rMax: rows.length, cMin: 24, cMax: 32 }
-      ];
-
-      sunDefs.forEach(def => {
-        parseRoundBlock(rows, def);
-      });
-    }
-
-    // ИЗОЛИРОВАННЫЙ СКАНЕР КОНКРЕТНОГО БЛОКА
-    function parseRoundBlock(rows, def) {
-      def.heats.forEach(h => {
+      // 2. ХИТЫ 17..24 (Нижняя сетка: Раунд 2А и 2Б)
+      // Ищутся строго в нижней половине (ниже splitR)
+      for (let h = 17; h <= 24; h++) {
         const m = tournamentMatches[h];
+        const isB = (h >= 21);
+        const cMin = isB ? 18 : 0;
+        const cMax = isB ? 30 : 10;
 
-        // 1. Ищем ячейку с номером хита внутри выделенного сектора
         let hRow = -1;
         let hCol = -1;
 
-        for (let r = def.rMin; r < Math.min(def.rMax, rows.length); r++) {
+        for (let r = splitR; r < rows.length; r++) {
           const row = rows[r];
           if (!row || !row.c) continue;
-          for (let c = def.cMin; c <= Math.min(def.cMax, row.c.length - 1); c++) {
-            const v = row.c[c]?.v;
-            if (Number(v) === h) {
-              hRow = r;
-              hCol = c;
-              break;
+          for (let c = cMin; c <= Math.min(cMax, row.c.length - 1); c++) {
+            if (Number(row.c[c]?.v) === h) {
+              hRow = r; hCol = c; break;
             }
           }
           if (hRow !== -1) break;
         }
 
-        if (hRow === -1) return;
+        if (hRow === -1) continue;
 
-        // 2. Сканируем заезд (от строки хита на 4 строки вниз)
-        let foundPilots = [];
-        for (let r = hRow; r <= Math.min(rows.length - 1, hRow + 4); r++) {
+        // Сканируем строки заезда
+        scanHeatParticipantsAndWin(rows, m, hRow, hCol, cMin, cMax, 4);
+      }
+
+      // 3. ХИТЫ 25..32 (Стыки: Раунд 3А и 3Б)
+      // Ищутся строго в верхней половине
+      for (let h = 25; h <= 32; h++) {
+        const m = tournamentMatches[h];
+        const isB = (h >= 29);
+        const cMin = isB ? 16 : 6;
+        const cMax = isB ? 24 : 14;
+
+        let hRow = -1;
+        let hCol = -1;
+
+        for (let r = 0; r < splitR; r++) {
           const row = rows[r];
           if (!row || !row.c) continue;
-
-          let detectedPilot = null;
-          let hasW = false;
-
-          for (let c = Math.max(0, hCol - 2); c <= Math.min(35, hCol + 6); c++) {
-            const val = row.c[c]?.v;
-            if (val === null || val === undefined || val === '') continue;
-
-            if (isWinChar(val)) hasW = true;
-
-            // Поиск пилота (по номеру или фамилии)
-            if (typeof val === 'number' && val >= 1 && val <= 32 && val !== h) {
-              if (!detectedPilot) detectedPilot = pilotsByNum[val];
-            } else if (typeof val === 'string') {
-              const low = val.trim().toLowerCase();
-              if (pilotsByName[low]) {
-                if (!detectedPilot) detectedPilot = pilotsByName[low];
-              } else if ((low.startsWith('l') || low.startsWith('w')) && !isWinChar(val)) {
-                if (!detectedPilot) detectedPilot = { seed: val.trim(), name: `Ожидание (${val.trim()})`, car: '' };
-              }
+          for (let c = cMin; c <= Math.min(cMax, row.c.length - 1); c++) {
+            if (Number(row.c[c]?.v) === h) {
+              hRow = r; hCol = c; break;
             }
           }
-
-          if (detectedPilot) {
-            const ex = foundPilots.find(x => x.p.seed === detectedPilot.seed);
-            if (!ex) foundPilots.push({ p: detectedPilot, win: hasW, row: r });
-            else if (hasW) ex.win = true;
-          }
+          if (hRow !== -1) break;
         }
 
-        // Для 1А и 1Б пилоты строго закреплены по жеребьевке
-        if (h <= 16) {
-          // Проверяем наличие 'w' в строках пилота 1 и пилота 2
-          let p1Won = false;
-          let p2Won = false;
+        if (hRow === -1) continue;
 
-          for (let r = hRow; r <= Math.min(rows.length - 1, hRow + 3); r++) {
-            const row = rows[r];
-            if (!row || !row.c) continue;
-            let rowHasW = false;
-            let rowP1 = false;
-            let rowP2 = false;
-
-            for (let c = def.cMin; c <= Math.min(def.cMax, row.c.length - 1); c++) {
-              const v = row.c[c]?.v;
-              if (!v) continue;
-              if (isWinChar(v)) rowHasW = true;
-              if (v === m.p1.seed || String(v).trim().toLowerCase() === String(m.p1.name).toLowerCase()) rowP1 = true;
-              if (v === m.p2.seed || String(v).trim().toLowerCase() === String(m.p2.name).toLowerCase()) rowP2 = true;
-            }
-
-            if (rowHasW) {
-              if (rowP1) p1Won = true;
-              if (rowP2) p2Won = true;
-            }
-          }
-
-          if (p1Won && !p2Won) { m.winner = m.p1; m.loser = m.p2; }
-          else if (p2Won && !p1Won) { m.winner = m.p2; m.loser = m.p1; }
-          return;
-        }
-
-        // Для всех остальных заездов (17-62)
-        if (foundPilots[0]) m.p1 = foundPilots[0].p;
-        if (foundPilots[1]) m.p2 = foundPilots[1].p;
-
-        if (foundPilots.length >= 2) {
-          if (foundPilots[0].win && !foundPilots[1].win) { m.winner = m.p1; m.loser = m.p2; }
-          else if (foundPilots[1].win && !foundPilots[0].win) { m.winner = m.p2; m.loser = m.p1; }
-        } else if (foundPilots.length === 1 && foundPilots[0].win && m.p2) {
-          m.winner = m.p1;
-          m.loser = m.p2;
-        }
-      });
+        scanHeatParticipantsAndWin(rows, m, hRow, hCol, cMin, cMax, 4);
+      }
     }
 
-    // ТУРНИРНЫЙ ДВИГАТЕЛЬ (ПЕРЕНОС ПОБЕДИТЕЛЕЙ И ПРОИГРАВШИХ)
-    function propagateTreeEngine() {
+    // СКАНИРОВАНИЕ ЗАЕЗДОВ ВОСКРЕСЕНЬЯ (ХИТЫ 33..62)
+    function parseSundaySheet(rows) {
+      if (!rows || !rows.length) return;
+
+      for (let h = 33; h <= 62; h++) {
+        const m = tournamentMatches[h];
+
+        // Все номера заездов >= 33 уникальны в листе воскресенья
+        let hRow = -1;
+        let hCol = -1;
+
+        for (let r = 0; r < rows.length; r++) {
+          const row = rows[r];
+          if (!row || !row.c) continue;
+          for (let c = 0; c < row.c.length; c++) {
+            if (Number(row.c[c]?.v) === h) {
+              hRow = r; hCol = c; break;
+            }
+          }
+          if (hRow !== -1) break;
+        }
+
+        if (hRow === -1) continue;
+
+        // Сканируем строки заезда (для полуфиналов и финалов расширенный диапазон поиска)
+        const scanSpan = (h === 55 || h === 56 || h === 60 || h === 61 || h === 62) ? 6 : 4;
+        const cMin = Math.max(0, hCol - 1);
+        const cMax = Math.min(32, hCol + 8);
+
+        scanHeatParticipantsAndWin(rows, m, hRow, hCol, cMin, cMax, scanSpan);
+      }
+    }
+
+    // ВСПОМОГАТЕЛЬНЫЙ СКАНЕР УЧАСТНИКОВ И 'W' ДЛЯ ЗАЕЗДА
+    function scanHeatParticipantsAndWin(rows, m, hRow, hCol, cMin, cMax, rowSpan) {
+      let foundPilots = [];
+
+      for (let r = hRow; r <= Math.min(rows.length - 1, hRow + rowSpan); r++) {
+        const row = rows[r];
+        if (!row || !row.c) continue;
+
+        let detected = null;
+        let rowHasW = false;
+
+        for (let c = cMin; c <= Math.min(cMax, row.c.length - 1); c++) {
+          const val = row.c[c]?.v;
+          if (val === null || val === undefined || val === '') continue;
+
+          if (isWinChar(val)) rowHasW = true;
+
+          // Определение пилота
+          if (typeof val === 'number' && val >= 1 && val <= 32 && val !== m.heat) {
+            if (!detected) detected = pilotsByNum[val];
+          } else if (typeof val === 'string') {
+            const low = val.trim().toLowerCase();
+            if (pilotsByName[low]) {
+              if (!detected) detected = pilotsByName[low];
+            } else if ((low.startsWith('l') || low.startsWith('w')) && !isWinChar(val)) {
+              if (!detected) detected = { seed: val.trim(), name: `Ожидание (${val.trim()})`, car: '' };
+            }
+          }
+        }
+
+        if (detected) {
+          const ex = foundPilots.find(x => x.p.seed === detected.seed);
+          if (!ex) foundPilots.push({ p: detected, win: rowHasW, row: r });
+          else if (rowHasW) ex.win = true;
+        }
+      }
+
+      if (foundPilots[0] && (!m.p1 || String(m.p1.name).startsWith('Ожидание'))) m.p1 = foundPilots[0].p;
+      if (foundPilots[1] && (!m.p2 || String(m.p2.name).startsWith('Ожидание'))) m.p2 = foundPilots[1].p;
+
+      if (foundPilots.length >= 2) {
+        if (foundPilots[0].win && !foundPilots[1].win) { m.winner = m.p1; m.loser = m.p2; }
+        else if (foundPilots[1].win && !foundPilots[0].win) { m.winner = m.p2; m.loser = m.p1; }
+      } else if (foundPilots.length === 1 && foundPilots[0].win && m.p2) {
+        m.winner = m.p1; m.loser = m.p2;
+      }
+    }
+
+    // ДВУХСТОРОННИЙ ТУРНИРНЫЙ ДВИГАТЕЛЬ (Double-Check Engine)
+    function propagateTournamentEngine() {
       for (let pass = 0; pass < 6; pass++) {
         for (let h = 1; h <= 62; h++) {
           const m = tournamentMatches[h];
           const cfg = DE_CONFIG[h];
 
+          // Проверка по следующему раунду: если в следующем раунде уже стоит наш пилот
+          if (cfg.nextW && cfg.nextW[0]) {
+            const nextMatch = tournamentMatches[cfg.nextW[0]];
+            const slot = cfg.nextW[1];
+            if (nextMatch && nextMatch[slot] && !String(nextMatch[slot].name).startsWith('Ожидание')) {
+              if (m.p1 && m.p1.seed === nextMatch[slot].seed) {
+                m.winner = m.p1; m.loser = m.p2;
+              } else if (m.p2 && m.p2.seed === nextMatch[slot].seed) {
+                m.winner = m.p2; m.loser = m.p1;
+              }
+            }
+          }
+
+          // Продвижение победителя и проигравшего вперед
           if (m.winner && m.loser) {
-            // Переход победителя
             if (cfg.nextW && cfg.nextW[0]) {
               const targetHeat = tournamentMatches[cfg.nextW[0]];
               const slot = cfg.nextW[1];
@@ -1172,8 +1329,6 @@
                 targetHeat[slot] = { ...m.winner };
               }
             }
-
-            // Переход проигравшего
             if (cfg.nextL && cfg.nextL[0]) {
               const targetHeat = tournamentMatches[cfg.nextL[0]];
               const slot = cfg.nextL[1];
@@ -1186,7 +1341,7 @@
       }
     }
 
-    // ПРОВЕРКА ПОБЕД И ВЫВОД ПЛАШКИ
+    // ОТСЛЕЖИВАНИЕ ПОБЕД ДЛЯ ВЫВОДА ПЛАШКИ
     function checkWinnerAlerts() {
       for (let h = 1; h <= 62; h++) {
         const m = tournamentMatches[h];
@@ -1290,21 +1445,33 @@
       }
     }
 
+    // ОТРИСОВКА ВСЕХ СЕКЦИЙ
     function renderDOM() {
-      // Суббота
+      // Суббота: Слайд 0 (Winners)
       renderGroup('colR1A', [1,2,3,4,5,6,7,8]);
-      renderGroup('colR1B', [9,10,11,12,13,14,15,16]);
       renderGroup('colR3A', [25,26,27,28]);
       renderGroup('colR3B', [29,30,31,32]);
+      renderGroup('colR1B', [9,10,11,12,13,14,15,16]);
+
+      // Суббота: Слайд 1 (Losers)
       renderGroup('colR2A', [17,18,19,20]);
       renderGroup('colR2B', [21,22,23,24]);
 
-      // Воскресенье
+      // Суббота: Слайд 2 (All)
+      renderGroup('colR1A_all', [1,2,3,4,5,6,7,8]);
+      renderGroup('colR3A_all', [25,26,27,28]);
+      renderGroup('colR3B_all', [29,30,31,32]);
+      renderGroup('colR1B_all', [9,10,11,12,13,14,15,16]);
+      renderGroup('colR2A_all', [17,18,19,20]);
+      renderGroup('colR2B_all', [21,22,23,24]);
+
+      // Воскресенье: Слайд 0 (Finals)
       renderGroup('colR6', [45,46,47,48]);
       renderGroup('colR9', [55,56]);
       renderGroup('colR12', [60]);
       renderGroup('colFinal', [62]);
 
+      // Воскресенье: Слайд 1 (Losers)
       renderGroup('colR4', [33,34,35,36,37,38,39,40]);
       renderGroup('colR5', [41,42,43,44]);
       renderGroup('colR7', [49,50,51,52]);
@@ -1312,12 +1479,134 @@
       renderGroup('colR10', [57,58]);
       renderGroup('colR11', [59]);
       renderGroup('colR13', [61]);
+
+      // Воскресенье: Слайд 2 (All)
+      renderGroup('colR6_all', [45,46,47,48]);
+      renderGroup('colR9_all', [55,56]);
+      renderGroup('colR12_all', [60]);
+      renderGroup('colFinal_all', [62]);
+      renderGroup('colR4_all', [33,34,35,36,37,38,39,40]);
+      renderGroup('colR5_all', [41,42,43,44]);
+      renderGroup('colR7_all', [49,50,51,52]);
+      renderGroup('colR8_all', [53,54]);
+      renderGroup('colR10_all', [57,58]);
+      renderGroup('colR11_all', [59]);
+      renderGroup('colR13_all', [61]);
     }
 
     function renderGroup(id, heats) {
       const el = document.getElementById(id);
       if (!el) return;
       el.innerHTML = heats.map(createHeatCardHTML).join('');
+    }
+
+    // УПРАВЛЕНИЕ АВТОСМЕНОЙ ЭКРАНОВ (КАРУСЕЛЬ)
+    function showSlide(day, idx) {
+      if (day === 'sat') {
+        satSlideIdx = idx;
+        for (let i = 0; i < 3; i++) {
+          const s = document.getElementById(`satSlide${i}`);
+          if (s) s.classList.toggle('active-slide', i === idx);
+        }
+        document.getElementById('btnSatWinners').classList.toggle('active', idx === 0);
+        document.getElementById('btnSatLosers').classList.toggle('active', idx === 1);
+        document.getElementById('btnSatAll').classList.toggle('active', idx === 2);
+      } else if (day === 'sun') {
+        sunSlideIdx = idx;
+        for (let i = 0; i < 3; i++) {
+          const s = document.getElementById(`sunSlide${i}`);
+          if (s) s.classList.toggle('active-slide', i === idx);
+        }
+        document.getElementById('btnSunFinals').classList.toggle('active', idx === 0);
+        document.getElementById('btnSunLosers').classList.toggle('active', idx === 1);
+        document.getElementById('btnSunAll').classList.toggle('active', idx === 2);
+      }
+    }
+
+    function setManualSlide(day, idx) {
+      showSlide(day, idx);
+      restartCarouselTimer();
+    }
+
+    function toggleAutoCycle() {
+      autoCycleEnabled = !autoCycleEnabled;
+      const btn = document.getElementById('btnAutoCycle');
+      btn.innerText = autoCycleEnabled ? "🔄 Автосмена: ВКЛ (11 сек)" : "⏸ Автосмена: ВЫКЛ";
+      btn.style.color = autoCycleEnabled ? "var(--matsuri-lime)" : "var(--text-dim)";
+      btn.style.borderColor = autoCycleEnabled ? "var(--matsuri-lime)" : "var(--border-color)";
+      if (autoCycleEnabled) restartCarouselTimer();
+      else resetTimerBar();
+    }
+
+    function restartCarouselTimer() {
+      clearInterval(carouselTimer);
+      resetTimerBar();
+
+      if (!autoCycleEnabled) return;
+
+      const bar = document.getElementById('carouselTimerBar');
+      setTimeout(() => {
+        bar.style.transition = 'width 11s linear';
+        bar.style.width = '100%';
+      }, 50);
+
+      carouselTimer = setInterval(() => {
+        if (!autoCycleEnabled) return;
+
+        if (currentDayTab === 'sat') {
+          satSlideIdx = (satSlideIdx === 0) ? 1 : 0;
+          showSlide('sat', satSlideIdx);
+        } else if (currentDayTab === 'sun') {
+          sunSlideIdx = (sunSlideIdx === 0) ? 1 : 0;
+          showSlide('sun', sunSlideIdx);
+        }
+
+        resetTimerBar();
+        setTimeout(() => {
+          bar.style.transition = 'width 11s linear';
+          bar.style.width = '100%';
+        }, 50);
+      }, CAROUSEL_INTERVAL);
+    }
+
+    function resetTimerBar() {
+      const bar = document.getElementById('carouselTimerBar');
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+    }
+
+    function switchDayTab(tabId) {
+      currentDayTab = tabId;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('viewSat').classList.add('hidden');
+      document.getElementById('viewSun').classList.add('hidden');
+      document.getElementById('viewPilots').classList.add('hidden');
+
+      const subbar = document.getElementById('subbarControls');
+      const satBtns = document.getElementById('satScreenButtons');
+      const sunBtns = document.getElementById('sunScreenButtons');
+
+      if (tabId === 'sat') {
+        document.getElementById('tabSat').classList.add('active');
+        document.getElementById('viewSat').classList.remove('hidden');
+        subbar.classList.remove('hidden');
+        satBtns.classList.remove('hidden');
+        sunBtns.classList.add('hidden');
+        showSlide('sat', satSlideIdx);
+      } else if (tabId === 'sun') {
+        document.getElementById('tabSun').classList.add('active');
+        document.getElementById('viewSun').classList.remove('hidden');
+        subbar.classList.remove('hidden');
+        satBtns.classList.add('hidden');
+        sunBtns.classList.remove('hidden');
+        showSlide('sun', sunSlideIdx);
+      } else if (tabId === 'pilots') {
+        document.getElementById('tabPilots').classList.add('active');
+        document.getElementById('viewPilots').classList.remove('hidden');
+        subbar.classList.add('hidden');
+      }
+
+      restartCarouselTimer();
     }
 
     // ГЛАВНЫЙ ЦИКЛ СИНХРОНИЗАЦИИ
@@ -1332,13 +1621,13 @@
           fetchSheetJSON('Sun 32DE')
         ]);
 
-        parseSaturdayDynamic(satData.table.rows);
-        parseSundayDynamic(sunData.table.rows);
+        parseSaturdaySheet(satData.table.rows);
+        parseSundaySheet(sunData.table.rows);
 
-        // Продвижение по сетке
-        propagateTreeEngine();
+        // Двойная проверка и продвижение по турнирному дереву
+        propagateTournamentEngine();
 
-        // Проверка новых побед
+        // Проверка побед
         checkWinnerAlerts();
 
         // Отрисовка
@@ -1352,27 +1641,10 @@
       }
     }
 
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('viewSat').classList.add('hidden');
-      document.getElementById('viewSun').classList.add('hidden');
-      document.getElementById('viewPilots').classList.add('hidden');
-
-      if (tabId === 'sat') {
-        document.getElementById('tabSat').classList.add('active');
-        document.getElementById('viewSat').classList.remove('hidden');
-      } else if (tabId === 'sun') {
-        document.getElementById('tabSun').classList.add('active');
-        document.getElementById('viewSun').classList.remove('hidden');
-      } else if (tabId === 'pilots') {
-        document.getElementById('tabPilots').classList.add('active');
-        document.getElementById('viewPilots').classList.remove('hidden');
-      }
-    }
-
     window.addEventListener('DOMContentLoaded', async () => {
       await loadPilotsCatalog();
       await runSync();
+      restartCarouselTimer();
       setInterval(runSync, POLL_INTERVAL);
     });
   </script>
